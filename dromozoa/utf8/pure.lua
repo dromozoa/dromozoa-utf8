@@ -83,6 +83,65 @@ local function each_codepoint(s, i)
   end
 end
 
+local function decode_tail(b, c, d)
+  
+
+
+  if 0x80 <= a and a <= 0xBF then
+    if b == nil then
+      return a % 0x40
+    else
+      return a % 0x40 * b
+    end
+  else
+    return nil
+  end
+end
+
+local function decode(s, i)
+  local a = s:byte(i)
+  if a == nil then
+    return nil
+  elseif 0x00 <= a and a <= 0x7F then
+    return i + 1, a
+  elseif 0xC2 <= a and a <= 0xDF then
+    local a = a % 0x20 * 0x40
+    local b = s:byte(i + 1)
+    if b == nil then
+      return nil
+    end
+
+    local b = decode_tail(b)
+    return i + 2, a + b
+  elseif 0xE0 <= a and a <= 0xEF then
+    local b, c = s:byte(i + 1, i + 2)
+    if 0xE0 == a then
+      if 0xA0 <= b and b <= 0xBF then
+        return decode_impl(a, b, c)
+      else
+        return nil
+      end
+    elseif 0xE1 <= a and a <= 0xEC then
+    elseif 0xED == a then
+      if 0x80 <= b and b <= 0x9f then
+      else
+        return nil
+      end
+    elseif 0xEE <= a and a <= 0xEF then
+    end
+
+  elseif 0xF0 <= a and a <= 0xF4 then
+    local a = a % 0x20 * 0x040000
+    local b, c, d = s:byte(i + 1, i + 3)
+    if d == nil then
+      return nil
+    end
+
+  else
+    return nil
+  end
+end
+
 local function char(...)
   local n = select("#", ...)
   if n == 0 then

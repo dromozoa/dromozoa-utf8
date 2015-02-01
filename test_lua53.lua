@@ -1,0 +1,43 @@
+#! /usr/bin/env lua
+
+assert(utf8)
+
+local utf8_char = string.char(
+  0x41,
+  0xE2, 0x89, 0xA2,
+  0xCE, 0x91,
+  0x2E,
+  0xED, 0x95, 0x9C,
+  0xEA, 0xB5, 0xAD,
+  0xEC, 0x96, 0xB4,
+  0xE6, 0x97, 0xA5,
+  0xE6, 0x9C, 0xAC,
+  0xE8, 0xAA, 0x9E,
+  0xEF, 0xBB, 0xBF,
+  0xF0, 0xA3, 0x8E, 0xB4
+)
+
+local utf8_len = 12
+
+print("--")
+print(pcall(utf8.len, utf8_char, 0))
+print(pcall(utf8.len, utf8_char, #utf8_char + 2))
+print(pcall(utf8.len, utf8_char, -#utf8_char - 1))
+
+print("--")
+for i = 1, #utf8_char + 1 do
+  print(i, utf8.len(utf8_char, i))
+end
+print("--")
+for i = -1, -#utf8_char, -1 do
+  print(i, utf8.len(utf8_char, i))
+end
+
+print("--")
+print(utf8.len(string.char(0xE2)))
+print(utf8.len(string.char(0xE2, 0x89)))
+print(utf8.len(string.char(0xE2, 0x89, 0xA2)))
+print(utf8.len(string.char(0xE2, 0x00)))
+print(utf8.len(string.char(0xE2, 0x89, 0x00)))
+print(utf8.len(string.char(0xE2, 0xFF)))
+print(utf8.len(string.char(0xE2, 0x89, 0xFF)))
