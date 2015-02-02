@@ -20,244 +20,58 @@
 
 local unpack = table.unpack or unpack
 
-local function compile()
-  local data = {
-    { 0x00, 0x7F };
-    { 0xC2, 0xDF, 0x80, 0xBF };
-    { 0xE0, 0xE0, 0xA0, 0xBF, 0x80, 0xBF };
-    { 0xE1, 0xEC, 0x80, 0xBF, 0x80, 0xBF };
-    { 0xED, 0xED, 0x80, 0x9F, 0x80, 0xBF };
-    { 0xEE, 0xEF, 0x80, 0xBF, 0x80, 0xBF };
-    { 0xF0, 0xF0, 0x90, 0xBF, 0x80, 0xBF, 0x80, 0xBF };
-    { 0xF1, 0xF3, 0x80, 0xBF, 0x80, 0xBF, 0x80, 0xBF };
-    { 0xF4, 0xF4, 0x80, 0x8F, 0x80, 0xBF, 0x80, 0xBF };
-  }
-
-  local code = {}
-  for i = 1, #data do
-    local x = { #data[i] / 2, unpack(data[i], 3) }
-    for j = data[i][1], data[i][2] do
-      code[j] = x
-    end
+local function len(s, i, j)
+  if i == nil then
+    i = 1
   end
-
-  local function len(s, i, j)
-    local code = code
-    if i == nil then
-      i = 1
-    end
-    if j == nil then
-      j = -1
-    end
-    if j < 0 then
-      j = #s + j + 1
-    end
-    local result = 0
-    while i <= j do
-      local a, b, c, d = string.byte(s, i, i + 3)
-      if a == nil then return nil, i end
-      local x = code[a]
-      if x == nil then return nil, i end
-      -- local n, bmin, bmax, cmin, cmax, dmin, dmax = unpack(x)
-      local n = x[1]
-      if n == 1 then
-        i = i + 1
-      elseif n == 2 then
-        -- if b == nil or b < bmin or bmax < b then return nil, i end
+  if j == nil then
+    j = #s
+  elseif j < 0 then
+    j = #s + j + 1
+  end
+  local result = 0
+  while i <= j do
+    local a, b, c, d = string.byte(s, i, i + 3)
+    if a == nil then
+      return nil, i
+    elseif a <= 0x7F then
+      i = i + 1
+    elseif 0xC2 <= a then
+      if a <= 0xDF then
+        if b == nil or b < 0x80 or 0xBF < b then return nil, i end
         i = i + 2
-      elseif n == 3 then
-        -- if b == nil or b < bmin or bmax < b then return nil, i end
-        -- if c == nil or c < cmin or cmax < c then return nil, i end
+      elseif a <= 0xEF then
+        if a <= 0xEC then
+          if 0xE0 == a then
+            if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
+          else
+            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+          end
+        else
+          if 0xED == a then
+            if b == nil or b < 0x80 or 0x9F < b then return nil, i end
+          else
+            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+          end
+        end
+        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
         i = i + 3
-      else
-        -- if b == nil or b < bmin or bmax < b then return nil, i end
-        -- if c == nil or c < cmin or cmax < c then return nil, i end
-        -- if d == nil or d < dmin or dmax < d then return nil, i end
+      elseif a <= 0xF4 then
+        if 0xF0 == a then
+          if b == nil or b < 0x90 or 0xBF < b then return nil, i end
+        elseif a <= 0xF3 then
+          if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+        else
+          if b == nil or b < 0x80 or 0x8F < b then return nil, i end
+        end
+        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
+        if d == nil or d < 0x80 or 0xBF < d then return nil, i end
         i = i + 4
+      else
+        return nil, 1
       end
-      result = result + 1
-    end
-    return result
-  end
-
-  return len
-end
-
-local len = compile()
-
-local function len(s, i, j)
-  if i == nil then
-    i = 1
-  end
-  if j == nil then
-    j = -1
-  end
-  if j < 0 then
-    j = #s + j + 1
-  end
-  local result = 0
-  while i <= j do
-    local a, b, c, d = string.byte(s, i, i + 3)
-    if a == nil then
-      return nil, i
-    end
-    if 0x00 <= a and a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a and a <= 0xDF then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-      i = i + 2
-    elseif 0xE0 == a then
-      if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      i = i + 3
-    elseif 0xE1 <= a and a <= 0xEC then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      i = i + 3
-    elseif 0xED == a then
-      if b == nil or b < 0x80 or 0x9F < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      i = i + 3
-    elseif 0xEE == a or 0xEF == a then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      i = i + 3
-    elseif 0xF0 == a then
-      if b == nil or b < 0x90 or 0xBF < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-      i = i + 4
-    elseif 0xF1 <= a and a <= 0xF3 then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-      i = i + 4
-    elseif 0xF4 == a then
-      if b == nil or b < 0x80 or 0x8F < b then return nil, i end
-      if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-      if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-      i = i + 4
     else
-      return nil, i
-    end
-    result = result + 1
-  end
-  return result
-end
-
-local function len(s, i, j)
-  if i == nil then
-    i = 1
-  end
-  if j == nil then
-    j = -1
-  end
-  if j < 0 then
-    j = #s + j + 1
-  end
-  local result = 0
-  while i <= j do
-    local a, b, c, d = string.byte(s, i, i + 3)
-    if a == nil then
-      return nil, i
-    end
-    if 0x00 <= a and a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a and a <= 0xDF then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i
-      else i = i + 2 end
-    elseif 0xE0 == a then
-      if b == nil or b < 0xA0 or 0xBF < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      else i = i + 3 end
-    elseif 0xE1 <= a and a <= 0xEC then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      else i = i + 3 end
-    elseif 0xED == a then
-      if b == nil or b < 0x80 or 0x9F < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      else i = i + 3 end
-    elseif 0xEE == a or 0xEF == a then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      else i = i + 3 end
-    elseif 0xF0 == a then
-      if b == nil or b < 0x90 or 0xBF < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      elseif d == nil or d < 0x80 or 0xBF < d then return nil, i
-      else i = i + 4 end
-    elseif 0xF1 <= a and a <= 0xF3 then
-      if b == nil or b < 0x80 or 0xBF < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      elseif d == nil or d < 0x80 or 0xBF < d then return nil, i
-      else i = i + 4 end
-    elseif 0xF4 == a then
-      if b == nil or b < 0x80 or 0x8F < b then return nil, i
-      elseif c == nil or c < 0x80 or 0xBF < c then return nil, i
-      elseif d == nil or d < 0x80 or 0xBF < d then return nil, i
-      else i = i + 4 end
-    else
-      return nil, i
-    end
-    result = result + 1
-  end
-  return result
-end
-
-local function len_(s, i, j)
-  if i == nil then
-    i = 1
-  end
-  if j == nil then
-    j = -1
-  end
-  if j < 0 then
-    j = #s + j + 1
-  end
-  local result = 0
-  while i <= j do
-    -- local a, b, c, d = string.byte(s, i, i + 3)
-    local a = string.byte(s, i)
-    if a == nil then
-      return nil, i
-    end
-    if 0x00 <= a and a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a and a <= 0xDF then
-      -- [\x80-\xBF]
-      if not s:match("^[\128-\191]", i + 1) then return nil, i end
-      i = i + 2
-    elseif 0xE0 == a then
-      -- [\xA0-\xBF][\x80-\xBF]
-      if not s:match("^[\160-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 3
-    elseif 0xE1 <= a and a <= 0xEC then
-      -- [\x80-\xBF][\x80-\xBF]
-      if not s:match("^[\128-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 3
-    elseif 0xED == a then
-      -- [\x80-\x9F][\x80-\xBF]
-      if not s:match("^[\128-\159][\128-\191]", i + 1) then return nil, i end
-      i = i + 3
-    elseif 0xEE == a or 0xEF == a then
-      -- [\x80-\xBF][\x80-\xBF]
-      if not s:match("^[\128-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 3
-    elseif 0xF0 == a then
-      -- [\x90-\xBF][\x80-\xBF][\x80-\xBF]
-      if not s:match("^[\144-\191][\128-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 4
-    elseif 0xF1 <= a and a <= 0xF3 then
-      -- [\x80-\xBF][\x80-\xBF][\x80-\xBF]
-      if not s:match("^[\128-\191][\128-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 4
-    elseif 0xF4 == a then
-      -- [\x80-\x8F][\x80-\xBF][\x80-\xBF]
-      if not s:match("^[\128-\143][\128-\191][\128-\191]", i + 1) then return nil, i end
-      i = i + 4
-    else
-      return nil, i
+      return nil, 1
     end
     result = result + 1
   end
