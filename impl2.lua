@@ -1,4 +1,5 @@
 local unpack = table.unpack or unpack
+local pure = require "dromozoa.utf8.pure"
 
 local decode1
 local decode2
@@ -174,6 +175,8 @@ end
 return function (name)
   if name == "native" then
     return utf8.len
+  elseif name == "pure" then
+    return pure.len
   else
     local fn
     if name == "decode1" then
