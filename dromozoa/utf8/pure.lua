@@ -166,7 +166,7 @@ local function char(...)
   local n = select("#", ...)
   local result = {}
   for i = 1, n do
-    local c = encode(tonumber(select(i, ...)))
+    local c = encode(tonumber((select(i, ...))))
     if c == nil then
       error "bad argument #1"
     end
@@ -220,6 +220,7 @@ end
 --- @export
 return {
   char = char;
+  charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
   len = length;

@@ -5,18 +5,21 @@ local pure = require "dromozoa.utf8.pure"
 local unpack = table.unpack or unpack
 
 local char
+local charpattern
 if arg[1] == "native" then
   char = utf8.char
+  charpattern = utf8.charpattern
 else
   char = pure.char
+  charpattern = pure.charpattern
 end
 
 local function result(result, ...)
   if result then
     print(true, ...)
   else
-    -- print(false)
-    print(false, ...)
+    print(false)
+    -- print(false, ...)
   end
 end
 
@@ -28,8 +31,10 @@ local codepoint = {
 }
 
 result(pcall(char))
+print "?"
 result(pcall(char, unpack(codepoint)))
 result(pcall(char, -1))
 result(pcall(char, 0x110000))
 result(pcall(char, nil))
 result(pcall(char, "21"))
+print(string.format("%q", charpattern))
