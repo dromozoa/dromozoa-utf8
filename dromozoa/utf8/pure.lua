@@ -18,17 +18,19 @@
 --- Lua 5.3 compatible pure-Lua UTF-8 implementation.
 -- @module dromozoa.utf8.purelua
 
-local function len(s, i, j)
+local function length(s, i, j)
   if i == nil then
     i = 1
   elseif i < 0 then
-    i = #s + i + 1
+    i = #s + 1 + i
   end
-  assert(1 <= i and i <= #s + 1)
+  if i < 1 or #s + 1 < i then
+    error "bad argument #2"
+  end
   if j == nil then
     j = #s
   elseif j < 0 then
-    j = #s + j + 1
+    j = #s + 1 + j
   end
   local result = 0
   while i <= j do
@@ -79,149 +81,98 @@ local function len(s, i, j)
   return result
 end
 
-local unpack = table.unpack or unpack
-
-
-
-
-
-
-
-local function range(s, v, d)
-  local v = tonumber(v)
-  if v == nil then
-    v = d
-  elseif v < 0 then
-    v = #s + v + 1
+local function decode(s, i)
+  local a, b, c, d = s:byte(i, i + 3)
+  if a == nil then
+    return nil
+  elseif a <= 0x7F then
+    return i + 1, a
+  elseif 0xC2 <= a then
+    if a <= 0xDF then
+      if b == nil or b < 0x80 or 0xBF < b then return nil end
+      local a = a % 0x20 * 0x40
+      local b = b % 0x40
+      return i + 2, a + b
+    elseif a <= 0xEF then
+      if a <= 0xEC then
+        if a == 0xE0 then
+          if b == nil or b < 0xA0 or 0xBF < b then return nil end
+        else
+          if b == nil or b < 0x80 or 0xBF < b then return nil end
+        end
+      else
+        if a == 0xED then
+          if b == nil or b < 0x80 or 0x9F < b then return nil end
+        else
+          if b == nil or b < 0x80 or 0xBF < b then return nil end
+        end
+      end
+      if c == nil or c < 0x80 or 0xBF < c then return nil end
+      local a = a % 0x10 * 0x1000
+      local b = b % 0x40 * 0x40
+      local c = c % 0x40
+      return i + 3, a + b + c
+    elseif a <= 0xF4 then
+      if a == 0xF0 then
+        if b == nil or b < 0x90 or 0xBF < b then return nil end
+      elseif a <= 0xF3 then
+        if b == nil or b < 0x80 or 0xBF < b then return nil end
+      else
+        if b == nil or b < 0x80 or 0x8F < b then return nil end
+      end
+      if c == nil or c < 0x80 or 0xBF < c then return nil end
+      if d == nil or d < 0x80 or 0xBF < d then return nil end
+      local a = a % 0x08 * 0x040000
+      local b = b % 0x40 * 0x1000
+      local c = c % 0x40 * 0x40
+      local d = d % 0x40
+      return i + 4, a + b + c + d
+    end
   end
-  return v
+  return nil
 end
 
 local function encode(a)
-  assert(0 <= a and a < 0xD800 or 0xDFFF < a and a <= 0x10FFFF)
-  if a <= 0x7F then
-    return string.char(a)
-  elseif a <= 0x07FF then
-    local b = a % 0x40
-    local a = math.floor(a / 0x40)
-    return string.char(a + 0xC0, b + 0x80)
-  elseif a <= 0xFFFF then
-    local c = a % 0x40
-    local a = math.floor(a / 0x40)
-    local b = a % 0x40
-    local a = math.floor(a / 0x40)
-    return string.char(a + 0xE0, b + 0x80, c + 0x80)
-  else
-    local d = a % 0x40
-    local a = math.floor(a / 0x40)
-    local c = a % 0x40
-    local a = math.floor(a / 0x40)
-    local b = a % 0x40
-    local a = math.floor(a / 0x40)
-    return string.char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+  if 0x00 <= a then
+    if a <= 0x7F then
+      return string.char(a)
+    elseif a <= 0x07FF then
+      local b = a % 0x40
+      local a = math.floor(a / 0x40)
+      return string.char(a + 0xC0, b + 0x80)
+    elseif a <= 0xFFFF then
+      if 0xD800 <= a and a <= 0xDFFF then return nil end
+      local c = a % 0x40
+      local a = math.floor(a / 0x40)
+      local b = a % 0x40
+      local a = math.floor(a / 0x40)
+      return string.char(a + 0xE0, b + 0x80, c + 0x80)
+    elseif a <= 0x10FFFF then
+      local d = a % 0x40
+      local a = math.floor(a / 0x40)
+      local c = a % 0x40
+      local a = math.floor(a / 0x40)
+      local b = a % 0x40
+      local a = math.floor(a / 0x40)
+      return string.char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+    end
   end
+  return nil
 end
 
-local function each_codepoint(s, i)
-  local a = s:byte(i)
-  local i = i + 1
-  if a <= 0x7F then
-    return i, a
-  elseif 0xC0 <= a and a <= 0xDF then
-    local b = s:byte(i)
-    local a = a % 0x20 * 0x40
-    local b = b % 0x40
-    return i + 1, a + b
-  elseif a <= 0xEF then
-    local b, c = s:byte(i, i + 1)
-    local a = a % 0x10 * 0x1000
-    local b = b % 0x40 * 0x40
-    local c = c % 0x40
-    return i + 2, a + b + c
-  elseif a <= 0xF7 then
-    local b, c, d = s:byte(i, i + 2)
-    local a = a % 0x08 * 0x040000
-    local b = b % 0x40 * 0x1000
-    local c = c % 0x40 * 0x40
-    local d = d % 0x40
-    return i + 3, a + b + c + d
-  else
-    error(i)
-  end
-end
-
-local function decode_tail(b, c, d)
-  
-
-
-  if 0x80 <= a and a <= 0xBF then
-    if b == nil then
-      return a % 0x40
-    else
-      return a % 0x40 * b
-    end
-  else
-    return nil
-  end
-end
-
-local function decode(s, i)
-  local a = s:byte(i)
-  if a == nil then
-    return nil
-  elseif 0x00 <= a and a <= 0x7F then
-    return i + 1, a
-  elseif 0xC2 <= a and a <= 0xDF then
-    local a = a % 0x20 * 0x40
-    local b = s:byte(i + 1)
-    if b == nil then
-      return nil
-    end
-
-    local b = decode_tail(b)
-    return i + 2, a + b
-  elseif 0xE0 <= a and a <= 0xEF then
-    local b, c = s:byte(i + 1, i + 2)
-    if 0xE0 == a then
-      if 0xA0 <= b and b <= 0xBF then
-        return decode_impl(a, b, c)
-      else
-        return nil
-      end
-    elseif 0xE1 <= a and a <= 0xEC then
-    elseif 0xED == a then
-      if 0x80 <= b and b <= 0x9f then
-      else
-        return nil
-      end
-    elseif 0xEE <= a and a <= 0xEF then
-    end
-
-  elseif 0xF0 <= a and a <= 0xF4 then
-    local a = a % 0x20 * 0x040000
-    local b, c, d = s:byte(i + 1, i + 3)
-    if d == nil then
-      return nil
-    end
-
-  else
-    return nil
-  end
-end
+local unpack = table.unpack or unpack
 
 local function char(...)
   local n = select("#", ...)
-  if n == 0 then
-    return ""
-  elseif n == 1 then
-    return encode(...)
-  else
-    local result = {}
-    for i = 1, n do
-      result[#result + 1] = encode(select(i, ...))
+  local result = {}
+  for i = 1, n do
+    local c = encode(tonumber(select(i, ...)))
+    if c == nil then
+      error "bad argument #1"
     end
-    return table.concat(result)
+    result[#result + 1] = c
   end
+  return table.concat(result)
 end
 
 local function codes(s)
@@ -230,22 +181,38 @@ local function codes(s)
     if i <= #s then
       local j = i
       local c
-      i, c = each_codepoint(s, i)
-      return j, c
+      i, c = decode(s, i)
+      if i == nil then
+        error "invalid UTF-8 code"
+      else
+        return j, c
+      end
     else
       return nil
     end
-  end, s, 0
+  end, s
 end
 
 local function codepoint(s, i, j)
-  local i = range(s, i, 1)
-  assert(1 <= i and i <= #s)
-  local j = range(s, j, i)
-
+  if i == nil then
+    i = 1
+  elseif i < 0 then
+    i = #s + 1 + i
+  end
+  if i < 1 or #s < i then
+    error "bad argument #2"
+  end
+  if j == nil then
+    j = i
+  elseif i < 0 then
+    j = #s + 1 + j
+  end
   local result = {}
   while i <= j do
-    i, result[#result + 1] = each_codepoint(s, i)
+    i, result[#result + 1] = decode(s, i)
+    if i == nil then
+      error "invalid UTF-8 code"
+    end
   end
   return unpack(result)
 end
@@ -255,5 +222,5 @@ return {
   char = char;
   codes = codes;
   codepoint = codepoint;
-  len = len;
+  len = length;
 }

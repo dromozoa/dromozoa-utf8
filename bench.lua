@@ -1,6 +1,7 @@
 #! /usr/bin/env lua
 
 local driver = require "impl2"
+local pure = require "dromozoa.utf8.pure"
 
 local data = table.concat {
   string.char(0x41, 0xE2, 0x89, 0xA2, 0xCE, 0x91, 0x2E);
@@ -42,3 +43,16 @@ for j = 1, #name do
   print(name[j], difftime(t2, t1), x)
 end
 
+local codes = { utf8.codes, pure.codes }
+for i = 1, #codes do
+  local x = 0
+  local fn = codes[i]
+  local t1 = time()
+  for j = 1, n do
+    for p, c in fn(data) do
+      x = x + 1
+    end
+  end
+  local t2 = time()
+  print(difftime(t2, t1), x)
+end
