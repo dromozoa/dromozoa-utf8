@@ -18,8 +18,6 @@
 --- Lua 5.3 compatible pure-Lua UTF-8 implementation.
 -- @module dromozoa.utf8.purelua
 
-local unpack = table.unpack or unpack
-
 local function len(s, i, j)
   if i == nil then
     i = 1
@@ -42,13 +40,13 @@ local function len(s, i, j)
         i = i + 2
       elseif a <= 0xEF then
         if a <= 0xEC then
-          if 0xE0 == a then
+          if a == 0xE0 then
             if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
           else
             if b == nil or b < 0x80 or 0xBF < b then return nil, i end
           end
         else
-          if 0xED == a then
+          if a == 0xED then
             if b == nil or b < 0x80 or 0x9F < b then return nil, i end
           else
             if b == nil or b < 0x80 or 0xBF < b then return nil, i end
@@ -57,7 +55,7 @@ local function len(s, i, j)
         if c == nil or c < 0x80 or 0xBF < c then return nil, i end
         i = i + 3
       elseif a <= 0xF4 then
-        if 0xF0 == a then
+        if a == 0xF0 then
           if b == nil or b < 0x90 or 0xBF < b then return nil, i end
         elseif a <= 0xF3 then
           if b == nil or b < 0x80 or 0xBF < b then return nil, i end
@@ -77,6 +75,14 @@ local function len(s, i, j)
   end
   return result
 end
+
+local unpack = table.unpack or unpack
+
+
+
+
+
+
 
 local function range(s, v, d)
   local v = tonumber(v)
