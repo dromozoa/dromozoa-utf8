@@ -1,5 +1,7 @@
 #! /usr/bin/env lua
 
+local driver = require "impl2"
+
 local data = table.concat {
   string.char(0x41, 0xE2, 0x89, 0xA2, 0xCE, 0x91, 0x2E);
   string.char(0xED, 0x95, 0x9C, 0xEA, 0xB5, 0xAD, 0xEC, 0x96, 0xB4);
@@ -25,14 +27,17 @@ else
   print(posix_sys_time)
 end
 
-local n = 1000000
-local x = 0
+local n = 100000
 
-local t1 = time()
-for i = 1, n do
-  x = x + utf8.len(data)
+local name = { "native", "decode1", "decode2", "decode3" }
+for j = 1, #name do
+  local x = 0
+  local utf8_len = driver(name[j])
+  local t1 = time()
+  for i = 1, n do
+    x = x + utf8_len(data)
+  end
+  local t2 = time()
+  print(name[j], difftime(t2, t1), x)
 end
-local t2 = time()
-print(difftime(t2, t1))
-print(x) -- 12 * n
 
