@@ -28,8 +28,9 @@ else
 end
 
 local n = 100000
+-- local n = 1
 
-local name = { "native", "decode1", "decode2", "decode3" }
+local name = { "native", "decode1", "decode2", "decode3", "decode4", "decode5" }
 for j = 1, #name do
   local x = 0
   local utf8_len = driver(name[j])

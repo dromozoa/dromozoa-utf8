@@ -3,6 +3,7 @@ local unpack = table.unpack or unpack
 local decode1
 local decode2
 local decode3
+local decode5
 
 do
   local function compile(expr)
@@ -127,6 +128,49 @@ do
   end
 end
 
+do
+  local function compile(expr)
+    local result = {}
+    for i = 1, #expr do
+      local length = #expr[i] / 2
+      for j = expr[i][1], expr[i][2] do
+        result[j] = { length, code }
+      end
+    end
+
+    return function (s)
+      local i = 1
+      local j = #s
+      local length = 0
+      while i <= j do
+        local a = s:byte(i)
+        if a == nil then
+          return nil, i
+        end
+        local x = result[a]
+        if x == nil then
+          return nil, i
+        end
+        i = i + x[1]
+        length = length + 1
+      end
+      return length
+    end
+  end
+
+  decode5 = compile {
+    { 0x00, 0x7F };
+    { 0xC2, 0xDF, 0x80, 0xBF };
+    { 0xE0, 0xE0, 0xA0, 0xBF, 0x80, 0xBF };
+    { 0xE1, 0xEC, 0x80, 0xBF, 0x80, 0xBF };
+    { 0xED, 0xED, 0x80, 0x9F, 0x80, 0xBF };
+    { 0xEE, 0xEF, 0x80, 0xBF, 0x80, 0xBF };
+    { 0xF0, 0xF0, 0x90, 0xBF, 0x80, 0xBF, 0x80, 0xBF };
+    { 0xF1, 0xF3, 0x80, 0xBF, 0x80, 0xBF, 0x80, 0xBF };
+    { 0xF4, 0xF4, 0x80, 0x8F, 0x80, 0xBF, 0x80, 0xBF };
+  }
+end
+
 return function (name)
   if name == "native" then
     return utf8.len
@@ -138,6 +182,31 @@ return function (name)
       fn = decode2
     elseif name == "decode3" then
       fn = decode3
+    elseif name == "decode4" then
+      return function (s)
+        local i = 1
+        local j = #s
+        local length = 0
+        while i <= j do
+          local a = s:byte(i)
+          if a == nil then
+            return nil, i
+          end
+          if a <= 0x7F then
+            i = i + 1
+          elseif a <= 0xDF then
+            i = i + 2
+          elseif a <= 0xEF then
+            i = i + 3
+          else
+            i = i + 4
+          end
+          length = length + 1
+        end
+        return length
+      end
+    elseif name == "decode5" then
+      return decode5
     end
     return function (s)
       local i = 1
