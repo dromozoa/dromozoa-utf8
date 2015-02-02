@@ -166,11 +166,11 @@ local function char(...)
   local n = select("#", ...)
   local result = {}
   for i = 1, n do
-    local c = encode(tonumber((select(i, ...))))
-    if c == nil then
+    local s = encode(select(i, ...))
+    if s == nil then
       error "bad argument #1"
     end
-    result[#result + 1] = c
+    result[#result + 1] = s
   end
   return table.concat(result)
 end

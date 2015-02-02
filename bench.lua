@@ -10,8 +10,16 @@ local data = table.concat {
   string.char(0xEF, 0xBB, 0xBF, 0xF0, 0xA3, 0x8E, 0xB4);
 }
 
+local codepoint = {
+  0x0041, 0x2262, 0x0391, 0x002E,
+  0xD55C, 0xAD6D, 0xC5B4,
+  0x65E5, 0x672C, 0x8A9E,
+  0xFEFF, 0x0233B4,
+}
+
 local time = os.time
 local difftime = os.difftime
+local unpack = table.unpack or unpack
 
 local result, posix_sys_time = pcall(require, "posix.sys.time")
 if result then
@@ -31,6 +39,7 @@ end
 local n = 100000
 -- local n = 1
 
+--[[
 local name = { "native", "pure", "decode1", "decode2", "decode3", "decode4", "decode5" }
 for j = 1, #name do
   local x = 0
@@ -52,6 +61,19 @@ for i = 1, #codes do
     for p, c in fn(data) do
       x = x + 1
     end
+  end
+  local t2 = time()
+  print(difftime(t2, t1), x)
+end
+]]
+
+local char = { utf8.char, pure.char }
+for i = 1, #char do
+  local x = 0
+  local fn = char[i]
+  local t1 = time()
+  for j = 1, n do
+    x = x + select("#", fn(unpack(codepoint)))
   end
   local t2 = time()
   print(difftime(t2, t1), x)
