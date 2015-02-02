@@ -1,6 +1,9 @@
 #! /usr/bin/env lua
 
 assert(utf8)
+local pure = require "dromozoa.utf8.pure"
+
+local len = pure.len
 
 local utf8_char = string.char(
   0x41,
@@ -20,24 +23,24 @@ local utf8_char = string.char(
 local utf8_len = 12
 
 print("--")
-print(pcall(utf8.len, utf8_char, 0))
-print(pcall(utf8.len, utf8_char, #utf8_char + 2))
-print(pcall(utf8.len, utf8_char, -#utf8_char - 1))
+print(pcall(len, utf8_char, 0))
+print(pcall(len, utf8_char, #utf8_char + 2))
+print(pcall(len, utf8_char, -#utf8_char - 1))
 
 print("--")
 for i = 1, #utf8_char + 1 do
-  print(i, utf8.len(utf8_char, i))
+  print(i, len(utf8_char, i))
 end
 print("--")
 for i = -1, -#utf8_char, -1 do
-  print(i, utf8.len(utf8_char, i))
+  print(i, len(utf8_char, i))
 end
 
 print("--")
-print(utf8.len(string.char(0xE2)))
-print(utf8.len(string.char(0xE2, 0x89)))
-print(utf8.len(string.char(0xE2, 0x89, 0xA2)))
-print(utf8.len(string.char(0xE2, 0x00)))
-print(utf8.len(string.char(0xE2, 0x89, 0x00)))
-print(utf8.len(string.char(0xE2, 0xFF)))
-print(utf8.len(string.char(0xE2, 0x89, 0xFF)))
+print(len(string.char(0xE2)))
+print(len(string.char(0xE2, 0x89)))
+print(len(string.char(0xE2, 0x89, 0xA2)))
+print(len(string.char(0xE2, 0x00)))
+print(len(string.char(0xE2, 0x89, 0x00)))
+print(len(string.char(0xE2, 0xFF)))
+print(len(string.char(0xE2, 0x89, 0xFF)))

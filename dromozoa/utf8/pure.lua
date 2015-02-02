@@ -21,7 +21,10 @@
 local function len(s, i, j)
   if i == nil then
     i = 1
+  elseif i < 0 then
+    i = #s + i + 1
   end
+  assert(1 <= i and i <= #s + 1)
   if j == nil then
     j = #s
   elseif j < 0 then
@@ -66,10 +69,10 @@ local function len(s, i, j)
         if d == nil or d < 0x80 or 0xBF < d then return nil, i end
         i = i + 4
       else
-        return nil, 1
+        return nil, i
       end
     else
-      return nil, 1
+      return nil, i
     end
     result = result + 1
   end
