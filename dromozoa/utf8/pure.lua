@@ -224,52 +224,43 @@ local function offset(s, n, i)
     if i == nil then
       i = 1
     end
-    local a = s:byte(i)
-    while a ~= nil and 0x80 <= a and a <= 0xBF do
+    local b = s:byte(i)
+    while b ~= nil and 0x80 <= b and b <= 0xBF do
       i = i - 1
-      a = s:byte(i)
+      b = s:byte(i)
     end
     return i
   elseif n > 0 then
     if i == nil then
       i = 1
     end
-
-    local j = i
-    local b = s:byte(j)
-    if b == nil then
-      if n == 1 then return i else return nil end
-    elseif 0x80 <= b and b <= 0xBF then
+    local b = s:byte(i)
+    if b ~= nil and 0x80 <= b and b <= 0xBF then
       error "initial position is a continuation byte"
     end
-
-    while true do
-      if n == 1 then
-        return i
-      end
-      local b
-      repeat
-        j = j + 1
-        b = s:byte(j)
-      until b == nil or b < 0x80 or 0xBF < b
-      i = j
-      n = n - 1
+    while n > 1 do
       if b == nil then
-        if n == 1 then return i else return nil end
+        return nil
       end
+      repeat
+        i = i + 1
+        b = s:byte(i)
+      until b == nil or b < 0x80 or 0xBF < b
+      n = n - 1
     end
+    return i
   else
     if i == nil then
       i = #s + 1
     end
-    repeat
+    while n < 0 do
       repeat
         i = i - 1
         local b = s:byte(i)
         if b == nil then return nil end
       until b < 0x80 or 0xBF < b
       n = n + 1
-    until n == 0
+    end
     return i
   end
 end
