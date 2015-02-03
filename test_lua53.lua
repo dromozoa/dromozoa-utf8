@@ -119,8 +119,6 @@ for i = 1, #utf8_char do
   print_result(pcall(offset, utf8_char, 1, i))
 end
 
-os.exit(0)
-
 local n = len(utf8_char)
 
 print("--")
@@ -131,4 +129,17 @@ print("--")
 for i = -1, -n, -1 do
   print(i, offset(utf8_char, i))
 end
-
+print("--")
+print_result(pcall(offset, "", 1))
+print_result(pcall(offset, "", 2))
+print_result(pcall(offset, "", -1))
+print("--")
+print_result(pcall(offset, "あいう", 1))
+print_result(pcall(offset, "あいう", 2))
+print_result(pcall(offset, "あいう", 3))
+print_result(pcall(offset, "あいう", 4))
+print("--")
+print_result(pcall(offset, "あいう", -1))
+print_result(pcall(offset, "あいう", -2))
+print_result(pcall(offset, "あいう", -3))
+print_result(pcall(offset, "あいう", -4))
