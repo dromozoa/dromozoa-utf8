@@ -217,6 +217,62 @@ local function codepoint(s, i, j)
   return unpack(result)
 end
 
+local function offset(s, n, i)
+  if n == nil then
+    error "bad argument #2"
+  elseif n == 0 then
+    if i == nil then
+      i = 1
+    end
+    local a = s:byte(i)
+    while a ~= nil and 0x80 <= a and a <= 0xBF do
+      i = i - 1
+      a = s:byte(i)
+    end
+    return i
+  elseif n > 0 then
+    if i == nil then
+      i = 1
+    end
+    local j = i
+    while n > 0 do
+      i = j
+      local a = s:byte(j)
+      if a ~= nil and 0x80 <= a and a <= 0xBF then
+        error "initial position is a continuation byte"
+      end
+      j = j + 1
+      local a = s:byte(j)
+      while a ~= nil and 0x80 <= a and a <= 0xBF do
+        j = j + 1
+        a = s:byte(j)
+      end
+      n = n - 1
+    end
+    return i
+  else
+    if i == nil then
+      i = #s + 1
+    end
+    while n < 0 do
+      i = i - 1
+      i = j
+      local a = s:byte(j)
+      if a ~= nil and 0x80 <= a and a <= 0xBF then
+        error "initial position is a continuation byte"
+      end
+      j = j + 1
+      local a = s:byte(j)
+      while a ~= nil and 0x80 <= a and a <= 0xBF do
+        j = j + 1
+        a = s:byte(j)
+      end
+      n = n - 1
+    end
+    return i
+  end
+end
+
 --- @export
 return {
   char = char;
@@ -224,4 +280,5 @@ return {
   codes = codes;
   codepoint = codepoint;
   len = length;
+  offset = offset;
 }

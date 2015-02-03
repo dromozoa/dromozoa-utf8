@@ -6,14 +6,17 @@ local pure = require "dromozoa.utf8.pure"
 local len
 local codepoint
 local codes
+local offset
 if arg[1] == "native" then
   len = utf8.len
   codes = utf8.codes
   codepoint = utf8.codepoint
+  offset = utf8.offset
 else
   len = pure.len
   codes = pure.codes
   codepoint = pure.codepoint
+  offset = pure.offset
 end
 
 local function print_result(result, ...)
@@ -101,5 +104,31 @@ print("--")
 for i = -1, -#utf8_char, -1 do
   io.write(i, "\t")
   print_result(pcall(codepoint, utf8_char, i))
+end
+
+print("--")
+print("?1", offset("", 0))
+print("?2", offset(utf8_char, 0))
+for i = 1, #utf8_char do
+  print(i, offset(utf8_char, 0, i))
+end
+
+print("--")
+for i = 1, #utf8_char do
+  io.write(i, "\t")
+  print_result(pcall(offset, utf8_char, 1, i))
+end
+
+os.exit(0)
+
+local n = len(utf8_char)
+
+print("--")
+for i = 1, n do
+  print(i, offset(utf8_char, i))
+end
+print("--")
+for i = -1, -n, -1 do
+  print(i, offset(utf8_char, i))
 end
 

@@ -31,10 +31,8 @@ local codepoint = {
 }
 
 result(pcall(char))
-print "?"
 result(pcall(char, unpack(codepoint)))
 result(pcall(char, -1))
 result(pcall(char, 0x110000))
 result(pcall(char, nil))
-result(pcall(char, "21"))
 print(string.format("%q", charpattern))
