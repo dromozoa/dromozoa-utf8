@@ -16,69 +16,38 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 --- Lua 5.3 compatible pure-Lua UTF-8 implementation.
--- @module dromozoa.utf8.purelua
+-- @module dromozoa.utf8.pure
 
-local function length(s, i, j)
-  if i == nil then
-    i = 1
-  elseif i < 0 then
-    i = #s + 1 + i
-  end
-  if i < 1 or #s + 1 < i then
-    error "bad argument #2"
-  end
-  if j == nil then
-    j = #s
-  elseif j < 0 then
-    j = #s + 1 + j
-  end
-  local result = 0
-  while i <= j do
-    local a, b, c, d = s:byte(i, i + 3)
-    if a == nil then
-      return nil, i
-    elseif a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a then
-      if a <= 0xDF then
-        if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        i = i + 2
-      elseif a <= 0xEF then
-        if a <= 0xEC then
-          if a == 0xE0 then
-            if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        else
-          if a == 0xED then
-            if b == nil or b < 0x80 or 0x9F < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        i = i + 3
-      elseif a <= 0xF4 then
-        if a == 0xF0 then
-          if b == nil or b < 0x90 or 0xBF < b then return nil, i end
-        elseif a <= 0xF3 then
-          if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        else
-          if b == nil or b < 0x80 or 0x8F < b then return nil, i end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-        i = i + 4
-      else
-        return nil, i
-      end
-    else
-      return nil, i
+local char = string.char
+local floor = math.floor
+local unpack = table.unpack or unpack
+
+local function encode(a)
+  if 0x00 <= a then
+    if a <= 0x7F then
+      return char(a)
+    elseif a <= 0x07FF then
+      local b = a % 0x40
+      local a = floor(a / 0x40)
+      return char(a + 0xC0, b + 0x80)
+    elseif a <= 0xFFFF then
+      if 0xD800 <= a and a <= 0xDFFF then return nil end
+      local c = a % 0x40
+      local a = floor(a / 0x40)
+      local b = a % 0x40
+      local a = floor(a / 0x40)
+      return char(a + 0xE0, b + 0x80, c + 0x80)
+    elseif a <= 0x10FFFF then
+      local d = a % 0x40
+      local a = floor(a / 0x40)
+      local c = a % 0x40
+      local a = floor(a / 0x40)
+      local b = a % 0x40
+      local a = floor(a / 0x40)
+      return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
     end
-    result = result + 1
   end
-  return result
+  return nil
 end
 
 local function decode(s, i)
@@ -132,36 +101,6 @@ local function decode(s, i)
   return nil
 end
 
-local function encode(a)
-  if 0x00 <= a then
-    if a <= 0x7F then
-      return string.char(a)
-    elseif a <= 0x07FF then
-      local b = a % 0x40
-      local a = math.floor(a / 0x40)
-      return string.char(a + 0xC0, b + 0x80)
-    elseif a <= 0xFFFF then
-      if 0xD800 <= a and a <= 0xDFFF then return nil end
-      local c = a % 0x40
-      local a = math.floor(a / 0x40)
-      local b = a % 0x40
-      local a = math.floor(a / 0x40)
-      return string.char(a + 0xE0, b + 0x80, c + 0x80)
-    elseif a <= 0x10FFFF then
-      local d = a % 0x40
-      local a = math.floor(a / 0x40)
-      local c = a % 0x40
-      local a = math.floor(a / 0x40)
-      local b = a % 0x40
-      local a = math.floor(a / 0x40)
-      return string.char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
-    end
-  end
-  return nil
-end
-
-local unpack = table.unpack or unpack
-
 local function char(...)
   local n = select("#", ...)
   local result = {}
@@ -199,14 +138,19 @@ local function codepoint(s, i, j)
   elseif i < 0 then
     i = #s + 1 + i
   end
-  if i < 1 or #s < i then
+  if i < 1 then
     error "bad argument #2"
   end
+
   if j == nil then
     j = i
-  elseif i < 0 then
+  elseif j < 0 then
     j = #s + 1 + j
   end
+  if #s < j then
+    error "bad argument #3"
+  end
+
   local result = {}
   while i <= j do
     i, result[#result + 1] = decode(s, i)
@@ -214,7 +158,75 @@ local function codepoint(s, i, j)
       error "invalid UTF-8 code"
     end
   end
-  return unpack(result)
+  return table_unpack(result)
+end
+
+local function len(s, i, j)
+  if i == nil then
+    i = 1
+  elseif i < 0 then
+    i = #s + 1 + i
+  end
+  if i < 1 or #s + 1 < i then
+    error "bad argument #2"
+  end
+
+  if j == nil then
+    j = #s
+  elseif j < 0 then
+    j = #s + 1 + j
+  end
+  if #s < j then
+    error "bad argument #3"
+  end
+
+  local result = 0
+  while i <= j do
+    local a, b, c, d = s:byte(i, i + 3)
+    if a == nil then
+      return nil, i
+    elseif a <= 0x7F then
+      i = i + 1
+    elseif 0xC2 <= a then
+      if a <= 0xDF then
+        if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+        i = i + 2
+      elseif a <= 0xEF then
+        if a <= 0xEC then
+          if a == 0xE0 then
+            if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
+          else
+            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+          end
+        else
+          if a == 0xED then
+            if b == nil or b < 0x80 or 0x9F < b then return nil, i end
+          else
+            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+          end
+        end
+        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
+        i = i + 3
+      elseif a <= 0xF4 then
+        if a == 0xF0 then
+          if b == nil or b < 0x90 or 0xBF < b then return nil, i end
+        elseif a <= 0xF3 then
+          if b == nil or b < 0x80 or 0xBF < b then return nil, i end
+        else
+          if b == nil or b < 0x80 or 0x8F < b then return nil, i end
+        end
+        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
+        if d == nil or d < 0x80 or 0xBF < d then return nil, i end
+        i = i + 4
+      else
+        return nil, i
+      end
+    else
+      return nil, i
+    end
+    result = result + 1
+  end
+  return result
 end
 
 local function offset(s, n, i)
@@ -235,32 +247,32 @@ local function offset(s, n, i)
     error "bad argument #3"
   end
 
-  local b = s:byte(i)
+  local a = s:byte(i)
   if n == 0 then
-    while b ~= nil and 0x80 <= b and b <= 0xBF do
+    while a ~= nil and 0x80 <= a and a <= 0xBF do
       i = i - 1
-      b = s:byte(i)
+      a = s:byte(i)
     end
   else
-    if b ~= nil and 0x80 <= b and b <= 0xBF then
+    if a ~= nil and 0x80 <= a and a <= 0xBF then
       error "initial position is a continuation byte"
     end
     if n < 0 then
       while n < 0 do
         repeat
           i = i - 1
-          b = s:byte(i)
-          if b == nil then return nil end
-        until b < 0x80 or 0xBF < b
+          a = s:byte(i)
+          if a == nil then return nil end
+        until a < 0x80 or 0xBF < a
         n = n + 1
       end
     else
       while n > 1 do
-        if b == nil then return nil end
+        if a == nil then return nil end
         repeat
           i = i + 1
-          b = s:byte(i)
-        until b == nil or b < 0x80 or 0xBF < b
+          a = s:byte(i)
+        until a == nil or a < 0x80 or 0xBF < a
         n = n - 1
       end
     end
@@ -274,6 +286,6 @@ return {
   charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
-  len = length;
+  len = len;
   offset = offset;
 }

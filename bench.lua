@@ -39,7 +39,6 @@ end
 local n = 100000
 -- local n = 1
 
---[[
 local name = { "native", "pure", "decode1", "decode2", "decode3", "decode4", "decode5" }
 for j = 1, #name do
   local x = 0
@@ -65,7 +64,6 @@ for i = 1, #codes do
   local t2 = time()
   print(difftime(t2, t1), x)
 end
-]]
 
 local char = { utf8.char, pure.char }
 for i = 1, #char do
