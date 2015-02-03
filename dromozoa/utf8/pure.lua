@@ -34,7 +34,7 @@ local function length(s, i, j)
   end
   local result = 0
   while i <= j do
-    local a, b, c, d = string.byte(s, i, i + 3)
+    local a, b, c, d = s:byte(i, i + 3)
     if a == nil then
       return nil, i
     elseif a <= 0x7F then
@@ -220,62 +220,52 @@ end
 local function offset(s, n, i)
   if n == nil then
     error "bad argument #2"
-  elseif n == 0 then
-    if i == nil then
+  end
+
+  if i == nil then
+    if n < 0 then
+      i = #s + 1
+    else
       i = 1
-    elseif i < 0 then
-      i = #s + 1 + i
     end
-    assert(1 <= i and i <= #s + 1)
-    local b = s:byte(i)
+  elseif i < 0 then
+    i = #s + 1 + i
+  end
+  if i < 1 or #s + 1 < i then
+    error "bad argument #3"
+  end
+
+  local b = s:byte(i)
+  if n == 0 then
     while b ~= nil and 0x80 <= b and b <= 0xBF do
       i = i - 1
       b = s:byte(i)
     end
-    return i
-  elseif n > 0 then
-    if i == nil then
-      i = 1
-    elseif i < 0 then
-      i = #s + 1 + i
-    end
-    assert(1 <= i and i <= #s + 1)
-    local b = s:byte(i)
-    if b ~= nil and 0x80 <= b and b <= 0xBF then
-      error "initial position is a continuation byte"
-    end
-    while n > 1 do
-      if b == nil then
-        return nil
-      end
-      repeat
-        i = i + 1
-        b = s:byte(i)
-      until b == nil or b < 0x80 or 0xBF < b
-      n = n - 1
-    end
-    return i
   else
-    if i == nil then
-      i = #s + 1
-    elseif i < 0 then
-      i = #s + 1 + i
-    end
-    assert(1 <= i and i <= #s + 1)
-    local b = s:byte(i)
     if b ~= nil and 0x80 <= b and b <= 0xBF then
       error "initial position is a continuation byte"
     end
-    while n < 0 do
-      repeat
-        i = i - 1
-        local b = s:byte(i)
+    if n < 0 then
+      while n < 0 do
+        repeat
+          i = i - 1
+          b = s:byte(i)
+          if b == nil then return nil end
+        until b < 0x80 or 0xBF < b
+        n = n + 1
+      end
+    else
+      while n > 1 do
         if b == nil then return nil end
-      until b < 0x80 or 0xBF < b
-      n = n + 1
+        repeat
+          i = i + 1
+          b = s:byte(i)
+        until b == nil or b < 0x80 or 0xBF < b
+        n = n - 1
+      end
     end
-    return i
   end
+  return i
 end
 
 --- @export

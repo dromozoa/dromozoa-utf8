@@ -10,7 +10,12 @@ local function concat(list, sep)
   return table.concat(result, sep)
 end
 
-local function compare(name, ...)
+local pattern = {
+  "(bad argument #%d+)";
+  "(initial position is a continuation byte)";
+}
+
+local function test(name, ...)
   io.write(name, "(", concat({...}, ","), ")\n")
   local result1 = { pcall(utf8[name], ...) }
   local result2 = { pcall(pure[name], ...) }
@@ -24,28 +29,39 @@ local function compare(name, ...)
     end
   else
     assert(not result2[1])
+    local p
+    for i = 1, #pattern do
+      p = result1[2]:match(pattern[i])
+      if p ~= nil then
+        assert(result2[2]:find(p, 1, false))
+        break
+      end
+    end
+    assert(p ~= nil)
   end
 end
 
+test("offset", "")
 for i = -1, 2 do
-  compare("offset", "", i)
+  test("offset", "", i)
   for j = -1, 2 do
-    compare("offset", "", i, j)
+    test("offset", "", i, j)
   end
 end
 
+test("offset", "foo")
 for i = -4, 5 do
-  compare("offset", "foo", i)
+  test("offset", "foo", i)
   for j = -4, 5 do
-    compare("offset", "foo", i, j)
+    test("offset", "foo", i, j)
   end
 end
 
-
+test("offset", "ほえ")
 for i = -3, 4 do
-  compare("offset", "ほえ", i)
+  test("offset", "ほえ", i)
   for j = -7, 8 do
-    compare("offset", "ほえ", i, j)
+    test("offset", "ほえ", i, j)
   end
 end
 
