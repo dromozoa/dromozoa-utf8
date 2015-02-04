@@ -17,6 +17,12 @@ local test_pattern = {
   "(invalid UTF%-8 code)";
 }
 
+local test_count = 0
+local test_exp
+if arg[1] then
+  test_exp = assert(loadfile(arg[1]))()
+end
+
 local function test_driver(M, name, ...)
   if name == "charpattern" then
     return { true, M.charpattern }
@@ -34,14 +40,18 @@ local function test_driver(M, name, ...)
   end
 end
 
-local test_count = 0
-
 local function test(name, ...)
-  io.write(name, "(", concat({...}, ","), ")\n")
-  local result1 = test_driver(utf8, name, ...)
+  io.stderr:write(name, "(", concat({...}, ","), ")\n")
+  local result1
+  test_count = test_count + 1
+  if test_exp then
+    result1 = test_exp[test_count]
+  else
+    result1 = test_driver(utf8, name, ...)
+  end
   local result2 = test_driver(pure, name, ...)
-  io.write("  [1]={", concat(result1, ","), "}\n")
-  io.write("  [2]={", concat(result2, ","), "}\n")
+  io.stderr:write("  [1]={", concat(result1, ","), "}\n")
+  io.stderr:write("  [2]={", concat(result2, ","), "}\n")
   if result1[1] then
     assert(result2[1])
     assert(#result1 == #result2)
@@ -60,7 +70,24 @@ local function test(name, ...)
     end
     assert(p ~= nil)
   end
-  test_count = test_count + 1
+  io.write("  {")
+  for i = 1, #result1 do
+    local v = result1[i]
+    local t = type(v)
+    if t == "nil" then
+      io.write("nil")
+    elseif t == "number" then
+      io.write(v)
+    elseif t == "string" then
+      io.write(string.format("%q", v))
+    elseif t == "boolean" then
+      io.write(v and "true" or "false")
+    else
+      error("invalie value " .. t)
+    end
+    io.write(";")
+  end
+  io.write("};\n")
 end
 
 local data = {
@@ -89,6 +116,8 @@ local data = {
     utf8_char = string.char(0xEF, 0xBB, 0xBF, 0xF0, 0xA3, 0x8E, 0xB4);
   };
 }
+
+io.write("return {\n")
 
 test("charpattern")
 
@@ -142,4 +171,5 @@ for i = 1, #data do
   end
 end
 
-io.write(test_count, " tests ok\n")
+io.write("}\n")
+
