@@ -1,8 +1,8 @@
 package = "dromozoa-utf8"
-version = "0.0.0-1"
+version = "1.0-1"
 source = {
   url = "https://github.com/dromozoa/dromozoa-utf8/dummy";
-  file = "dromozoa-lua-0.0.tar.gz";
+  file = "dromozoa-utf8-1.0.tar.gz";
 }
 description = {
   summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation.";
