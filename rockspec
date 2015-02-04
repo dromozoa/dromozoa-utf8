@@ -1,0 +1,19 @@
+package = "dromozoa-utf8"
+version = "0.0.0-1"
+source = {
+  url = "https://github.com/dromozoa/dromozoa-utf8/dummy";
+  file = "dromozoa-lua-0.0.tar.gz";
+}
+description = {
+  summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation.";
+  license = "GPLv3";
+  homepage = "https://github.com/dromozoa/dromozoa-utf8/";
+  maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
+}
+build = {
+  type = "builtin";
+  modules = {
+    ["dromozoa.utf8"] = "dromozoa/utf8.lua";
+    ["dromozoa.utf8.pure"] = "dromozoa/utf8/pure.lua";
+  };
+}
