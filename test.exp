@@ -1,17 +1,18 @@
+-- This file was auto-generated.
 return {
   {true;"[\0-\127Â-ô][€-¿]*";};
   {false;"bad argument #1 to 'utf8.char' (value out of range)";};
   {false;"bad argument #2 to 'utf8.char' (value out of range)";};
   {false;"bad argument #1 to 'utf8.char' (value out of range)";};
   {false;"bad argument #2 to 'utf8.char' (value out of range)";};
-  {false;"test.lua:32: invalid UTF-8 code";};
-  {false;"test.lua:32: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
   {true;};
-  {false;"test.lua:32: invalid UTF-8 code";};
-  {false;"test.lua:32: invalid UTF-8 code";};
-  {false;"test.lua:32: invalid UTF-8 code";};
-  {false;"test.lua:32: invalid UTF-8 code";};
-  {false;"test.lua:32: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
+  {false;"test.lua:49: invalid UTF-8 code";};
   {true;"";};
   {true;};
   {false;"bad argument #3 to 'utf8.codepoint' (out of range)";};

@@ -16,35 +16,38 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local char = string.char
+local concat = table.concat
 local floor = math.floor
+local select = select
 local unpack = table.unpack or unpack
 
 local function encode(a)
-  if 0x00 <= a then
-    if a <= 0x7F then
-      return char(a)
-    elseif a <= 0x07FF then
-      local b = a % 0x40
-      local a = floor(a / 0x40)
-      return char(a + 0xC0, b + 0x80)
-    elseif a <= 0xFFFF then
-      if 0xD800 <= a and a <= 0xDFFF then return nil end
-      local c = a % 0x40
-      local a = floor(a / 0x40)
-      local b = a % 0x40
-      local a = floor(a / 0x40)
-      return char(a + 0xE0, b + 0x80, c + 0x80)
-    elseif a <= 0x10FFFF then
-      local d = a % 0x40
-      local a = floor(a / 0x40)
-      local c = a % 0x40
-      local a = floor(a / 0x40)
-      local b = a % 0x40
-      local a = floor(a / 0x40)
-      return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
-    end
+  if a < 0 then
+    return nil
+  elseif a <= 0x7F then
+    return char(a)
+  elseif a <= 0x07FF then
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xC0, b + 0x80)
+  elseif a <= 0xFFFF then
+    if 0xD800 <= a and a <= 0xDFFF then return nil end
+    local c = a % 0x40
+    local a = floor(a / 0x40)
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xE0, b + 0x80, c + 0x80)
+  elseif a <= 0x10FFFF then
+    local d = a % 0x40
+    local a = floor(a / 0x40)
+    local c = a % 0x40
+    local a = floor(a / 0x40)
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+  else
+    return nil
   end
-  return nil
 end
 
 local function decode(s, i)
@@ -99,16 +102,15 @@ local function decode(s, i)
 end
 
 local function char(...)
-  local n = select("#", ...)
   local result = {}
-  for i = 1, n do
+  for i = 1, select("#", ...) do
     local a = encode(select(i, ...))
     if a == nil then
       error("bad argument #" .. i)
     end
     result[#result + 1] = a
   end
-  return table.concat(result)
+  return concat(result)
 end
 
 local function codes(s)
@@ -132,11 +134,13 @@ end
 local function codepoint(s, i, j)
   if i == nil then
     i = 1
-  elseif i < 0 then
-    i = #s + 1 + i
-  end
-  if i < 1 then
-    error "bad argument #2"
+  else
+    if i < 0 then
+      i = #s + 1 + i
+    end
+    if i < 1 then
+      error "bad argument #2"
+    end
   end
 
   if j == nil then
@@ -161,20 +165,24 @@ end
 local function len(s, i, j)
   if i == nil then
     i = 1
-  elseif i < 0 then
-    i = #s + 1 + i
-  end
-  if i < 1 or #s + 1 < i then
-    error "bad argument #2"
+  else
+    if i < 0 then
+      i = #s + 1 + i
+    end
+    if i < 1 or #s + 1 < i then
+      error "bad argument #2"
+    end
   end
 
   if j == nil then
     j = #s
-  elseif j < 0 then
-    j = #s + 1 + j
-  end
-  if #s < j then
-    error "bad argument #3"
+  else
+    if j < 0 then
+      j = #s + 1 + j
+    end
+    if #s < j then
+      error "bad argument #3"
+    end
   end
 
   local result = 0
@@ -237,11 +245,13 @@ local function offset(s, n, i)
     else
       i = 1
     end
-  elseif i < 0 then
-    i = #s + 1 + i
-  end
-  if i < 1 or #s + 1 < i then
-    error "bad argument #3"
+  else
+    if i < 0 then
+      i = #s + 1 + i
+    end
+    if i < 1 or #s + 1 < i then
+      error "bad argument #3"
+    end
   end
 
   local a = s:byte(i)
@@ -284,4 +294,5 @@ return {
   codepoint = codepoint;
   len = len;
   offset = offset;
+  version = function () return "1.1" end;
 }
