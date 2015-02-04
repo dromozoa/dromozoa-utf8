@@ -1,7 +1,7 @@
 package = "dromozoa-utf8"
 version = "1.0-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-utf8/dummy";
+  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.0.tar.gz";
   file = "dromozoa-utf8-1.0.tar.gz";
 }
 description = {
