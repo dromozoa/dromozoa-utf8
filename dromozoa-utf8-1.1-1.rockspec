@@ -6,7 +6,7 @@ source = {
 }
 description = {
   summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation.";
-  license = "GPLv3";
+  license = "GPL-3";
   homepage = "https://github.com/dromozoa/dromozoa-utf8/";
   maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
 }
