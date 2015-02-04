@@ -22,35 +22,32 @@ local select = select
 local unpack = table.unpack or unpack
 
 local function encode(a)
-  if 0x00 <= a then
-    if a <= 0x07FF then
-      if a <= 0x7F then
-        return char(a)
-      else
-        local b = a % 0x40
-        local a = floor(a / 0x40)
-        return char(a + 0xC0, b + 0x80)
-      end
-    elseif a <= 0x10FFFF then
-      if a <= 0xFFFF then
-        if 0xD800 <= a and a <= 0xDFFF then return nil end
-        local c = a % 0x40
-        local a = floor(a / 0x40)
-        local b = a % 0x40
-        local a = floor(a / 0x40)
-        return char(a + 0xE0, b + 0x80, c + 0x80)
-      else
-        local d = a % 0x40
-        local a = floor(a / 0x40)
-        local c = a % 0x40
-        local a = floor(a / 0x40)
-        local b = a % 0x40
-        local a = floor(a / 0x40)
-        return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
-      end
-    end
+  if a < 0 then
+    return nil
+  elseif a <= 0x7F then
+    return char(a)
+  elseif a <= 0x07FF then
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xC0, b + 0x80)
+  elseif a <= 0xFFFF then
+    if 0xD800 <= a and a <= 0xDFFF then return nil end
+    local c = a % 0x40
+    local a = floor(a / 0x40)
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xE0, b + 0x80, c + 0x80)
+  elseif a <= 0x10FFFF then
+    local d = a % 0x40
+    local a = floor(a / 0x40)
+    local c = a % 0x40
+    local a = floor(a / 0x40)
+    local b = a % 0x40
+    local a = floor(a / 0x40)
+    return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+  else
+    return nil
   end
-  return nil
 end
 
 local function decode(s, i)
