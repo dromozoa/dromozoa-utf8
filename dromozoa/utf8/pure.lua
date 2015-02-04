@@ -105,11 +105,11 @@ local function char(...)
   local n = select("#", ...)
   local result = {}
   for i = 1, n do
-    local s = encode(select(i, ...))
-    if s == nil then
-      error "bad argument #1"
+    local a = encode(select(i, ...))
+    if a == nil then
+      error("bad argument #" .. i)
     end
-    result[#result + 1] = s
+    result[#result + 1] = a
   end
   return table.concat(result)
 end
@@ -158,7 +158,7 @@ local function codepoint(s, i, j)
       error "invalid UTF-8 code"
     end
   end
-  return table_unpack(result)
+  return unpack(result)
 end
 
 local function len(s, i, j)

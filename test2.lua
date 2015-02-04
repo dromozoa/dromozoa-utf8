@@ -1,7 +1,7 @@
 #! /usr/bin/env lua
 
-local unpack = table.unpack or unpack
 local pure = require "dromozoa.utf8.pure"
+local unpack = table.unpack or unpack
 
 local function concat(list, sep)
   local result = {}
@@ -11,16 +11,35 @@ local function concat(list, sep)
   return table.concat(result, sep)
 end
 
-local pattern = {
+local test_pattern = {
   "(bad argument #%d+)";
   "(initial position is a continuation byte)";
   "(invalid UTF%-8 code)";
 }
 
+local function test_driver(M, name, ...)
+  if name == "charpattern" then
+    return { true, M.charpattern }
+  elseif name == "codes" then
+    return { pcall(function (...)
+      local result = {}
+      for p, c in M.codes(...) do
+        result[#result + 1] = p
+        result[#result + 2] = c
+      end
+      unpack(result)
+    end, ...) }
+  else
+    return { pcall(M[name], ...) }
+  end
+end
+
+local test_count = 0
+
 local function test(name, ...)
   io.write(name, "(", concat({...}, ","), ")\n")
-  local result1 = { pcall(utf8[name], ...) }
-  local result2 = { pcall(pure[name], ...) }
+  local result1 = test_driver(utf8, name, ...)
+  local result2 = test_driver(pure, name, ...)
   io.write("  [1]={", concat(result1, ","), "}\n")
   io.write("  [2]={", concat(result2, ","), "}\n")
   if result1[1] then
@@ -32,8 +51,8 @@ local function test(name, ...)
   else
     assert(not result2[1])
     local p
-    for i = 1, #pattern do
-      p = result1[2]:match(pattern[i])
+    for i = 1, #test_pattern do
+      p = result1[2]:match(test_pattern[i])
       if p ~= nil then
         assert(result2[2]:find(p, 1, true))
         break
@@ -41,26 +60,7 @@ local function test(name, ...)
     end
     assert(p ~= nil)
   end
-end
-
-local function test_codes(...)
-  io.write("codes(", concat({...}, ","), ")\n")
-  local result1 = {}
-  for p, c in utf8.codes(...) do
-    result1[#result1 + 1] = p
-    result1[#result1 + 1] = c
-  end
-  io.write("  [1]={", concat(result1, ","), "}\n")
-  local result2 = {}
-  for p, c in pure.codes(...) do
-    result2[#result2 + 1] = p
-    result2[#result2 + 1] = c
-  end
-  io.write("  [2]={", concat(result1, ","), "}\n")
-  assert(#result1 == #result2)
-  for i = 1, #result1 do
-    assert(result1[i] == result2[i])
-  end
+  test_count = test_count + 1
 end
 
 local data = {
@@ -90,7 +90,21 @@ local data = {
   };
 }
 
-assert(utf8.charpattern == pure.charpattern)
+test("charpattern")
+
+test("char", -1)
+test("char", 0, -1)
+test("char", 0x110000)
+test("char", 0, 0x110000)
+
+test("codes", string.char(0xE2))
+test("codes", string.char(0xE2, 0x89))
+test("codes", string.char(0xE2, 0x89, 0xA2))
+test("codes", string.char(0xE2))
+test("codes", string.char(0xE2, 0x00))
+test("codes", string.char(0xE2, 0x89, 0x00))
+test("codes", string.char(0xE2, 0xFF))
+test("codes", string.char(0xE2, 0x89, 0xFF))
 
 for i = 1, #data do
   local codepoint = data[i].codepoint
@@ -101,7 +115,7 @@ for i = 1, #data do
 
   test("char", unpack(codepoint))
 
-  test_codes(utf8_char)
+  test("codes", utf8_char)
 
   test("codepoint", utf8_char)
   for j = -n, n do
@@ -127,3 +141,5 @@ for i = 1, #data do
     end
   end
 end
+
+io.write(test_count, " tests ok\n")

@@ -80,7 +80,7 @@ if utf8 then
 
   test_codepoint(utf8_char)
   test_codepoint(utf8_char, 1)
-  test_codepoint(utf8_char, "1")
+  -- test_codepoint(utf8_char, "1")
   for i = 1, #codepoint do
     test_codepoint(utf8_char, 1, i)
   end
@@ -88,7 +88,7 @@ if utf8 then
     test_codepoint(utf8_char, 1, -i)
   end
   test_codepoint(utf8_char, -1)
-  test_codepoint(utf8_char, "-1")
+  -- test_codepoint(utf8_char, "-1")
   for i = 1, #codepoint do
     test_codepoint(utf8_char, 1, i)
   end
