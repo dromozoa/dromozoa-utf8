@@ -15,8 +15,4 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local utf8 = utf8
-
-if utf8 then
-else
-end
+return utf8 or require "dromozoa.utf8.pure"
