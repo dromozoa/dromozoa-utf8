@@ -15,9 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
---- Lua 5.3 compatible pure-Lua UTF-8 implementation.
--- @module dromozoa.utf8.pure
-
 local char = string.char
 local floor = math.floor
 local unpack = table.unpack or unpack
@@ -280,7 +277,6 @@ local function offset(s, n, i)
   return i
 end
 
---- @export
 return {
   char = char;
   charpattern = "[\000-\127\194-\244][\128-\191]*";
