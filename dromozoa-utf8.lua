@@ -299,7 +299,7 @@ return {
   codepoint = codepoint;
   len = len;
   offset = offset;
-  version = function () return "1.1" end;
+  version = function () return "1.2" end;
 }
 -- ===========================================================================
 end)()
