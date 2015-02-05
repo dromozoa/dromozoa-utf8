@@ -1,5 +1,5 @@
 -- Copyright (C) 2015 Tomoyuki Fujimori <moyu@dromozoa.com>
-
+--
 -- This file is part of dromozoa-utf8.
 --
 -- dromozoa-utf8 is free software: you can redistribute it and/or modify
