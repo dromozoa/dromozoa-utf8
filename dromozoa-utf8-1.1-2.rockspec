@@ -5,7 +5,7 @@ source = {
   file = "dromozoa-utf8-1.1.tar.gz";
 }
 description = {
-  summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation.";
+  summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation";
   license = "GPL-3";
   homepage = "https://github.com/dromozoa/dromozoa-utf8/";
   maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
