@@ -1,5 +1,5 @@
 -- This file was auto-generated.
-package.loaded["dromozoa/utf8/pure.lua"] = (function ()
+package.loaded["dromozoa.utf8.pure"] = (function ()
 -- ===========================================================================
 -- dromozoa.utf8.pure
 -- ===========================================================================
@@ -303,7 +303,7 @@ return {
 }
 -- ===========================================================================
 end)()
-package.loaded["dromozoa/utf8.lua"] = (function ()
+package.loaded["dromozoa.utf8"] = (function ()
 -- ===========================================================================
 -- dromozoa.utf8
 -- ===========================================================================
@@ -324,6 +324,10 @@ package.loaded["dromozoa/utf8.lua"] = (function ()
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-return utf8 or require "dromozoa.utf8.pure"
+if utf8 then
+  return utf8
+else
+  return require "dromozoa.utf8.pure"
+end
 -- ===========================================================================
 end)()
