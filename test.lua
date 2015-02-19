@@ -1,5 +1,3 @@
-#! /usr/bin/env lua
-
 -- Copyright (C) 2015 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
@@ -40,20 +38,20 @@ if arg[1] then
   test_exp = assert(loadfile(arg[1]))()
 end
 
-local function test_driver(M, name, ...)
+local function test_driver(module, name, ...)
   if name == "charpattern" then
-    return { true, M.charpattern }
+    return { true, module.charpattern }
   elseif name == "codes" then
     return { pcall(function (...)
       local result = {}
-      for p, c in M.codes(...) do
+      for p, c in module.codes(...) do
         result[#result + 1] = p
         result[#result + 2] = c
       end
       unpack(result)
     end, ...) }
   else
-    return { pcall(M[name], ...) }
+    return { pcall(module[name], ...) }
   end
 end
 
