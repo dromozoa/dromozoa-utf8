@@ -15,8 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
+local pure = require "dromozoa.utf8.pure"
+
 if utf8 then
   return utf8
 else
-  return require "dromozoa.utf8.pure"
+  return pure
 end
