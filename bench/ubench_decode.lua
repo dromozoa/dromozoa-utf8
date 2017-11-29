@@ -16,6 +16,7 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local decode = require "experimental.decode"
+local decode2 = require "experimental.decode2"
 
 local utf8_char = table.concat {
   string.char(0x41, 0xE2, 0x89, 0xA2, 0xCE, 0x91, 0x2E);
@@ -31,7 +32,7 @@ local codepoint = {
   0xFEFF, 0x0233B4,
 }
 
-local n = 1
+local n = 100
 local data = utf8_char:rep(n)
 
 local sum = 0
@@ -54,15 +55,15 @@ local function run(f, source)
   until false
 end
 
-local _, _, result = run(decode, data)
-assert(result == sum)
-
 local algorithms = {
   decode;
+  decode2;
 }
 
 local benchmarks = {}
 for i = 1, #algorithms do
+  local _, _, result = run(algorithms[i], data)
+  assert(result == sum)
   benchmarks[("%02d"):format(i)] = { run, algorithms[i], data }
 end
 return benchmarks
