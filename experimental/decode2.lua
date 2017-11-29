@@ -74,7 +74,7 @@ for i = 0x00, 0xFF do
   elseif i <= 0xEF then
     map1[i] = i % 0x10 * 0x1000
   elseif i <= 0xF4 then
-    map1[i] = i % 0x08 * 0x400000
+    map1[i] = i % 0x08 * 0x40000
   else
     map1[i] = false
   end
