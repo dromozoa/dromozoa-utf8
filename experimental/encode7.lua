@@ -18,32 +18,60 @@
 local char = string.char
 
 local T = {}
+for i = 0x0000, 0x003F do
+  T[i] = char(i + 0x80)
+end
+
+local T1 = {}
 for i = 0x0000, 0x007F do
-  T[i] = char(i)
+  T1[i] = char(i)
 end
 for i = 0x0080, 0x07FF do
   local b = i % 0x40
   local a = (i - b) / 0x40
-  T[i] = char(a + 0xC0, b + 0x80)
+  T1[i] = char(a + 0xC0, b + 0x80)
+end
+
+local T2 = {}
+for i = 0x0000, 0x03FF do
+  if i <= 0x001F or (0x0360 <= i and i <= 0x037F) then
+    T2[i] = false
+  else
+    local b = i % 0x40
+    local a = (i - b) / 0x40
+    T2[i] = char(a + 0xE0, b + 0x80)
+  end
+end
+
+local T3 = {}
+for i = 0x0000, 0x010F do
+  if i <= 0x000F then
+    T3[i] = false
+  else
+    local b = i % 0x40
+    local a = (i - b) / 0x40
+    T3[i] = char(a + 0xF0, b + 0x80)
+  end
 end
 
 return function (a)
   if a <= 0x07FF then
-    return T[a]
+    return T1[a]
   elseif a <= 0xFFFF then
-    if 0xD800 <= a and a <= 0xDFFF then return nil end
     local c = a % 0x40
     local a = (a - c) / 0x40
-    local b = a % 0x40
-    local a = (a - b) / 0x40
-    return char(a + 0xE0, b + 0x80, c + 0x80)
+    local v = T2[a]
+    if v then
+      return v .. T[c]
+    end
   elseif a <= 0x10FFFF then
     local d = a % 0x40
     local a = (a - d) / 0x40
     local c = a % 0x40
     local a = (a - c) / 0x40
-    local b = a % 0x40
-    local a = (a - b) / 0x40
-    return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+    local v = T3[a]
+    if v then
+      return v .. T[c] .. T[d]
+    end
   end
 end
