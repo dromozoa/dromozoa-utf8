@@ -74,7 +74,6 @@ local algorithms = {
   encode2;
   encode3;
   encode4;
-  encode5;
 }
 
 local benchmarks = {}
