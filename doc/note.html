@@ -119,6 +119,20 @@ UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 実験によれば、U+0001..U+07FFまでの区間を表にすると、消費メモリ量と速度のバランスがよいようだった。
 </div>
 
+<table>
+  <tr><th>符号位置</th><th>6bit分割</th><th>ビット列</th><th>上位12bit</th></tr>
+  <tr><td>0800</td><td>00 20 00</td><td>000000 100000 000000</td><td>0020</td></tr>
+  <tr><td>D800</td><td>0D 20 00</td><td>001101 100000 000000</td><td>0360</td></tr>
+  <tr><td>DFFF</td><td>0D 3F 3F</td><td>001101 111111 111111</td><td>037F</td></tr>
+  <tr><td>FFFF</td><td>0F 3F 3F</td><td>001111 111111 111111</td><td>03FF</td></tr>
+</table>
+
+<table>
+  <tr><th>符号位置</th><th>6bit分割</th><th>上位12bit</th></tr>
+  <tr><td>010000</td><td>00 10 00 00</td><td>0010</td></tr>
+  <tr><td>10FFFF</td><td>04 0F 3F 3F</td><td>010F</td></tr>
+</table>
+
 <h2>Luaのビット演算</h2>
 
 <table>
