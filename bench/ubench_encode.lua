@@ -20,6 +20,9 @@ local encode2 = require "experimental.encode2"
 local encode3 = require "experimental.encode3"
 local encode4 = require "experimental.encode4"
 local encode5 = require "experimental.encode5"
+local encode6 = require "experimental.encode6"
+local encode7 = require "experimental.encode7"
+local encode8 = require "experimental.encode8"
 
 local utf8_char = table.concat {
   string.char(
@@ -74,6 +77,10 @@ local algorithms = {
   encode2;
   encode3;
   encode4;
+  encode5;
+  encode6;
+  encode7;
+  encode8;
 }
 
 local benchmarks = {}
