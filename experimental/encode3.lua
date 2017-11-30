@@ -15,22 +15,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encode = require "experimental.encode"
-
 local char = string.char
 
-local T1 = {}
-local T2 = {}
-
-for i = 0x0000, 0x07FF do
-  T1[i] = encode(i)
+local T = {}
+for i = 0x0000, 0x007F do
+  T[i] = char(i)
+end
+for i = 0x0080, 0x07FF do
+  local b = i % 0x40
+  local a = (i - b) / 0x40
+  T[i] = char(a + 0xC0, b + 0x80)
 end
 
 return function (a)
-  if a < 0 then
-    return nil
-  elseif a <= 0x07FF then
-    return T1[a]
+  if a <= 0x07FF then
+    return T[a]
   elseif a <= 0xFFFF then
     if 0xD800 <= a and a <= 0xDFFF then return nil end
     local c = a % 0x40
@@ -46,7 +45,5 @@ return function (a)
     local b = a % 0x40
     local a = (a - b) / 0x40
     return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
-  else
-    return nil
   end
 end
