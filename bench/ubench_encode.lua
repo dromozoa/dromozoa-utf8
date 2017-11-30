@@ -15,10 +15,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local decode = require "experimental.decode"
-local decode2 = require "experimental.decode2"
-local decode3 = require "experimental.decode3"
-local decode4 = require "experimental.decode4"
+local encode = require "experimental.encode"
+local encode2 = require "experimental.encode2"
+local encode3 = require "experimental.encode3"
+local encode4 = require "experimental.encode4"
+local encode5 = require "experimental.encode5"
 
 local utf8_char = table.concat {
   string.char(
@@ -47,40 +48,40 @@ local codepoint = {
 }
 
 local n = 100
-local data = utf8_char:rep(n)
 
-local sum = 0
-for i = 1, #codepoint do
-  sum = sum + codepoint[i]
+local data = {}
+for i = 1, n do
+  for j = 1, #codepoint do
+    data[#data + 1] = codepoint[j]
+  end
 end
-sum = sum * n
+
+local length = #utf8_char * n
 
 local function run(f, source)
-  local i = 1
-  local code
   local result = 0
 
-  repeat
-    i, code = f(source, i)
-    if not i then
-      return f, source, result
-    end
-    result = result + code
-  until false
+  for i = 1, #data do
+    local s = f(data[i])
+    result = result + #s
+  end
+
+  return f, source, result
 end
 
 local algorithms = {
-  decode;
-  decode2;
-  decode3;
-  decode4;
+  encode;
+  encode2;
+  encode3;
+  encode4;
+  encode5;
 }
 
 local benchmarks = {}
 for i = 1, #algorithms do
   local _, _, result = run(algorithms[i], data)
   -- io.stderr:write(result, "\n")
-  assert(result == sum)
+  assert(result == length)
   benchmarks[("%02d"):format(i)] = { run, algorithms[i], data }
 end
 return benchmarks
