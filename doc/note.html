@@ -62,12 +62,11 @@ UTF8-4b = [\xF1-\xF3] [\x80-\xBF] [\x80-\xBF] [\x80-\xBF]
 UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 
 <div>
-まず、UTF8-3bとUTF8-3dはまとめられるので、第1バイトを8種類の範囲に分類できる。
-妥当でない領域も考慮すると、
+第1バイトだけに着目し、妥当でない領域も考慮すると、
 </div>
 
 <table>
-  <tr><th>1</th><th>N</th></tr>
+  <tr><th>第1バイト</th><th>長さ</th></tr>
   <tr><td>00..7F</td><td>1</td></tr>
   <tr><td>80..C1</td><td></td></tr>
   <tr><td>C2..DF</td><td>2</td></tr>
@@ -82,13 +81,12 @@ UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 </table>
 
 <div>
-また、第2バイト以降の範囲は6種類であることも判る。
-演算後の値をテーブルとして保持する場合、第2バイト以降の範囲は7種類に分けられる（次表）。
-テーブルは第1バイトだけから決定できる。
+第2バイト以降の範囲は6種類である。
+演算後の値をテーブルとして保持する場合、第2バイト以降の範囲は7種類に分けられる（次表A,B,B2,B3,C,C2,C3）。
 </div>
 
 <table>
-  <tr><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+  <tr><th>第1バイト</th><th>第2バイト</th><th>第3バイト</th><th>第4バイト</th></tr>
   <tr><td>00..7F</td><td></td><td></td><td></td></tr>
   <tr><td>C2..DF</td><td>80..BF (A)</td><td></td><td></td></tr>
   <tr><td>E0</td><td>A0..BF (B2)</td><td>80..BF (A)</td><td></td></tr>
@@ -103,30 +101,46 @@ UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 <h2>UTF-8デコード</h2>
 
 <div>
-1112064種類の整数を引数としてUTF-8バイト列を返すような関数であり、メモリ量を考えなければ表を使って高速な実装が可能である。
+1112064種類の整数を引数としてUTF-8バイト列を返すような関数であり、メモリ量を考えなければ単純な表で実装が可能である。
 </div>
 
 <table>
-  <tr><th>first</th><th>last</th><th>count</th><th>size</th></tr>
-  <tr><td>U+0000</td><td>U+007F</td><td>1</td><td>128 (0x0080)</td></tr>
-  <tr><td>U+0080</td><td>U+07FF</td><td>2</td><td>1920 (0x0780)</td></tr>
-  <tr><td>U+0800</td><td>U+D7FF</td><td>3</td><td>53248 (0xD000)</td></tr>
-  <tr><td>U+E000</td><td>U+FFFF</td><td>3</td><td>8192 (0x2000)</td></tr>
-  <tr><td>U+010000</td><td>U+10FFFF</td><td>4</td><td>1048576 (0x010000)</td></tr>
+  <tr><th>開始符号位置</th><th>終了符号位置</th><th>長さ</th><th>数</th></tr>
+  <tr><td>0000</td><td>007F</td><td>1</td><td>128 (0x0080)</td></tr>
+  <tr><td>0080</td><td>07FF</td><td>2</td><td>1920 (0x0780)</td></tr>
+  <tr><td>0800</td><td>D7FF</td><td>3</td><td>53248 (0xD000)</td></tr>
+  <tr><td>E000</td><td>FFFF</td><td>3</td><td>8192 (0x2000)</td></tr>
+  <tr><td>010000</td><td>10FFFF</td><td>4</td><td>1048576 (0x010000)</td></tr>
 </table>
 
 <div>
 実験によれば、U+0001..U+07FFまでの区間を表にすると、消費メモリ量と速度のバランスがよいようだった。
+U+0800以降については、上位12bitで表を作ることで消費メモリ量と速度のバランスをとる。
 </div>
 
-<h2>Luaのビット演算</h2>
+<table>
+  <tr><th>長さ</th><th>符号位置</th><th>6bit分割</th><th>上位12bit</th></tr>
+  <tr><td>2</td><td>0800</td><td>00 20 00</td><td>0020</td></tr>
+  <tr><td>2</td><td>D800</td><td>0D 20 00</td><td>0360</td></tr>
+  <tr><td>2</td><td>DFFF</td><td>0D 3F 3F</td><td>037F</td></tr>
+  <tr><td>2</td><td>FFFF</td><td>0F 3F 3F</td><td>03FF</td></tr>
+  <tr><td>3</td><td>010000</td><td>00 10 00 00</td><td>0010</td></tr>
+  <tr><td>3</td><td>10FFFF</td><td>04 0F 3F 3F</td><td>010F</td></tr>
+</table>
+
+<h2>Luaと演算</h2>
+
+<ul>
+  <li>Lua 5.3のビット演算は演算子実装なので関数呼び出しよりも速い。</li>
+  <li>LuaJITは最適化を考慮する必要がある。</li>
+</ul>
 
 <table>
-  <tr><th>Version</th><th>Impl</th></tr>
+  <tr><th>バージョン</th><th>実装</th></tr>
   <tr><td>Lua 5.1</td><td></td></tr>
-  <tr><td>LuaJIT</td><td>function (bit)</td></tr>
-  <tr><td>Lua 5.2</td><td>function (bit32)</td></tr>
-  <tr><td>Lua 5.3</td><td>operator</td></tr>
+  <tr><td>LuaJIT</td><td>関数 (bit)</td></tr>
+  <tr><td>Lua 5.2</td><td>関数 (bit32)</td></tr>
+  <tr><td>Lua 5.3</td><td>演算子</td></tr>
 </table>
 
 <script type="text/x-mathjax-config">
