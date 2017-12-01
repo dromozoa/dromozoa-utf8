@@ -1,4 +1,4 @@
--- Copyright (C) 2015 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2015,2017 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -20,8 +20,10 @@ local concat = table.concat
 local floor = math.floor
 local select = select
 local unpack = table.unpack or unpack
+local decode = require "dromozoa.utf8.decode"
+local encode = require "dromozoa.utf8.encode"
 
-local function encode(a)
+local function _encode(a)
   if a < 0 then
     return nil
   elseif a <= 0x7F then
@@ -50,7 +52,7 @@ local function encode(a)
   end
 end
 
-local function decode(s, i)
+local function _decode(s, i)
   local a, b, c, d = s:byte(i, i + 3)
   if a == nil then
     return nil
