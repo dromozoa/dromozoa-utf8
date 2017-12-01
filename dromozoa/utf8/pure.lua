@@ -15,6 +15,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
+local count = require "dromozoa.utf8.count"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
 
@@ -213,6 +214,6 @@ return {
   charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
-  len = len;
+  len = count;
   offset = offset;
 }
