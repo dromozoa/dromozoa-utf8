@@ -16,7 +16,34 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 if _VERSION == "Lua 5.3" then
-  return require "dromozoa.utf8.impl.encode53"
-else
-  return require "dromozoa.utf8.encode_impl"
+  return require "dromozoa.utf8.encode53"
+end
+
+local encoder = require "dromozoa.utf8.encoder"
+
+local A = encoder.A
+local B = encoder.B
+local C = encoder.C
+local T = encoder.T
+
+return function (a)
+  if a <= 0x07FF then
+    return A[a]
+  elseif a <= 0xFFFF then
+    local c = a % 0x40
+    local a = (a - c) / 0x40
+    local v = B[a]
+    if v then
+      return v .. T[c]
+    end
+  elseif a <= 0x10FFFF then
+    local d = a % 0x40
+    local a = (a - d) / 0x40
+    local c = a % 0x40
+    local a = (a - c) / 0x40
+    local v = C[a]
+    if v then
+      return v .. T[c] .. T[d]
+    end
+  end
 end
