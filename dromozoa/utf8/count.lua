@@ -23,6 +23,15 @@ local S = counter.S
 local E = counter.E
 
 return function (s, i, j)
+  local t = type(s)
+  if t ~= "string" then
+    if t == "number" then
+      s = tostring(s)
+    else
+      error("bad argument #1 to 'dromozoa.utf8.count' (string expected, got " ..  t .. ")")
+    end
+  end
+
   local n = #s
 
   if not i then
