@@ -26,9 +26,6 @@ local encode8 = require "experimental.encode8"
 local encode9 = require "experimental.encode9"
 
 local encode = require "dromozoa.utf8.encode"
-if _VERSION == "Lua 5.3" then
-  encode = require "dromozoa.utf8.encode53"
-end
 
 local utf8_char = table.concat {
   string.char(
