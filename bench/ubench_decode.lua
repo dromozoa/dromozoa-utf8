@@ -15,11 +15,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local decode = require "experimental.decode"
+local decode1 = require "experimental.decode"
 local decode2 = require "experimental.decode2"
 local decode3 = require "experimental.decode3"
 local decode4 = require "experimental.decode4"
 local decode5 = require "experimental.decode5"
+local decode = require "dromozoa.utf8.decode"
 
 local utf8_char = table.concat {
   string.char(
@@ -71,11 +72,12 @@ local function run(f, source)
 end
 
 local algorithms = {
-  decode;
+  decode1;
   decode2;
   decode3;
   decode4;
   decode5;
+  decode;
 }
 
 local benchmarks = {}

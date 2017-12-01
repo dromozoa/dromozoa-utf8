@@ -15,7 +15,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encode = require "experimental.encode"
+local encode1 = require "experimental.encode"
 local encode2 = require "experimental.encode2"
 local encode3 = require "experimental.encode3"
 local encode4 = require "experimental.encode4"
@@ -24,6 +24,11 @@ local encode6 = require "experimental.encode6"
 local encode7 = require "experimental.encode7"
 local encode8 = require "experimental.encode8"
 local encode9 = require "experimental.encode9"
+
+local encode = require "dromozoa.utf8.encode"
+if _VERSION == "Lua 5.3" then
+  encode = require "dromozoa.utf8.encode53"
+end
 
 local utf8_char = table.concat {
   string.char(
@@ -74,7 +79,7 @@ local function run(f, source)
 end
 
 local algorithms = {
-  encode;
+  encode1;
   encode2;
   encode3;
   encode4;
@@ -83,6 +88,7 @@ local algorithms = {
   encode7;
   encode8;
   encode9;
+  encode;
 }
 
 local benchmarks = {}
