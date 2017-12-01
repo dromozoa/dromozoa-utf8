@@ -15,6 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
+if _VERSION == "Lua 5.3" then
+  return require "dromozoa.utf8.encode53"
+end
+
 local encoder = require "dromozoa.utf8.encoder"
 
 local A = encoder.A
