@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2015 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2015,2017 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -36,16 +36,13 @@ local codepoint = {
   0xFEFF, 0x0233B4,
 }
 
-local result, posix_sys_time = pcall(require, "posix.sys.time")
+local result, unix = pcall(require, "dromozoa.unix")
 if result then
-  time = posix_sys_time.gettimeofday
+  time = function ()
+    return unix.clock_gettime(unix.CLOCK_MONOTONIC_RAW)
+  end
   difftime = function (t2, t1)
-    local sec = t2.tv_sec - t1.tv_sec
-    if t2.tv_usec < t1.tv_usec then
-      return (sec - 1) + (1000000 + t2.tv_usec - t1.tv_usec) * 0.000001
-    else
-      return sec + (t2.tv_usec - t1.tv_usec) * 0.000001
-    end
+    return (t2 - t1):tonumber()
   end
 end
 
