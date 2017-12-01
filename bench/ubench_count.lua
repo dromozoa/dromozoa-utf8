@@ -15,11 +15,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local count = require "experimental.count"
+local count1 = require "experimental.count"
 local count2 = require "experimental.count2"
 local count3 = require "experimental.count3"
 local count4 = require "experimental.count4"
 local count5 = require "experimental.count5"
+local count = require "dromozoa.utf8.count"
 
 local utf8_char = table.concat {
   string.char(
@@ -57,11 +58,12 @@ local function run(f, source)
 end
 
 local algorithms = {
-  count;
+  count1;
   count2;
   count3;
   count4;
   count5;
+  count;
 }
 
 local benchmarks = {}
