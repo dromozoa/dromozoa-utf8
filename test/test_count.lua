@@ -17,10 +17,31 @@
 
 local pure = require "dromozoa.utf8.pure"
 
+local unpack = table.unpack or unpack
+
 local function call(f1, f2, ...)
-  print(...)
-  print("=>", pcall(f1, ...))
-  print("=>", pcall(f2, ...))
+  local result1 = { pcall(f1, ...) }
+  local result2 = { pcall(f2, ...) }
+  assert(result1[1] == result2[1])
+  assert(#result1 == #result2)
+  if result1[1] then
+    for i = 2, #result1 do
+      assert(result1[i] == result2[i])
+    end
+  else
+    local message1 = result1[2]
+    local message2 = result2[2]
+    local a, b = message1:match("bad argument #(%d+) .-%((.*)%)$")
+    if a then
+      local c, d = assert(message2:match("bad argument #(%d+) .-%((.*)%)$"))
+      assert(a == c)
+      assert(b == d)
+    else
+      print(...)
+      print("=>", unpack(result1))
+      print("=>", unpack(result2))
+    end
+  end
 end
 
 local function check(f1, f2, s)
@@ -42,5 +63,9 @@ call(f1, f2, true, 1, 1)
 call(f1, f2, {}, 1, 1)
 call(f1, f2, call, 1, 1)
 call(f1, f2, "foo", "1", "1")
--- check(f1, f2, "あいう")
+call(f1, f2, "foo", 1.5, 1.5)
+call(f1, f2, "foo", 1, "2.5")
+call(f1, f2, "foo", false, false)
+
+check(f1, f2, "あいう")
 

@@ -19,8 +19,12 @@ local count = require "dromozoa.utf8.count"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
 
-local concat = table.concat
 local select = select
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+
+local concat = table.concat
 local unpack = table.unpack or unpack
 
 local function char(...)
@@ -85,25 +89,59 @@ local function codepoint(s, i, j)
 end
 
 local function len(s, i, j)
+  local t = type(s)
+  if t ~= "string" then
+    if t == "number" then
+      s = tostring(s)
+    else
+      error("bad argument #1 (string expected, got " .. t .. ")")
+    end
+  end
+
+  local n = #s
+  local m = n + 1
+
   if i == nil then
     i = 1
   else
-    if i < 0 then
-      i = #s + 1 + i
+    local t = type(i)
+    if t ~= "number" then
+      if t == "string" then
+        i = tonumber(i)
+      else
+        error("bad argument #2 (number expected, got " .. t .. ")")
+      end
     end
-    if i < 1 or #s + 1 < i then
-      error "bad argument #2"
+    if i % 1 ~= 0 then
+      error "bad argument #2 (number has no integer representation)"
+    end
+    if i < 0 then
+      i = i + m
+    end
+    if i < 1 or m < i then
+      error "bad argument #2 (initial position out of string)"
     end
   end
 
   if j == nil then
-    j = #s
+    j = n
   else
-    if j < 0 then
-      j = #s + 1 + j
+    local t = type(j)
+    if t ~= "number" then
+      if t == "string" then
+        j = tonumber(j)
+      else
+        error("bad argument #3 (number expected, got " .. t .. ")")
+      end
     end
-    if #s < j then
-      error "bad argument #3"
+    if j % 1 ~= 0 then
+      error "bad argument #3 (number has no integer representation)"
+    end
+    if j < 0 then
+      j = j + m
+    end
+    if n < j then
+      error "bad argument #3 (final position out of string)"
     end
   end
 
