@@ -19,6 +19,7 @@ local count = require "dromozoa.utf8.count"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
 
+local error = error
 local select = select
 local tonumber = tonumber
 local tostring = tostring
