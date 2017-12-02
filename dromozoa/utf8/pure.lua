@@ -19,8 +19,13 @@ local count = require "dromozoa.utf8.count"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
 
-local concat = table.concat
+local error = error
 local select = select
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+
+local concat = table.concat
 local unpack = table.unpack or unpack
 
 local function char(...)
@@ -85,75 +90,67 @@ local function codepoint(s, i, j)
 end
 
 local function len(s, i, j)
+  local t = type(s)
+  if t ~= "string" then
+    if t == "number" then
+      s = tostring(s)
+    else
+      error("bad argument #1 (string expected, got " .. t .. ")")
+    end
+  end
+
+  local n = #s
+  local m = n + 1
+
   if i == nil then
     i = 1
   else
-    if i < 0 then
-      i = #s + 1 + i
+    local t = type(i)
+    if t ~= "number" then
+      if t == "string" then
+        i = tonumber(i)
+      else
+        error("bad argument #2 (number expected, got " .. t .. ")")
+      end
     end
-    if i < 1 or #s + 1 < i then
-      error "bad argument #2"
+    if i % 1 ~= 0 then
+      error "bad argument #2 (number has no integer representation)"
+    end
+    if i < 0 then
+      i = i + m
+    end
+    if i < 1 or m < i then
+      error "bad argument #2 (initial position out of string)"
     end
   end
 
   if j == nil then
-    j = #s
+    j = n
   else
-    if j < 0 then
-      j = #s + 1 + j
+    local t = type(j)
+    if t ~= "number" then
+      if t == "string" then
+        j = tonumber(j)
+      else
+        error("bad argument #3 (number expected, got " .. t .. ")")
+      end
     end
-    if #s < j then
-      error "bad argument #3"
+    if j % 1 ~= 0 then
+      error "bad argument #3 (number has no integer representation)"
+    end
+    if j < 0 then
+      j = j + m
+    end
+    if n < j then
+      error "bad argument #3 (final position out of string)"
     end
   end
 
-  local result = 0
-  while i <= j do
-    local a, b, c, d = s:byte(i, i + 3)
-    if a == nil then
-      return nil, i
-    elseif a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a then
-      if a <= 0xDF then
-        if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        i = i + 2
-      elseif a <= 0xEF then
-        if a <= 0xEC then
-          if a == 0xE0 then
-            if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        else
-          if a == 0xED then
-            if b == nil or b < 0x80 or 0x9F < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        i = i + 3
-      elseif a <= 0xF4 then
-        if a == 0xF0 then
-          if b == nil or b < 0x90 or 0xBF < b then return nil, i end
-        elseif a <= 0xF3 then
-          if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        else
-          if b == nil or b < 0x80 or 0x8F < b then return nil, i end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-        i = i + 4
-      else
-        return nil, i
-      end
-    else
-      return nil, i
-    end
-    result = result + 1
+  if i > j then
+    return 0
   end
-  return result
+
+  return count(s, i, j)
 end
 
 local function offset(s, n, i)
@@ -214,6 +211,6 @@ return {
   charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
-  len = count;
+  len = len;
   offset = offset;
 }

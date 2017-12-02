@@ -15,12 +15,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encoder = require "dromozoa.utf8.encoder"
+local encode_table = require "dromozoa.utf8.encode_table"
 
-local A = encoder.A
-local B = encoder.B
-local C = encoder.C
-local T = encoder.T
+local A = encode_table.A
+local B = encode_table.B
+local C = encode_table.C
+local T = encode_table.T
 
 return function (a)
   if a <= 0x07FF then

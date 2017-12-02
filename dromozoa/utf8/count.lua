@@ -15,43 +15,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local counter = require "dromozoa.utf8.counter"
+local counte_table = require "dromozoa.utf8.count_table"
 
 local byte = string.byte
 
-local S = counter.S
-local E = counter.E
+local S = counte_table.S
+local E = counte_table.E
 
 return function (s, i, j)
-  local n = #s
-
-  if not i then
-    i = 1
-  else
-    local m = n + 1
-    if i < 0 then
-      i = m + i
-    end
-    if i < 1 or m < i then
-      error "bad argument #2"
-    end
-  end
-
-  if not j then
-    j = n
-  else
-    if j < 0 then
-      j = n + 1 + j
-    end
-    if n < j then
-      error "bad argument #3"
-    end
-  end
-
-  if i > j then
-    return 0
-  end
-
   local s1 = S
   local result = 0
   for i = i + 3, j, 4 do
