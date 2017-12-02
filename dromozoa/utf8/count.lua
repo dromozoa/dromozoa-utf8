@@ -23,44 +23,6 @@ local S = counter.S
 local E = counter.E
 
 return function (s, i, j)
-  local t = type(s)
-  if t ~= "string" then
-    if t == "number" then
-      s = tostring(s)
-    else
-      error("bad argument #1 to 'dromozoa.utf8.count' (string expected, got " ..  t .. ")")
-    end
-  end
-
-  local n = #s
-
-  if not i then
-    i = 1
-  else
-    local m = n + 1
-    if i < 0 then
-      i = m + i
-    end
-    if i < 1 or m < i then
-      error "bad argument #2"
-    end
-  end
-
-  if not j then
-    j = n
-  else
-    if j < 0 then
-      j = n + 1 + j
-    end
-    if n < j then
-      error "bad argument #3"
-    end
-  end
-
-  if i > j then
-    return 0
-  end
-
   local s1 = S
   local result = 0
   for i = i + 3, j, 4 do

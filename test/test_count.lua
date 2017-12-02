@@ -15,7 +15,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local count = require "dromozoa.utf8.count"
+local pure = require "dromozoa.utf8.pure"
 
 local function call(f1, f2, ...)
   print(...)
@@ -34,7 +34,7 @@ local function check(f1, f2, s)
 end
 
 local f1 = utf8.len
-local f2 = count
+local f2 = pure.len
 call(f1, f2, nil, 1, 1)
 call(f1, f2, 3.14, 1, 1)
 call(f1, f2, "foo", 1, 1)

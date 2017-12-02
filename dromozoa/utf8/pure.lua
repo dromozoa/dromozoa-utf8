@@ -107,53 +107,11 @@ local function len(s, i, j)
     end
   end
 
-  local result = 0
-  while i <= j do
-    local a, b, c, d = s:byte(i, i + 3)
-    if a == nil then
-      return nil, i
-    elseif a <= 0x7F then
-      i = i + 1
-    elseif 0xC2 <= a then
-      if a <= 0xDF then
-        if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        i = i + 2
-      elseif a <= 0xEF then
-        if a <= 0xEC then
-          if a == 0xE0 then
-            if b == nil or b < 0xA0 or 0xBF < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        else
-          if a == 0xED then
-            if b == nil or b < 0x80 or 0x9F < b then return nil, i end
-          else
-            if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-          end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        i = i + 3
-      elseif a <= 0xF4 then
-        if a == 0xF0 then
-          if b == nil or b < 0x90 or 0xBF < b then return nil, i end
-        elseif a <= 0xF3 then
-          if b == nil or b < 0x80 or 0xBF < b then return nil, i end
-        else
-          if b == nil or b < 0x80 or 0x8F < b then return nil, i end
-        end
-        if c == nil or c < 0x80 or 0xBF < c then return nil, i end
-        if d == nil or d < 0x80 or 0xBF < d then return nil, i end
-        i = i + 4
-      else
-        return nil, i
-      end
-    else
-      return nil, i
-    end
-    result = result + 1
+  if i > j then
+    return 0
   end
-  return result
+
+  return count(s, i, j)
 end
 
 local function offset(s, n, i)
@@ -214,6 +172,6 @@ return {
   charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
-  len = count;
+  len = len;
   offset = offset;
 }
