@@ -15,12 +15,12 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local counter = require "dromozoa.utf8.counter"
+local counte_table = require "dromozoa.utf8.count_table"
 
 local byte = string.byte
 
-local S = counter.S
-local E = counter.E
+local S = counte_table.S
+local E = counte_table.E
 
 return function (s, i, j)
   local s1 = S
