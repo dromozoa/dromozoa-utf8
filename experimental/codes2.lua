@@ -20,15 +20,5 @@ local decode = require "dromozoa.utf8.decode"
 local error = error
 
 return function (s)
-  local n = #s
-  return function (s, i)
-    if i <= n then
-      local j, c = decode(s, i)
-      if not j then
-        error "invalid UTF-8 code"
-      else
-        return j, c
-      end
-    end
-  end, s, 1
+  return decode, s, 1
 end

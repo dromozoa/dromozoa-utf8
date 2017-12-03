@@ -17,6 +17,7 @@
 
 local decode_table = require "dromozoa.utf8.decode_table"
 
+local error = error
 local byte = string.byte
 
 local A = decode_table.A
@@ -54,5 +55,9 @@ return function (s, i)
         end
       end
     end
+    error "invalid UTF-8 code"
+  end
+  if a then
+    error "invalid UTF-8 code"
   end
 end
