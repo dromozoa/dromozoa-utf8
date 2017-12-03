@@ -28,16 +28,42 @@ local type = type
 local concat = table.concat
 local unpack = table.unpack or unpack
 
-local function char(...)
-  local result = {}
-  for i = 1, select("#", ...) do
-    local a = encode(select(i, ...))
-    if a == nil then
-      error("bad argument #" .. i)
+local function check_integer(v, i)
+  local t = type(v)
+  if t ~= "number" then
+    if t == "string" then
+      v = tonumber(v)
+    else
+      error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
     end
-    result[#result + 1] = a
   end
-  return concat(result)
+  if v % 1 ~= 0 then
+    error("bad argument #" .. i .. " (number has no integer representation)")
+  end
+  return v
+end
+
+local function char(...)
+  local n = select("#", ...)
+  if n == 1 then
+    local v = encode(check_integer(..., 1))
+    if not v then
+      error "bad argument #1 (value out of range)"
+    else
+      return v
+    end
+  else
+    local data = {...}
+    for i = 1, n do
+      local v = encode(check_integer(data[i], i))
+      if not v then
+        error("bad argument #" .. i .. " (value out of range)")
+      else
+        data[i] = v
+      end
+    end
+    return concat(data)
+  end
 end
 
 local function codes(s)
@@ -105,17 +131,7 @@ local function len(s, i, j)
   if i == nil then
     i = 1
   else
-    local t = type(i)
-    if t ~= "number" then
-      if t == "string" then
-        i = tonumber(i)
-      else
-        error("bad argument #2 (number expected, got " .. t .. ")")
-      end
-    end
-    if i % 1 ~= 0 then
-      error "bad argument #2 (number has no integer representation)"
-    end
+    i = check_integer(i, 2)
     if i < 0 then
       i = i + m
     end
@@ -127,17 +143,7 @@ local function len(s, i, j)
   if j == nil then
     j = n
   else
-    local t = type(j)
-    if t ~= "number" then
-      if t == "string" then
-        j = tonumber(j)
-      else
-        error("bad argument #3 (number expected, got " .. t .. ")")
-      end
-    end
-    if j % 1 ~= 0 then
-      error "bad argument #3 (number has no integer representation)"
-    end
+    j = check_integer(j, 3)
     if j < 0 then
       j = j + m
     end
