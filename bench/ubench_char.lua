@@ -18,6 +18,8 @@
 local char = require "experimental.char"
 local char2 = require "experimental.char2"
 local char3 = require "experimental.char3"
+local char4 = require "experimental.char4"
+local char5 = require "experimental.char5"
 
 local unpack = table.unpack or unpack
 
@@ -66,6 +68,8 @@ local algorithms = {
   char;
   char2;
   char3;
+  char4;
+  char5;
 }
 
 local benchmarks = {}
