@@ -41,7 +41,7 @@ return function (...)
       end
     end
     if a % 1 ~= 0 then
-      error "bad argument #2 (number has no integer representation)"
+      error("bad argument #" .. i .. " (number has no integer representation)")
     end
 
     local b = encode(a)
