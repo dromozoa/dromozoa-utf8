@@ -16,6 +16,8 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local codes = require "experimental.codes"
+local codes2 = require "experimental.codes2"
+local codes3 = require "experimental.codes3"
 
 local utf8_char = table.concat {
   string.char(
@@ -65,6 +67,8 @@ end
 
 local algorithms = {
   codes;
+  codes2;
+  codes3;
 }
 
 local benchmarks = {}
