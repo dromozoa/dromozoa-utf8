@@ -15,13 +15,13 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local decoder = require "dromozoa.utf8.decoder"
+local decode_table = require "dromozoa.utf8.decode_table"
 
-local H1 = decoder.A
-local H2 = decoder.B
-local TA_80_BF = decoder.TA
-local TB_80_BF = decoder.TB
-local TC_80_BF = decoder.TC
+local H1 = decode_table.A
+local H2 = decode_table.B
+local TA_80_BF = decode_table.TA
+local TB_80_BF = decode_table.TB
+local TC_80_BF = decode_table.TC
 
 local byte = string.byte
 
