@@ -125,15 +125,6 @@ end
 local function len(s, i, j)
   s = check_string(s, 1)
 
-  local t = type(s)
-  if t ~= "string" then
-    if t == "number" then
-      s = tostring(s)
-    else
-      error("bad argument #1 (string expected, got " .. t .. ")")
-    end
-  end
-
   local n = #s
   local m = n + 1
 

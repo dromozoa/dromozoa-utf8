@@ -31,9 +31,6 @@ end
 local function call(f1, f2, ...)
   local result1 = { pcall(each, f1, ...) }
   local result2 = { pcall(each, f2, ...) }
-  print(...)
-  print("=>", unpack(result1))
-  print("=>", unpack(result2))
   assert(result1[1] == result2[1])
   assert(#result1 == #result2)
   if result1[1] then
@@ -48,6 +45,8 @@ local function call(f1, f2, ...)
       local c, d = assert(message2:match("bad argument #(%d+) .-%((.*)%)$"))
       assert(a == c)
       assert(b == d)
+    elseif message1:match("invalid UTF%-8 code") then
+      assert(message2:match("invalid UTF%-8 code"))
     else
       print(...)
       print("=>", unpack(result1))
