@@ -92,34 +92,46 @@ local function codes(s)
 end
 
 local function codepoint(s, i, j)
+  s = check_string(s, 1)
+
+  local n = #s
+  local m = n + 1
+
   if i == nil then
     i = 1
   else
+    i = check_integer(i, 2)
     if i < 0 then
-      i = #s + 1 + i
+      i = i + m
     end
-    if i < 1 then
-      error "bad argument #2"
+    if i < 1 or m < i then
+      error "bad argument #2 (out of range)"
     end
   end
 
   if j == nil then
     j = i
-  elseif j < 0 then
-    j = #s + 1 + j
-  end
-  if #s < j then
-    error "bad argument #3"
-  end
-
-  local result = {}
-  while i <= j do
-    i, result[#result + 1] = decode(s, i)
-    if i == nil then
-      error "invalid UTF-8 code"
+  else
+    j = check_integer(j, 3)
+    if j < 0 then
+      j = j + m
     end
   end
-  return unpack(result)
+  if n < j then
+    error "bad argument #3 (out of range)"
+  end
+
+  if i == j then
+    local a, b = decode(s, i)
+  else
+    local result = {}
+    local k = 0
+    while i <= j do
+      k = k + 1
+      i, result[k] = decode(s, i)
+    end
+    return unpack(result)
+  end
 end
 
 local function len(s, i, j)
