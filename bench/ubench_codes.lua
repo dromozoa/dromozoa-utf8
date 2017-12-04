@@ -18,6 +18,7 @@
 local codes = require "experimental.codes"
 local codes2 = require "experimental.codes2"
 local codes3 = require "experimental.codes3"
+local codes4 = require "experimental.codes4"
 
 local utf8_char = table.concat {
   string.char(
@@ -69,6 +70,7 @@ local algorithms = {
   codes;
   codes2;
   codes3;
+  codes4;
 }
 
 local benchmarks = {}
