@@ -121,10 +121,10 @@ local function codepoint(s, i, j)
     error "bad argument #3 (out of range)"
   end
 
-  -- if i == j then
-  --   local a, b = decode(s, i)
-  --   return b
-  -- else
+  if i == j then
+    local a, b = decode(s, i)
+    return b
+  else
     local result = {}
     local k = 0
     while i <= j do
@@ -132,7 +132,7 @@ local function codepoint(s, i, j)
       i, result[k] = decode(s, i)
     end
     return unpack(result)
-  -- end
+  end
 end
 
 local function len(s, i, j)
