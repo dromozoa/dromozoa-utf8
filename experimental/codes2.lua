@@ -17,8 +17,14 @@
 
 local decode = require "dromozoa.utf8.decode"
 
-local error = error
-
 return function (s)
-  return decode, s, 1
+  local i = 1
+  local c
+  return function ()
+    local j = i
+    i, c = decode(s, i)
+    if i then
+      return j, c
+    end
+  end
 end
