@@ -43,6 +43,18 @@ local function check_integer(v, i)
   return v
 end
 
+local function check_string(v, i)
+  local t = type(v)
+  if t ~= "string" then
+    if t == "number" then
+      v = tostring(v)
+    else
+      error("bad argument #" .. i .. " (string expected, got " .. t .. ")")
+    end
+  end
+  return v
+end
+
 local function char(...)
   local n = select("#", ...)
   if n == 1 then
@@ -67,21 +79,16 @@ local function char(...)
 end
 
 local function codes(s)
+  local s = check_string(s, 1)
   local i = 1
-  return function (s)
-    if i <= #s then
-      local j = i
-      local c
-      i, c = decode(s, i)
-      if i == nil then
-        error "invalid UTF-8 code"
-      else
-        return j, c
-      end
-    else
-      return nil
+  local c
+  return function ()
+    local j = i
+    i, c = decode(s, i)
+    if i then
+      return j, c
     end
-  end, s
+  end
 end
 
 local function codepoint(s, i, j)
@@ -116,6 +123,8 @@ local function codepoint(s, i, j)
 end
 
 local function len(s, i, j)
+  s = check_string(s, 1)
+
   local t = type(s)
   if t ~= "string" then
     if t == "number" then
