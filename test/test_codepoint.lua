@@ -29,8 +29,8 @@ local function each(f, s)
 end
 
 local function call(f1, f2, ...)
-  local result1 = { pcall(each, f1, ...) }
-  local result2 = { pcall(each, f2, ...) }
+  local result1 = { pcall(f1, ...) }
+  local result2 = { pcall(f2, ...) }
   assert(result1[1] == result2[1])
   assert(#result1 == #result2)
   if result1[1] then
@@ -55,8 +55,8 @@ local function call(f1, f2, ...)
   end
 end
 
-local f1 = utf8.codes
-local f2 = pure.codes
+local f1 = utf8.codepoint
+local f2 = pure.codepoint
 
 call(f1, f2, nil)
 call(f1, f2, 3.5)
