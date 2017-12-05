@@ -104,7 +104,7 @@ local function codepoint(s, i, j)
     if i < 0 then
       i = i + m
     end
-    if i < 1 or m < i then
+    if i < 1 then
       error "bad argument #2 (out of range)"
     end
   end
@@ -123,6 +123,7 @@ local function codepoint(s, i, j)
 
   if i == j then
     local a, b = decode(s, i)
+    return b
   else
     local result = {}
     local k = 0
