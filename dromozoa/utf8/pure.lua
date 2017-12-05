@@ -109,48 +109,11 @@ local function codepoint(s, i, j)
   end
 end
 
-local function len(s, i, j)
-  s = check_string(s, 1)
-
-  local n = #s
-  local m = n + 1
-
-  if i == nil then
-    i = 1
-  else
-    i = check_integer(i, 2)
-    if i < 0 then
-      i = i + m
-    end
-    if i < 1 or m < i then
-      error "bad argument #2 (initial position out of string)"
-    end
-  end
-
-  if j == nil then
-    j = n
-  else
-    j = check_integer(j, 3)
-    if j < 0 then
-      j = j + m
-    end
-    if n < j then
-      error "bad argument #3 (final position out of string)"
-    end
-  end
-
-  if i > j then
-    return 0
-  end
-
-  return count(s, i, j)
-end
-
 return {
   char = char;
   charpattern = "[\000-\127\194-\244][\128-\191]*";
   codes = codes;
   codepoint = codepoint;
-  len = len;
+  len = count;
   offset = offset;
 }
