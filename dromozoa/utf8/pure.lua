@@ -16,44 +16,18 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local count = require "dromozoa.utf8.count"
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
+local offset = require "dromozoa.utf8.offset"
 
 local error = error
 local select = select
-local tonumber = tonumber
-local tostring = tostring
 local type = type
 
 local concat = table.concat
 local unpack = table.unpack or unpack
-
-local function check_integer(v, i)
-  local t = type(v)
-  if t ~= "number" then
-    if t == "string" then
-      v = tonumber(v)
-    else
-      error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
-    end
-  end
-  if v % 1 ~= 0 then
-    error("bad argument #" .. i .. " (number has no integer representation)")
-  end
-  return v
-end
-
-local function check_string(v, i)
-  local t = type(v)
-  if t ~= "string" then
-    if t == "number" then
-      v = tostring(v)
-    else
-      error("bad argument #" .. i .. " (string expected, got " .. t .. ")")
-    end
-  end
-  return v
-end
 
 local function char(...)
   local n = select("#", ...)
@@ -170,59 +144,6 @@ local function len(s, i, j)
   end
 
   return count(s, i, j)
-end
-
-local function offset(s, n, i)
-  if n == nil then
-    error "bad argument #2"
-  end
-
-  if i == nil then
-    if n < 0 then
-      i = #s + 1
-    else
-      i = 1
-    end
-  else
-    if i < 0 then
-      i = #s + 1 + i
-    end
-    if i < 1 or #s + 1 < i then
-      error "bad argument #3"
-    end
-  end
-
-  local a = s:byte(i)
-  if n == 0 then
-    while a ~= nil and 0x80 <= a and a <= 0xBF do
-      i = i - 1
-      a = s:byte(i)
-    end
-  else
-    if a ~= nil and 0x80 <= a and a <= 0xBF then
-      error "initial position is a continuation byte"
-    end
-    if n < 0 then
-      while n < 0 do
-        repeat
-          i = i - 1
-          a = s:byte(i)
-          if a == nil then return nil end
-        until a < 0x80 or 0xBF < a
-        n = n + 1
-      end
-    else
-      while n > 1 do
-        if a == nil then return nil end
-        repeat
-          i = i + 1
-          a = s:byte(i)
-        until a == nil or a < 0x80 or 0xBF < a
-        n = n - 1
-      end
-    end
-  end
-  return i
 end
 
 return {
