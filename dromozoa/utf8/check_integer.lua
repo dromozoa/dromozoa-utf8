@@ -24,6 +24,9 @@ return function (v, i)
   if t ~= "number" then
     if t == "string" then
       v = tonumber(v)
+      if not v then
+        error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
+      end
     else
       error("bad argument #" .. i .. " (number expected, got " .. t .. ")")
     end

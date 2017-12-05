@@ -15,6 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
 local offset_table = require "dromozoa.utf8.offset_table"
 
 local error = error
@@ -24,9 +26,8 @@ local H = offset_table.H
 local T = offset_table.T
 
 return function (s, n, i)
-  if n == nil then
-    error "bad argument #2"
-  end
+  s = check_string(s, 1)
+  n = check_integer(n, 2)
 
   if i == nil then
     if n < 0 then
@@ -35,11 +36,13 @@ return function (s, n, i)
       i = 1
     end
   else
+    i = check_integer(i, 3)
+    local m = #s + 1
     if i < 0 then
-      i = #s + 1 + i
+      i = i + m
     end
-    if i < 1 or #s + 1 < i then
-      error "bad argument #3"
+    if i < 1 or m < i then
+      error "bad argument #3 (position out of range)"
     end
   end
 
@@ -153,11 +156,14 @@ return function (s, n, i)
         if not x then
           return
         end
-        i = i + x
-        n = n - 1
-        a = byte(s, i)
-      until n == 1
-      return i
+        if n == 2 then
+          return i + x
+        else
+          i = i + x
+          n = n - 1
+          a = byte(s, i)
+        end
+      until false
     end
   end
 end
