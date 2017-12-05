@@ -15,10 +15,14 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local offset = require "experimental.offset"
+local offset = require "dromozoa.utf8.offset"
+local offset1 = require "experimental.offset"
 local offset2 = require "experimental.offset2"
 local offset3 = require "experimental.offset3"
 local offset4 = require "experimental.offset4"
+local offset5 = require "experimental.offset5"
+local offset6 = require "experimental.offset6"
+local offset7 = require "experimental.offset7"
 
 local utf8_char = table.concat {
   string.char(
@@ -65,10 +69,15 @@ local function run(f, s)
 end
 
 local algorithms = {
+  offset1;
+  -- offset2;
+  -- offset3;
+  -- offset4;
   offset;
-  offset2;
-  offset3;
-  offset4;
+  offset5;
+  offset6;
+  offset7;
+  offset8;
 }
 
 local benchmarks = {}
