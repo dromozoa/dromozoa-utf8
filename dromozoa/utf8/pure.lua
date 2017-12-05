@@ -18,6 +18,7 @@
 local count = require "dromozoa.utf8.count"
 local decode = require "dromozoa.utf8.decode"
 local encode = require "dromozoa.utf8.encode"
+local offset = require "dromozoa.utf8.offset"
 
 local error = error
 local select = select
@@ -170,59 +171,6 @@ local function len(s, i, j)
   end
 
   return count(s, i, j)
-end
-
-local function offset(s, n, i)
-  if n == nil then
-    error "bad argument #2"
-  end
-
-  if i == nil then
-    if n < 0 then
-      i = #s + 1
-    else
-      i = 1
-    end
-  else
-    if i < 0 then
-      i = #s + 1 + i
-    end
-    if i < 1 or #s + 1 < i then
-      error "bad argument #3"
-    end
-  end
-
-  local a = s:byte(i)
-  if n == 0 then
-    while a ~= nil and 0x80 <= a and a <= 0xBF do
-      i = i - 1
-      a = s:byte(i)
-    end
-  else
-    if a ~= nil and 0x80 <= a and a <= 0xBF then
-      error "initial position is a continuation byte"
-    end
-    if n < 0 then
-      while n < 0 do
-        repeat
-          i = i - 1
-          a = s:byte(i)
-          if a == nil then return nil end
-        until a < 0x80 or 0xBF < a
-        n = n + 1
-      end
-    else
-      while n > 1 do
-        if a == nil then return nil end
-        repeat
-          i = i + 1
-          a = s:byte(i)
-        until a == nil or a < 0x80 or 0xBF < a
-        n = n - 1
-      end
-    end
-  end
-  return i
 end
 
 return {
