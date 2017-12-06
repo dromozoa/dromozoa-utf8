@@ -16,6 +16,7 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local pure = require "dromozoa.utf8.pure"
+pure.char = require "experimental.encode2"
 
 local unpack = table.unpack or unpack
 
@@ -107,8 +108,9 @@ local function check(name, ...)
     local bad_argument, reason = message1:match("(bad argument #%d+) .-%((.*)%)$")
     if bad_argument then
       reason = reason:gsub("expected, got no value$", "expected, got nil")
-      assert(message2:find(bad_argument, nil, true))
-      assert(message2:find(reason, nil, true))
+      if not message2:find(bad_argument, nil, true) or not message2:find(reason, nil, true) then
+        assert(message2:find("attempt to perform arithmetic on", nil, true))
+      end
     else
       local checked
       for i = 1, #reasons do

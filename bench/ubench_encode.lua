@@ -15,36 +15,24 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encode1 = require "experimental.encode"
+local encode = require "experimental.encode"
 local encode2 = require "experimental.encode2"
-local encode3 = require "experimental.encode3"
-local encode4 = require "experimental.encode4"
-local encode5 = require "experimental.encode5"
-local encode6 = require "experimental.encode6"
-local encode7 = require "experimental.encode7"
-local encode8 = require "experimental.encode8"
-local encode9 = require "experimental.encode9"
 
-local encode = require "dromozoa.utf8.encode"
+local unpack = table.unpack or unpack
 
-local utf8_char = table.concat {
-  string.char(
-      0x41,
-      0xE2, 0x89, 0xA2,
-      0xCE, 0x91,
-      0x2E);
-  string.char(
-      0xED, 0x95, 0x9C,
-      0xEA, 0xB5, 0xAD,
-      0xEC, 0x96, 0xB4);
-  string.char(
-      0xE6, 0x97, 0xA5,
-      0xE6, 0x9C, 0xAC,
-      0xE8, 0xAA, 0x9E);
-  string.char(
-      0xEF, 0xBB, 0xBF,
-      0xF0, 0xA3, 0x8E, 0xB4);
-}
+local utf8_char = string.char(
+    0x41,
+    0xE2, 0x89, 0xA2,
+    0xCE, 0x91,
+    0x2E,
+    0xED, 0x95, 0x9C,
+    0xEA, 0xB5, 0xAD,
+    0xEC, 0x96, 0xB4,
+    0xE6, 0x97, 0xA5,
+    0xE6, 0x9C, 0xAC,
+    0xE8, 0xAA, 0x9E,
+    0xEF, 0xBB, 0xBF,
+    0xF0, 0xA3, 0x8E, 0xB4);
 
 local codepoint = {
   0x0041, 0x2262, 0x0391, 0x002E,
@@ -53,46 +41,31 @@ local codepoint = {
   0xFEFF, 0x0233B4,
 }
 
-local n = 100
-
+local n = 10
 local data = {}
-for i = 1, n do
-  for j = 1, #codepoint do
-    data[#data + 1] = codepoint[j]
+for _ = 1, n do
+  for i = 1, #codepoint do
+    data[#data + 1] = codepoint[i]
   end
 end
+local count = #utf8_char * n
 
-local length = #utf8_char * n
-
-local function run(f, source)
-  local result = 0
-
-  for i = 1, #data do
-    local s = f(data[i])
-    result = result + #s
-  end
-
-  return f, source, result
+local function run(f, x, ...)
+  local result = f(...)
+  x = x + #result
+  return f, x, ...
 end
 
 local algorithms = {
-  encode1;
-  encode2;
-  encode3;
-  encode4;
-  encode5;
-  encode6;
-  encode7;
-  encode8;
-  encode9;
   encode;
+  encode2;
 }
 
 local benchmarks = {}
 for i = 1, #algorithms do
-  local _, _, result = run(algorithms[i], data)
-  -- io.stderr:write(result, "\n")
-  assert(result == length)
-  benchmarks[("%02d"):format(i)] = { run, algorithms[i], data }
+  local _, result = run(algorithms[i], 0, unpack(data))
+  -- io.stderr:write(count, ",", result, "\n")
+  assert(result == count)
+  benchmarks[("%02d"):format(i)] = { run, algorithms[i], 0, unpack(data) }
 end
 return benchmarks
