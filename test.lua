@@ -16,7 +16,12 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local pure = require "dromozoa.utf8.pure"
+
 local unpack = table.unpack or unpack
+
+local pack = table.pack or function (...)
+  return { n = select("#", ...), ... }
+end
 
 local function concat(list, sep)
   local result = {}
@@ -26,83 +31,106 @@ local function concat(list, sep)
   return table.concat(result, sep)
 end
 
-local test_pattern = {
-  "(bad argument #%d+)";
-  "(initial position is a continuation byte)";
-  "(invalid UTF%-8 code)";
+local reasons = {
+  "initial position is a continuation byte";
+  "invalid UTF-8 code";
 }
 
-local test_count = 0
-local test_exp
+local count = 0
+local expect
 if arg[1] then
-  test_exp = assert(loadfile(arg[1]))()
+  expect = assert(loadfile(arg[1]))()
 end
 
-local function test_driver(module, name, ...)
+local function each(module, ...)
+  local result = {}
+  for p, c in module.codes(...) do
+    result[#result + 1] = p
+    result[#result + 1] = c
+  end
+  return unpack(result)
+end
+
+local function run(module, name, ...)
   if name == "charpattern" then
-    return { true, module.charpattern }
+    return pack(true, module.charpattern)
   elseif name == "codes" then
-    return { pcall(function (...)
-      local result = {}
-      for p, c in module.codes(...) do
-        result[#result + 1] = p
-        result[#result + 2] = c
-      end
-      unpack(result)
-    end, ...) }
+    return pack(pcall(each, module, ...))
   else
-    return { pcall(module[name], ...) }
+    return pack(pcall(module[name], ...))
   end
 end
 
-local function test(name, ...)
-  io.stderr:write(name, "(", concat({...}, ","), ")\n")
-  local result1
-  test_count = test_count + 1
-  if test_exp then
-    result1 = test_exp[test_count]
-  else
-    result1 = test_driver(utf8, name, ...)
+local function dump(v)
+  local t = type(v)
+  if t == "nil" then
+    return "nil"
+  elseif t == "number" then
+    return ("%.17g"):format(v)
+  elseif t == "string" then
+    return ("%q"):format(v)
+  elseif t == "boolean" then
+    if v then
+      return "true"
+    else
+      return "false"
+    end
+  elseif t == "table" then
+    local n = assert(v.n)
+    local result = {}
+    for i = 1, #v do
+      result[i] = dump(v[i])
+    end
+    return "{n=" .. n .. "," .. table.concat(result, ",") .. "}"
   end
-  local result2 = test_driver(pure, name, ...)
-  io.stderr:write("  [1]={", concat(result1, ","), "}\n")
-  io.stderr:write("  [2]={", concat(result2, ","), "}\n")
+end
+
+local function check(name, ...)
+  io.stderr:write(name, " ", dump(pack(...)), "\n")
+  local result1
+  if expect then
+    count = count + 1
+    result1 = expect[count]
+  else
+    result1 = run(utf8, name, ...)
+  end
+  local result2 = run(pure, name, ...)
+
+  io.stderr:write("  utf8 ", dump(result1), "\n")
+  io.stderr:write("  pure ", dump(result2), "\n")
+
   if result1[1] then
     assert(result2[1])
-    assert(#result1 == #result2)
-    for i = 2, #result1 do
+    local n = result1.n
+    if n < result2.n then
+      n = result2.n
+    end
+    for i = 2, n do
       assert(result1[i] == result2[i])
     end
   else
     assert(not result2[1])
-    local p
-    for i = 1, #test_pattern do
-      p = result1[2]:match(test_pattern[i])
-      if p ~= nil then
-        assert(result2[2]:find(p, 1, true))
-        break
-      end
-    end
-    assert(p ~= nil)
-  end
-  io.write("  {")
-  for i = 1, #result1 do
-    local v = result1[i]
-    local t = type(v)
-    if t == "nil" then
-      io.write("nil")
-    elseif t == "number" then
-      io.write(v)
-    elseif t == "string" then
-      io.write(string.format("%q", v))
-    elseif t == "boolean" then
-      io.write(v and "true" or "false")
+    local message1 = result1[2]
+    local message2 = result2[2]
+    local bad_argument, reason = message1:match("(bad argument #%d+) .-%((.*)%)$")
+    if bad_argument then
+      reason = reason:gsub("expected, got no value$", "expected, got nil")
+      assert(message2:find(bad_argument, nil, true))
+      assert(message2:find(reason, nil, true))
     else
-      error("invalie value " .. t)
+      local checked
+      for i = 1, #reasons do
+        local reason = reasons[i]
+        if message1:find(reason, nil, true) then
+          assert(message2:find(reason, nil, true))
+          checked = true
+          break
+        end
+      end
+      assert(checked)
     end
-    io.write(";")
   end
-  io.write("};\n")
+  io.write("  ", dump(result1), ";\n")
 end
 
 local data = {
@@ -129,25 +157,31 @@ local data = {
 }
 
 io.write [[
--- This file was auto-generated.
 return {
 ]]
 
-test("charpattern")
+check("charpattern")
 
-test("char", -1)
-test("char", 0, -1)
-test("char", 0x110000)
-test("char", 0, 0x110000)
+check("char", -1)
+check("char", 0, -1)
+check("char", 0x10FFFF)
+check("char", 0x110000)
+check("char", 0, 0x10FFFF)
+check("char", 0, 0x110000)
+check("char", 0x41, 0x42, 0x43)
+check("char", "65", "0x42")
+check("char", 65.5)
+check("char", true)
+check("char", 0x41, nil, 0x43)
 
-test("codes", string.char(0xE2))
-test("codes", string.char(0xE2, 0x89))
-test("codes", string.char(0xE2, 0x89, 0xA2))
-test("codes", string.char(0xE2))
-test("codes", string.char(0xE2, 0x00))
-test("codes", string.char(0xE2, 0x89, 0x00))
-test("codes", string.char(0xE2, 0xFF))
-test("codes", string.char(0xE2, 0x89, 0xFF))
+check("codes", string.char(0xE2))
+check("codes", string.char(0xE2, 0x89))
+check("codes", string.char(0xE2, 0x89, 0xA2))
+check("codes", string.char(0xE2))
+check("codes", string.char(0xE2, 0x00))
+check("codes", string.char(0xE2, 0x89, 0x00))
+check("codes", string.char(0xE2, 0xFF))
+check("codes", string.char(0xE2, 0x89, 0xFF))
 
 for i = 1, #data do
   local codepoint = data[i].codepoint
@@ -156,31 +190,31 @@ for i = 1, #data do
   local m = #codepoint + 2
   local n = #utf8_char + 2
 
-  test("char", unpack(codepoint))
+  check("char", unpack(codepoint))
 
-  test("codes", utf8_char)
+  check("codes", utf8_char)
 
-  test("codepoint", utf8_char)
+  check("codepoint", utf8_char)
   for j = -n, n do
-    test("codepoint", utf8_char, j)
+    check("codepoint", utf8_char, j)
     for k = -n, n do
-      test("codepoint", utf8_char, j, k)
+      check("codepoint", utf8_char, j, k)
     end
   end
 
-  test("len", utf8_char)
+  check("len", utf8_char)
   for j = -n, n do
-    test("len", utf8_char, j)
+    check("len", utf8_char, j)
     for k = -n, n do
-      test("len", utf8_char, j, k)
+      check("len", utf8_char, j, k)
     end
   end
 
-  test("offset", utf8_char)
+  check("offset", utf8_char)
   for j = -m, m do
-    test("offset", utf8_char, j)
+    check("offset", utf8_char, j)
     for k = -n, n do
-      test("offset", utf8_char, j, k)
+      check("offset", utf8_char, j, k)
     end
   end
 end

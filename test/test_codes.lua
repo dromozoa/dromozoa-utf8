@@ -31,6 +31,9 @@ end
 local function call(f1, f2, ...)
   local result1 = { pcall(each, f1, ...) }
   local result2 = { pcall(each, f2, ...) }
+  print(...)
+  print("=>", unpack(result1))
+  print("=>", unpack(result2))
   assert(result1[1] == result2[1])
   assert(#result1 == #result2)
   if result1[1] then
@@ -64,3 +67,4 @@ call(f1, f2, true)
 call(f1, f2, "")
 call(f1, f2, "foo")
 call(f1, f2, "\255")
+call(f1, f2, string.char(0xE2, 0x89, 0xA2))
