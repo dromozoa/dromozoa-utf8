@@ -18,7 +18,6 @@
 local encode_error = require "dromozoa.utf8.encode_error"
 local encode_table = require "dromozoa.utf8.encode_table"
 
-local error = error
 local select = select
 local concat = table.concat
 
