@@ -23,14 +23,6 @@ local pack = table.pack or function (...)
   return { n = select("#", ...), ... }
 end
 
-local function concat(list, sep)
-  local result = {}
-  for i = 1, #list do
-    result[i] = tostring(list[i])
-  end
-  return table.concat(result, sep)
-end
-
 local reasons = {
   "initial position is a continuation byte";
   "invalid UTF-8 code";
@@ -38,8 +30,8 @@ local reasons = {
 
 local count = 0
 local expect
-if arg[1] then
-  expect = assert(loadfile(arg[1]))()
+if _VERSION ~= "Lua 5.3" then
+  expect = assert(loadfile("test.exp"))()
 end
 
 local function each(module, ...)
