@@ -17,11 +17,18 @@
 
 local check_integer = require "dromozoa.utf8.check_integer"
 local check_string = require "dromozoa.utf8.check_string"
-local decode_impl = require "dromozoa.utf8.decode_impl"
+local decode_table = require "dromozoa.utf8.decode_table"
 
 local error = error
-local concat = table.concat
+local byte = string.byte
 local unpack = table.unpack or unpack
+
+local A = decode_table.A
+local B = decode_table.B
+local TA = decode_table.TA
+local TB = decode_table.TB
+
+local data = {}
 
 return function (s, i, j)
   s = check_string(s, 1)
@@ -55,15 +62,85 @@ return function (s, i, j)
   end
 
   if i == j then
-    local a, b = decode_impl(s, i)
-    return b
+    local a, b, c, d = byte(s, i, i + 3)
+    local v = A[a]
+    if v then
+      if a <= 0xDF then
+        if a <= 0x7F then
+          return v
+        else
+          local b = TA[b]
+          if b then
+            return v + b
+          end
+        end
+      else
+        if a <= 0xEF then
+          local b = B[a][b]
+          local c = TA[c]
+          if b and c then
+            return v + b + c
+          end
+        else
+          local b = B[a][b]
+          local c = TB[c]
+          local d = TA[d]
+          if b and c and d then
+            return v + b + c + d
+          end
+        end
+      end
+      error "invalid UTF-8 code"
+    elseif a then
+      error "invalid UTF-8 code"
+    end
   else
-    local result = {}
     local k = 0
     while i <= j do
       k = k + 1
-      i, result[k] = decode_impl(s, i)
+      local j = i + 3
+      local a, b, c, d = byte(s, i, j)
+      local v = A[a]
+      if v then
+        if a <= 0xDF then
+          if a <= 0x7F then
+            i = i + 1
+            data[k] = v
+          else
+            local b = TA[b]
+            if b then
+              i = i + 2
+              data[k] = v + b
+            else
+              error "invalid UTF-8 code"
+            end
+          end
+        else
+          if a <= 0xEF then
+            local b = B[a][b]
+            local c = TA[c]
+            if b and c then
+              i = j
+              data[k] = v + b + c
+            else
+              error "invalid UTF-8 code"
+            end
+          else
+            local b = B[a][b]
+            local c = TB[c]
+            local d = TA[d]
+            if b and c and d then
+              i = i + 4
+              data[k] = v + b + c + d
+            else
+              error "invalid UTF-8 code"
+            end
+          end
+        end
+      elseif a then
+        error "invalid UTF-8 code"
+      end
     end
-    return unpack(result)
+    return unpack(data, 1, k)
   end
 end

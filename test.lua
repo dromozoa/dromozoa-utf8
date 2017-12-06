@@ -16,6 +16,7 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local pure = require "dromozoa.utf8.pure"
+-- pure.codepoint = require "experimental.decode4"
 
 local unpack = table.unpack or unpack
 

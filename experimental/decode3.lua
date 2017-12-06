@@ -15,99 +15,108 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local function fill(t, v)
-  for i = 0x00, 0xFF do
-    t[i] = v
-  end
-  return t
-end
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
+local decode_impl = require "dromozoa.utf8.decode_impl"
+local decode_table = require "dromozoa.utf8.decode_table"
 
-local TA_80_BF = fill({}, false)
-local TB_80_BF = fill({}, false)
-local TB_80_9F = fill({}, false)
-local TB_A0_BF = fill({}, false)
-local TC_80_BF = fill({}, false)
-local TC_80_8F = fill({}, false)
-local TC_90_BF = fill({}, false)
-
-for i = 0x80, 0xBF do
-  local a = i % 0x40
-  local b = a * 0x40
-  local c = b * 0x40
-
-  TA_80_BF[i] = a
-  TB_80_BF[i] = b
-  TB_80_9F[i] = i <= 0x9F and b
-  TB_A0_BF[i] = 0xA0 <= i and b
-  TC_80_BF[i] = c
-  TC_80_8F[i] = i <= 0x8F and c
-  TC_90_BF[i] = 0x90 <= i and c
-end
-
-local H1 = fill({}, false)
-local H2 = fill({}, false)
-
-for i = 0x00, 0xFF do
-  if i <= 0x7F then
-    H1[i] = i
-  elseif i <= 0xC1 then
-    -- noop
-  elseif i <= 0xDF then
-    H1[i] = i % 0x20 * 0x40
-  elseif i <= 0xEF then
-    H1[i] = i % 0x10 * 0x1000
-    if i == 0xE0 then
-      H2[i] = TB_A0_BF
-    elseif i == 0xED then
-      H2[i] = TB_80_9F
-    else
-      H2[i] = TB_80_BF
-    end
-  elseif i <= 0xF4 then
-    H1[i] = i % 0x08 * 0x40000
-    if i == 0xF0 then
-      H2[i] = TC_90_BF
-    elseif i == 0xF4 then
-      H2[i] = TC_80_8F
-    else
-      H2[i] = TC_80_BF
-    end
-  else
-    -- noop
-  end
-end
-
+local error = error
 local byte = string.byte
+local concat = table.concat
+local unpack = table.unpack or unpack
 
-return function (s, i)
-  local j = i + 3
-  local a, b, c, d = byte(s, i, j)
-  local x = H1[a]
-  if x then
-    if a <= 0xDF then
-      if a <= 0x7F then
-        return i + 1, x
-      else
-        local b = TA_80_BF[b]
-        if b then
-          return i + 2, x + b
+local A = decode_table.A
+local B = decode_table.B
+local TA = decode_table.TA
+local TB = decode_table.TB
+
+local data = {}
+
+return function (s, i, j)
+  s = check_string(s, 1)
+
+  local n = #s
+  local m = n + 1
+
+  if i == nil then
+    i = 1
+  else
+    i = check_integer(i, 2)
+    if i < 0 then
+      i = i + m
+    end
+  end
+
+  if j == nil then
+    j = i
+  else
+    j = check_integer(j, 3)
+    if j < 0 then
+      j = j + m
+    end
+  end
+
+  if i < 1 then
+    error "bad argument #2 (out of range)"
+  end
+  if n < j then
+    error "bad argument #3 (out of range)"
+  end
+
+  if i == j then
+    local a, b = decode_impl(s, i)
+    return b
+  else
+    local k = 0
+    while i <= j do
+      k = k + 1
+      -- i, data[k] = decode_impl(s, i)
+
+      local j = i + 3
+      local a, b, c, d = byte(s, i, j)
+      local x = A[a]
+      if x then
+        if a <= 0xDF then
+          if a <= 0x7F then
+            i = i + 1
+            data[k] = x
+          else
+            local b = TA[b]
+            if b then
+              i = i + 2
+              data[k] = x + b
+            else
+              error "invalid UTF-8 code"
+            end
+          end
+        else
+          if a <= 0xEF then
+            local b = B[a][b]
+            local c = TA[c]
+            if b and c then
+              i = j
+              data[k] = x + b + c
+            else
+              error "invalid UTF-8 code"
+            end
+          else
+            local b = B[a][b]
+            local c = TB[c]
+            local d = TA[d]
+            if b and c and d then
+              i = i + 4
+              data[k] = x + b + c + d
+            else
+              error "invalid UTF-8 code"
+            end
+          end
         end
-      end
-    else
-      if a <= 0xEF then
-        local b = H2[a][b]
-        local c = TA_80_BF[c]
-        if b and c then
-          return j, x + b + c
-        end
       else
-        local b = H2[a][b]
-        local c = TB_80_BF[c]
-        local d = TA_80_BF[d]
-        if b and c and d then
-          return i + 4, x + b + c + d
+        if a then
+          error "invalid UTF-8 code"
         end
       end
     end
+    return unpack(data, 1, k)
   end
 end

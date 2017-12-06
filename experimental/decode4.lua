@@ -15,133 +15,132 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local function fill(t, v)
-  for i = 0x00, 0xFF do
-    t[i] = v
-  end
-  return t
-end
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
+local decode_table = require "dromozoa.utf8.decode_table"
 
-local TA_80_BF = fill({}, false)
-local TB_80_BF = fill({}, false)
-local TB_80_9F = fill({}, false)
-local TB_A0_BF = fill({}, false)
-local TC_80_BF = fill({}, false)
-local TC_80_8F = fill({}, false)
-local TC_90_BF = fill({}, false)
-
-for i = 0x80, 0xBF do
-  local a = i % 0x40
-  local b = a * 0x40
-  local c = b * 0x40
-
-  TA_80_BF[i] = a
-  TB_80_BF[i] = b
-  TB_80_9F[i] = i <= 0x9F and b
-  TB_A0_BF[i] = 0xA0 <= i and b
-  TC_80_BF[i] = c
-  TC_80_8F[i] = i <= 0x8F and c
-  TC_90_BF[i] = 0x90 <= i and c
-end
-
-local H1 = fill({}, false)
-local H2 = fill({}, false)
-
-for i = 0x00, 0xFF do
-  if i <= 0x7F then
-    H1[i] = i
-  elseif i <= 0xC1 then
-    -- noop
-  elseif i <= 0xDF then
-    H1[i] = i % 0x20 * 0x40
-  elseif i <= 0xEF then
-    H1[i] = i % 0x10 * 0x1000
-    if i == 0xE0 then
-      H2[i] = TB_A0_BF
-    elseif i == 0xED then
-      H2[i] = TB_80_9F
-    else
-      H2[i] = TB_80_BF
-    end
-  elseif i <= 0xF4 then
-    H1[i] = i % 0x08 * 0x40000
-    if i == 0xF0 then
-      H2[i] = TC_90_BF
-    elseif i == 0xF4 then
-      H2[i] = TC_80_8F
-    else
-      H2[i] = TC_80_BF
-    end
-  else
-    -- noop
-  end
-end
-
+local error = error
 local byte = string.byte
+local unpack = table.unpack or unpack
 
-local A, B, C, D, E, F, G
-local I
-local N
+local A = decode_table.A
+local B = decode_table.B
+local TA = decode_table.TA
+local TB = decode_table.TB
 
-return function (s, i)
-  if i == 1 then
-    A, B, C, D = byte(s, 1, 4)
-    E = nil
-    F = nil
-    G = nil
-    I = 5
-    N = #s
+local data = {}
+
+return function (s, i, j)
+  s = check_string(s, 1)
+
+  local n = #s
+  local m = n + 1
+
+  if i == nil then
+    i = 1
   else
-    if I <= N then
-      if not A then
-        A, B, C, D = byte(s, I, I + 3)
-        I = I + 4
-      elseif not B then
-        B, C, D, E = byte(s, I, I + 3)
-        I = I + 4
-      elseif not C then
-        C, D, E, F = byte(s, I, I + 3)
-        I = I + 4
-      elseif not D then
-        D, E, F, G = byte(s, I, I + 3)
-        I = I + 4
-      end
+    i = check_integer(i, 2)
+    if i < 0 then
+      i = i + m
     end
   end
 
-  -- io.stderr:write(("%8d %8d %02X %02X %02X %02X %02X %02X %02X\n"):format(I, N, A or 0, B or 0, C or 0, D or 0, E or 0, F or 0, G or 0))
+  if j == nil then
+    j = i
+  else
+    j = check_integer(j, 3)
+    if j < 0 then
+      j = j + m
+    end
+  end
 
-  local a, b, c, d = A, B, C, D
-  local x = H1[a]
-  if x then
-    if a <= 0xDF then
-      if a <= 0x7F then
-        A, B, C, D, E, F, G = B, C, D, E, F, G, nil
-        return i + 1, x
+  if i < 1 then
+    error "bad argument #2 (out of range)"
+  end
+  if n < j then
+    error "bad argument #3 (out of range)"
+  end
+
+  if i == j then
+    local a, b, c, d = byte(s, i, i + 3)
+    local v = A[a]
+    if v then
+      if a <= 0xDF then
+        if a <= 0x7F then
+          return v
+        else
+          local b = TA[b]
+          if b then
+            return v + b
+          end
+        end
       else
-        local b = TA_80_BF[b]
-        if b then
-          A, B, C, D, E, F, G = C, D, E, F, G, nil, nil
-          return i + 2, x + b
+        if a <= 0xEF then
+          local b = B[a][b]
+          local c = TA[c]
+          if b and c then
+            return v + b + c
+          end
+        else
+          local b = B[a][b]
+          local c = TB[c]
+          local d = TA[d]
+          if b and c and d then
+            return v + b + c + d
+          end
         end
       end
-    else
-      if a <= 0xEF then
-        local b = H2[a][b]
-        local c = TA_80_BF[c]
-        if b and c then
-          A, B, C, D, E, F, G = D, E, F, G, nil, nil, nil
-          return i + 3, x + b + c
+      error "invalid UTF-8 code"
+    elseif a then
+      error "invalid UTF-8 code"
+    end
+  else
+    local k = 0
+    while i <= j do
+      k = k + 1
+      local j = i + 3
+      local a, b, c, d = byte(s, i, j)
+      local v = A[a]
+      if v then
+        if a <= 0xDF then
+          if a <= 0x7F then
+            i = i + 1
+            data[k] = v
+          else
+            local b = TA[b]
+            if b then
+              i = i + 2
+              data[k] = v + b
+            else
+              error "invalid UTF-8 code"
+            end
+          end
+        else
+          if a <= 0xEF then
+            local b = B[a][b]
+            local c = TA[c]
+            if b and c then
+              i = j
+              data[k] = v + b + c
+            else
+              error "invalid UTF-8 code"
+            end
+          else
+            local b = B[a][b]
+            local c = TB[c]
+            local d = TA[d]
+            if b and c and d then
+              i = i + 4
+              data[k] = v + b + c + d
+            else
+              error "invalid UTF-8 code"
+            end
+          end
         end
-      else
-        local b = H2[a][b]
-        local c = TB_80_BF[c]
-        local d = TA_80_BF[d]
-        if b and c and d then
-          A, B, C, D, E, F, G = E, F, G, nil, nil, nil, nil
-          return i + 4, x + b + c + d
-        end
+      elseif a then
+        error "invalid UTF-8 code"
       end
     end
+    return unpack(data, 1, k)
   end
 end
