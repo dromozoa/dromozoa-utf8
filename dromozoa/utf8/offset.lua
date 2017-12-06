@@ -42,9 +42,10 @@ return function (s, n, i)
     if i < 0 then
       i = i + m
     end
-    if i < 1 or m < i then
-      error "bad argument #3 (position out of range)"
-    end
+  end
+
+  if i < 1 or m < i then
+    error "bad argument #3 (position out of range)"
   end
 
   if n == 0 then
@@ -77,8 +78,7 @@ return function (s, n, i)
       if H[b] then n = n + 1 if n == 0 then return i - 2 end end
       if H[a] then n = n + 1 if n == 0 then return j end end
     end
-    local p = i % 4
-    local a, b, c = byte(s, 1, p)
+    local a, b, c = byte(s, 1, i % 4)
     if H[c] then n = n + 1 if n == 0 then return 3 end end
     if H[b] then n = n + 1 if n == 0 then return 2 end end
     if H[a] then n = n + 1 if n == 0 then return 1 end end
@@ -94,14 +94,16 @@ return function (s, n, i)
       local x = H[a]
       if not x then
         return
+      else
+        i = i + x
+        a = byte(s, i)
       end
-      i = i + x
-      a = byte(s, i)
     end
     local x = H[a]
     if not x then
       return
+    else
+      return i + x
     end
-    return i + x
   end
 end

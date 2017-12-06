@@ -16,7 +16,7 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local pure = require "dromozoa.utf8.pure"
--- pure.len = require "experimental.count2"
+pure.offset = require "experimental.offset2"
 
 local unpack = table.unpack or unpack
 
