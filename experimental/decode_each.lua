@@ -15,24 +15,18 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encode = require "dromozoa.utf8.encode"
+local check_string = require "dromozoa.utf8.check_string"
+local decode_impl = require "dromozoa.utf8.decode_impl"
 
-local error = error
-local concat = table.concat
-
-local function char(result, n, a, ...)
-  if a then
-    local b = encode(a)
-    if not b then
-      error("bad argument #" .. n)
+return function (s)
+  local s = check_string(s, 1)
+  local i = 1
+  local c
+  return function ()
+    local j = i
+    i, c = decode_impl(s, i)
+    if i then
+      return j, c
     end
-    result[n] = b
-    return char(result, n + 1, ...)
-  else
-    return concat(result)
   end
-end
-
-return function (...)
-  return char({}, 1, ...)
 end

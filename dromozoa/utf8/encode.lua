@@ -15,30 +15,81 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local check_integer = require "dromozoa.utf8.check_integer"
-local encode_impl = require "dromozoa.utf8.encode_impl"
+if _VERSION == "Lua 5.3" then
+  return require "dromozoa.utf8.encode53"
+end
 
-local error = error
+local encode_error = require "dromozoa.utf8.encode_error"
+local encode_table = require "dromozoa.utf8.encode_table"
+
 local select = select
 local concat = table.concat
+
+local A = encode_table.A
+local B = encode_table.B
+local C = encode_table.C
+local T = encode_table.T
 
 return function (...)
   local n = select("#", ...)
   if n == 1 then
-    local v = encode_impl(check_integer(..., 1))
-    if not v then
-      error "bad argument #1 (value out of range)"
-    else
-      return v
+    local a = ... + 0
+    if a <= 0x07FF then
+      local v = A[a]
+      if v then
+        return v
+      end
+    elseif a <= 0xFFFF then
+      local c = a % 0x40
+      local a = (a - c) / 0x40
+      local v = B[a]
+      if v then
+        return v .. T[c]
+      end
+    elseif a <= 0x10FFFF then
+      local d = a % 0x40
+      local a = (a - d) / 0x40
+      local c = a % 0x40
+      local a = (a - c) / 0x40
+      local v = C[a]
+      if v then
+        return v .. T[c] .. T[d]
+      end
     end
+    encode_error(..., 1)
   else
     local data = {...}
     for i = 1, n do
-      local v = encode_impl(check_integer(data[i], i))
-      if not v then
-        error("bad argument #" .. i .. " (value out of range)")
+      local a = data[i] + 0
+      if a <= 0x07FF then
+        local v = A[a]
+        if v then
+          data[i] = v
+        else
+          encode_error(data[i], i)
+        end
+      elseif a <= 0xFFFF then
+        local c = a % 0x40
+        local a = (a - c) / 0x40
+        local v = B[a]
+        if v then
+          data[i] = v .. T[c]
+        else
+          encode_error(data[i], i)
+        end
+      elseif a <= 0x10FFFF then
+        local d = a % 0x40
+        local a = (a - d) / 0x40
+        local c = a % 0x40
+        local a = (a - c) / 0x40
+        local v = C[a]
+        if v then
+          data[i] = v .. T[c] .. T[d]
+        else
+          encode_error(data[i], i)
+        end
       else
-        data[i] = v
+        encode_error(data[i], i)
       end
     end
     return concat(data)

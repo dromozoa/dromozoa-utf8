@@ -15,76 +15,59 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local decoder = require "dromozoa.utf8.decoder"
+local check_string = require "dromozoa.utf8.check_string"
+local decode_table = require "dromozoa.utf8.decode_table"
 
+local error = error
 local byte = string.byte
 
-local A = decoder.A
-local B = decoder.B
-local TA = decoder.TA
-local TB = decoder.TB
+local A = decode_table.A
+local B = decode_table.B
+local TA = decode_table.TA
+local TB = decode_table.TB
 
-return function (s, i, j)
-  local n = #s
+return function (s)
+  s = check_string(s, 1)
 
-  if i == nil then
-    i = 1
-  else
-    local m = n + 1
-    if i < 0 then
-      i = m + i
-    end
-    if i < 1 or m < i then
-      error "bad argument #2"
-    end
-  end
-
-  if j == nil then
-    j = n
-  else
-    if j < 0 then
-      j = n + 1 + j
-    end
-    if #s < j then
-      error "bad argument #3"
-    end
-  end
-
-  local result = 0
-  while i <= j do
-    local a, b, c, d = byte(s, i, i + 3)
+  local i = 1
+  return function ()
+    local j = i + 3
+    local p = i
+    local a, b, c, d = byte(s, i, j)
     local x = A[a]
     if x then
       if a <= 0xDF then
         if a <= 0x7F then
           i = i + 1
+          return p, x
         else
-          if TA[b] then
+          local b = TA[b]
+          if b then
             i = i + 2
-          else
-            return nil, i
+            return p, x + b
           end
         end
       else
         if a <= 0xEF then
-          if B[a][b] and TA[c] then
-            i = i + 3
-          else
-            return nil, i
+          local b = B[a][b]
+          local c = TA[c]
+          if b and c then
+            i = j
+            return p, x + b + c
           end
         else
-          if B[a][b] and TB[c] and TA[d] then
+          local b = B[a][b]
+          local c = TB[c]
+          local d = TA[d]
+          if b and c and d then
             i = i + 4
-          else
-            return nil, i
+            return p, x + b + c + d
           end
         end
       end
-    else
-      return nil, i
+      error "invalid UTF-8 code"
+    elseif a then
+      error "invalid UTF-8 code"
     end
-    result = result + 1
   end
-
-  return result
 end

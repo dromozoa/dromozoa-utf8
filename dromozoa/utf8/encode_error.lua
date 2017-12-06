@@ -15,22 +15,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local encode = require "dromozoa.utf8.encode"
+local check_integer = require "dromozoa.utf8.check_integer"
 
 local error = error
-local select = select
-local concat = table.concat
 
-return function (...)
-  local data = { ... }
-  local n = select("#", ...)
-
-  for i = 1, n do
-    local a = encode(data[i])
-    if not a then
-      error("bad argument #" .. i)
-    end
-    data[i] = a
-  end
-  return concat(data)
+return function (v, i)
+  check_integer(v, i)
+  error("bad argument #" .. i .. " (value out of range)")
 end

@@ -15,34 +15,32 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local char = string.char
-local floor = math.floor
+local check_integer = require "dromozoa.utf8.check_integer"
+local encode_impl = require "dromozoa.utf8.encode_impl"
 
-return function (a)
-  if a < 0 then
-    return nil
-  elseif a <= 0x7F then
-    return char(a)
-  elseif a <= 0x07FF then
-    local b = a % 0x40
-    local a = floor(a / 0x40)
-    return char(a + 0xC0, b + 0x80)
-  elseif a <= 0xFFFF then
-    if 0xD800 <= a and a <= 0xDFFF then return nil end
-    local c = a % 0x40
-    local a = floor(a / 0x40)
-    local b = a % 0x40
-    local a = floor(a / 0x40)
-    return char(a + 0xE0, b + 0x80, c + 0x80)
-  elseif a <= 0x10FFFF then
-    local d = a % 0x40
-    local a = floor(a / 0x40)
-    local c = a % 0x40
-    local a = floor(a / 0x40)
-    local b = a % 0x40
-    local a = floor(a / 0x40)
-    return char(a + 0xF0, b + 0x80, c + 0x80, d + 0x80)
+local error = error
+local select = select
+local concat = table.concat
+
+return function (...)
+  local n = select("#", ...)
+  if n == 1 then
+    local v = encode_impl(check_integer(..., 1))
+    if not v then
+      error "bad argument #1 (value out of range)"
+    else
+      return v
+    end
   else
-    return nil
+    local data = {...}
+    for i = 1, n do
+      local v = encode_impl(check_integer(data[i], i))
+      if not v then
+        error("bad argument #" .. i .. " (value out of range)")
+      else
+        data[i] = v
+      end
+    end
+    return concat(data)
   end
 end
