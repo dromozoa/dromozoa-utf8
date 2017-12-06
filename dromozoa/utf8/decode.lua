@@ -36,9 +36,6 @@ return function (s, i, j)
     if i < 0 then
       i = i + m
     end
-    if i < 1 then
-      error "bad argument #2 (out of range)"
-    end
   end
 
   if j == nil then
@@ -48,6 +45,10 @@ return function (s, i, j)
     if j < 0 then
       j = j + m
     end
+  end
+
+  if i < 1 then
+    error "bad argument #2 (out of range)"
   end
   if n < j then
     error "bad argument #3 (out of range)"

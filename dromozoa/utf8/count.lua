@@ -37,9 +37,6 @@ return function (s, i, j)
     if i < 0 then
       i = i + m
     end
-    if i < 1 or m < i then
-      error "bad argument #2 (initial position out of string)"
-    end
   end
 
   if j == nil then
@@ -49,9 +46,13 @@ return function (s, i, j)
     if j < 0 then
       j = j + m
     end
-    if n < j then
-      error "bad argument #3 (final position out of string)"
-    end
+  end
+
+  if i < 1 or m < i then
+    error "bad argument #2 (initial position out of string)"
+  end
+  if n < j then
+    error "bad argument #3 (final position out of string)"
   end
 
   if i > j then

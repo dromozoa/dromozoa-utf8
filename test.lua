@@ -133,32 +133,7 @@ local function check(name, ...)
   io.write("  ", dump(result1), ";\n")
 end
 
-local data = {
-  {
-    codepoint = {};
-    utf8_char = "";
-  };
-  {
-    codepoint = { 0x0041, 0x2262, 0x0391, 0x002E };
-    utf8_char = string.char(0x41, 0xE2, 0x89, 0xA2, 0xCE, 0x91, 0x2E);
-  };
-  {
-    codepoint = { 0xD55C, 0xAD6D, 0xC5B4 };
-    utf8_char = string.char(0xED, 0x95, 0x9C, 0xEA, 0xB5, 0xAD, 0xEC, 0x96, 0xB4);
-  };
-  {
-    codepoint = { 0x65E5, 0x672C, 0x8A9E };
-    utf8_char = string.char(0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC, 0xE8, 0xAA, 0x9E);
-  };
-  {
-    codepoint = { 0xFEFF, 0x233B4 };
-    utf8_char = string.char(0xEF, 0xBB, 0xBF, 0xF0, 0xA3, 0x8E, 0xB4);
-  };
-}
-
-io.write [[
-return {
-]]
+io.write("return {\n")
 
 check("charpattern")
 
@@ -183,6 +158,62 @@ check("codes", string.char(0xE2, 0x89, 0x00))
 check("codes", string.char(0xE2, 0xFF))
 check("codes", string.char(0xE2, 0x89, 0xFF))
 
+local data = {
+  65;
+  65.5;
+  0;
+  1;
+  1.5;
+  -1;
+  -2;
+  -4;
+  "";
+  "foo";
+  "1";
+  "0x01";
+  true;
+  false;
+  { n = 0 };
+}
+
+for i = 0, #data do
+  local a = data[i]
+  for j = 0, #data do
+    local b = data[j]
+    for k = 0, #data do
+      local c = data[k]
+      check("char", a, b, c)
+      check("codes", a, b, c)
+      check("codepoint", a, b, c)
+      check("len", a, b, c)
+      check("offset", a, b, c)
+    end
+  end
+end
+
+local data = {
+  {
+    codepoint = {};
+    utf8_char = "";
+  };
+  {
+    codepoint = { 0x0041, 0x2262, 0x0391, 0x002E };
+    utf8_char = string.char(0x41, 0xE2, 0x89, 0xA2, 0xCE, 0x91, 0x2E);
+  };
+  {
+    codepoint = { 0xD55C, 0xAD6D, 0xC5B4 };
+    utf8_char = string.char(0xED, 0x95, 0x9C, 0xEA, 0xB5, 0xAD, 0xEC, 0x96, 0xB4);
+  };
+  {
+    codepoint = { 0x65E5, 0x672C, 0x8A9E };
+    utf8_char = string.char(0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC, 0xE8, 0xAA, 0x9E);
+  };
+  {
+    codepoint = { 0xFEFF, 0x233B4 };
+    utf8_char = string.char(0xEF, 0xBB, 0xBF, 0xF0, 0xA3, 0x8E, 0xB4);
+  };
+}
+
 for i = 1, #data do
   local codepoint = data[i].codepoint
   local utf8_char = data[i].utf8_char
@@ -191,7 +222,6 @@ for i = 1, #data do
   local n = #utf8_char + 2
 
   check("char", unpack(codepoint))
-
   check("codes", utf8_char)
 
   check("codepoint", utf8_char)
