@@ -60,9 +60,9 @@ return function (s, i, j)
   end
 
   local s1 = S
-  local result = 0
+  local count = 0
   for i = i + 3, j, 4 do
-    if s1 == S then result = result + 1 end
+    if s1 == S then count = count + 1 end
     local a, b, c, d = byte(s, i - 3, i)
     local s2 = s1[a]
     local s3 = s2[b]
@@ -74,15 +74,15 @@ return function (s, i, j)
       if s4 == E then return nil, i - 1 end
       return nil, i
     end
-    if s2 == S then result = result + 1 end
-    if s3 == S then result = result + 1 end
-    if s4 == S then result = result + 1 end
+    if s2 == S then count = count + 1 end
+    if s3 == S then count = count + 1 end
+    if s4 == S then count = count + 1 end
   end
 
   local p = j + 1
   local m = p - (p - i) % 4
   if m < p then
-    if s1 == S then result = result + 1 end
+    if s1 == S then count = count + 1 end
     local a, b, c = byte(s, m, j)
     if c then
       local s2 = s1[a]
@@ -93,8 +93,8 @@ return function (s, i, j)
         if s3 == E then return nil, j - 1 end
         return nil, j
       end
-      if s2 == S then result = result + 1 end
-      if s3 == S then result = result + 1 end
+      if s2 == S then count = count + 1 end
+      if s3 == S then count = count + 1 end
     elseif b then
       local s2 = s1[a]
       local s3 = s2[b]
@@ -102,12 +102,12 @@ return function (s, i, j)
         if s2 == E then return nil, j - 1 end
         return nil, j
       end
-      if s2 == S then result = result + 1 end
+      if s2 == S then count = count + 1 end
     else
       local s2 = s1[a]
       if s2 == E then return nil, j end
     end
   end
 
-  return result
+  return count
 end

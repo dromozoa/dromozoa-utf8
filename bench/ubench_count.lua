@@ -15,31 +15,22 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local count1 = require "experimental.count"
+local count = require "experimental.count"
 local count2 = require "experimental.count2"
-local count3 = require "experimental.count3"
-local count4 = require "experimental.count4"
-local count5 = require "experimental.count5"
-local count = require "dromozoa.utf8.count"
 
-local utf8_char = table.concat {
-  string.char(
-      0x41,
-      0xE2, 0x89, 0xA2,
-      0xCE, 0x91,
-      0x2E);
-  string.char(
-      0xED, 0x95, 0x9C,
-      0xEA, 0xB5, 0xAD,
-      0xEC, 0x96, 0xB4);
-  string.char(
-      0xE6, 0x97, 0xA5,
-      0xE6, 0x9C, 0xAC,
-      0xE8, 0xAA, 0x9E);
-  string.char(
-      0xEF, 0xBB, 0xBF,
-      0xF0, 0xA3, 0x8E, 0xB4);
-}
+local utf8_char = string.char(
+    0x41,
+    0xE2, 0x89, 0xA2,
+    0xCE, 0x91,
+    0x2E,
+    0xED, 0x95, 0x9C,
+    0xEA, 0xB5, 0xAD,
+    0xEC, 0x96, 0xB4,
+    0xE6, 0x97, 0xA5,
+    0xE6, 0x9C, 0xAC,
+    0xE8, 0xAA, 0x9E,
+    0xEF, 0xBB, 0xBF,
+    0xF0, 0xA3, 0x8E, 0xB4);
 
 local codepoint = {
   0x0041, 0x2262, 0x0391, 0x002E,
@@ -58,12 +49,8 @@ local function run(f, source)
 end
 
 local algorithms = {
-  count1;
-  count2;
-  count3;
-  count4;
-  count5;
   count;
+  count2;
 }
 
 local benchmarks = {}
