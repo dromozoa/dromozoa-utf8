@@ -29,15 +29,16 @@ return function (s, n, i)
   s = check_string(s, 1)
   n = check_integer(n, 2)
 
+  local m = #s + 1
+
   if i == nil then
     if n < 0 then
-      i = #s + 1
+      i = m
     else
       i = 1
     end
   else
     i = check_integer(i, 3)
-    local m = #s + 1
     if i < 0 then
       i = i + m
     end
@@ -47,123 +48,60 @@ return function (s, n, i)
   end
 
   if n == 0 then
-    local a = byte(s, i)
-    while a ~= nil and 0x80 <= a and a <= 0xBF do
-      i = i - 1
-      a = s:byte(i)
-    end
-    return i
-  elseif n < 0 then
-    if n == -1 then
-      local a = byte(s, i)
-      if T[a] then
-        error "initial position is a continuation byte"
-      end
-      i = i - 1
-      if i > 3 then
-        local a, b, c, d = byte(s, i - 3, i)
-        if not T[d] then
-          -- noop
-        elseif not T[c] then
-          i = i - 1
-        elseif not T[b] then
-          i = i - 2
-        elseif not T[a] then
-          i = i - 3
-        else
-          error "invalid UTF-8"
-        end
-      else
-        local a, b, c = byte(s, 1, i)
-        if c and not T[c] then
-          -- noop
-          i = 3
-        elseif b and not T[b] then
-          i = 2
-        elseif a and not T[a] then
-          i = 1
-        else
-          return
-        end
-      end
+    if i == m then
       return i
+    elseif i > 3 then
+      local j = i - 3
+      local a, b, c, d = byte(s, j, i)
+      if H[d] then return i end
+      if H[c] then return i - 1 end
+      if H[b] then return i - 2 end
+      if H[a] then return j end
     else
-      local a = byte(s, i)
-      if T[a] then
-        error "initial position is a continuation byte"
-      end
-      i = i - 1
-      for i = i, 4, -4 do
-        local a, b, c, d = byte(s, i - 3, i)
-        if not T[d] then
-          n = n + 1 if n == 0 then return i end
-        end
-        if not T[c] then
-          n = n + 1 if n == 0 then return i - 1 end
-        end
-        if not T[b] then
-          n = n + 1 if n == 0 then return i - 2 end
-        end
-        if not T[a] then
-          n = n + 1 if n == 0 then return i - 3 end
-        end
-      end
-      local p = i % 4
-      if p > 0 then
-        local a, b, c = byte(s, 1, p)
-        if c then
-          if not T[c] then
-            n = n + 1 if n == 0 then return 3 end
-          end
-          if not T[b] then
-            n = n + 1 if n == 0 then return 2 end
-          end
-          if not T[a] then
-            n = n + 1 if n == 0 then return 1 end
-          end
-        elseif b then
-          if not T[b] then
-            n = n + 1 if n == 0 then return 2 end
-          end
-          if not T[a] then
-            n = n + 1 if n == 0 then return 1 end
-          end
-        elseif a then
-          if not T[a] then
-            n = n + 1 if n == 0 then return 1 end
-          end
-        else
-          error "???"
-        end
-      else
+      local a, b, c = byte(s, 1, i)
+      if H[c] then return 3 end
+      if H[b] then return 2 end
+      if H[a] then return 1 end
+    end
+  elseif n < 0 then
+    local a = byte(s, i)
+    if T[a] then
+      error "initial position is a continuation byte"
+    end
+    i = i - 1
+    for i = i, 4, -4 do
+      local j = i - 3
+      local a, b, c, d = byte(s, j, i)
+      if H[d] then n = n + 1 if n == 0 then return i end end
+      if H[c] then n = n + 1 if n == 0 then return i - 1 end end
+      if H[b] then n = n + 1 if n == 0 then return i - 2 end end
+      if H[a] then n = n + 1 if n == 0 then return j end end
+    end
+    local p = i % 4
+    local a, b, c = byte(s, 1, p)
+    if H[c] then n = n + 1 if n == 0 then return 3 end end
+    if H[b] then n = n + 1 if n == 0 then return 2 end end
+    if H[a] then n = n + 1 if n == 0 then return 1 end end
+  else
+    local a = byte(s, i)
+    if T[a] then
+      error "initial position is a continuation byte"
+    end
+    if n == 1 then
+      return i
+    end
+    for n = n, 3, -1 do
+      local x = H[a]
+      if not x then
         return
       end
+      i = i + x
+      a = byte(s, i)
     end
-  else
-    if n == 1 then
-      local a = byte(s, i)
-      if T[a] then
-        error "initial position is a continuation byte"
-      end
-      return i
-    else
-      local a = byte(s, i)
-      if T[a] then
-        error "initial position is a continuation byte"
-      end
-      repeat
-        local x = H[a]
-        if not x then
-          return
-        end
-        if n == 2 then
-          return i + x
-        else
-          i = i + x
-          n = n - 1
-          a = byte(s, i)
-        end
-      until false
+    local x = H[a]
+    if not x then
+      return
     end
+    return i + x
   end
 end

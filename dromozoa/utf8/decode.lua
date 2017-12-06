@@ -15,49 +15,55 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local decode_table = require "dromozoa.utf8.decode_table"
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
+local decode_impl = require "dromozoa.utf8.decode_impl"
 
 local error = error
-local byte = string.byte
+local concat = table.concat
+local unpack = table.unpack or unpack
 
-local A = decode_table.A
-local B = decode_table.B
-local TA = decode_table.TA
-local TB = decode_table.TB
+return function (s, i, j)
+  s = check_string(s, 1)
 
-return function (s, i)
-  local j = i + 3
-  local a, b, c, d = byte(s, i, j)
-  local x = A[a]
-  if x then
-    if a <= 0xDF then
-      if a <= 0x7F then
-        return i + 1, x
-      else
-        local b = TA[b]
-        if b then
-          return i + 2, x + b
-        end
-      end
-    else
-      if a <= 0xEF then
-        local b = B[a][b]
-        local c = TA[c]
-        if b and c then
-          return j, x + b + c
-        end
-      else
-        local b = B[a][b]
-        local c = TB[c]
-        local d = TA[d]
-        if b and c and d then
-          return i + 4, x + b + c + d
-        end
-      end
+  local n = #s
+  local m = n + 1
+
+  if i == nil then
+    i = 1
+  else
+    i = check_integer(i, 2)
+    if i < 0 then
+      i = i + m
     end
-    error "invalid UTF-8 code"
   end
-  if a then
-    error "invalid UTF-8 code"
+
+  if j == nil then
+    j = i
+  else
+    j = check_integer(j, 3)
+    if j < 0 then
+      j = j + m
+    end
+  end
+
+  if i < 1 then
+    error "bad argument #2 (out of range)"
+  end
+  if n < j then
+    error "bad argument #3 (out of range)"
+  end
+
+  if i == j then
+    local a, b = decode_impl(s, i)
+    return b
+  else
+    local result = {}
+    local k = 0
+    while i <= j do
+      k = k + 1
+      i, result[k] = decode_impl(s, i)
+    end
+    return unpack(result)
   end
 end

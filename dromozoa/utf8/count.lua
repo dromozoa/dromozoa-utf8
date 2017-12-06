@@ -15,14 +15,50 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local counte_table = require "dromozoa.utf8.count_table"
+local check_integer = require "dromozoa.utf8.check_integer"
+local check_string = require "dromozoa.utf8.check_string"
+local counter_table = require "dromozoa.utf8.count_table"
 
 local byte = string.byte
 
-local S = counte_table.S
-local E = counte_table.E
+local S = counter_table.S
+local E = counter_table.E
 
 return function (s, i, j)
+  s = check_string(s, 1)
+
+  local n = #s
+  local m = n + 1
+
+  if i == nil then
+    i = 1
+  else
+    i = check_integer(i, 2)
+    if i < 0 then
+      i = i + m
+    end
+  end
+
+  if j == nil then
+    j = n
+  else
+    j = check_integer(j, 3)
+    if j < 0 then
+      j = j + m
+    end
+  end
+
+  if i < 1 or m < i then
+    error "bad argument #2 (initial position out of string)"
+  end
+  if n < j then
+    error "bad argument #3 (final position out of string)"
+  end
+
+  if i > j then
+    return 0
+  end
+
   local s1 = S
   local result = 0
   for i = i + 3, j, 4 do
