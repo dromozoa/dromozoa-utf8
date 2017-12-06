@@ -18,8 +18,8 @@
 local count = require "dromozoa.utf8.count"
 local check_integer = require "dromozoa.utf8.check_integer"
 local check_string = require "dromozoa.utf8.check_string"
-local decode = require "dromozoa.utf8.decode"
-local encode = require "dromozoa.utf8.encode"
+local decode_impl = require "dromozoa.utf8.decode_impl"
+local encode_impl = require "dromozoa.utf8.encode_impl"
 local offset = require "dromozoa.utf8.offset"
 
 local error = error
@@ -32,7 +32,7 @@ local unpack = table.unpack or unpack
 local function char(...)
   local n = select("#", ...)
   if n == 1 then
-    local v = encode(check_integer(..., 1))
+    local v = encode_impl(check_integer(..., 1))
     if not v then
       error "bad argument #1 (value out of range)"
     else
@@ -41,7 +41,7 @@ local function char(...)
   else
     local data = {...}
     for i = 1, n do
-      local v = encode(check_integer(data[i], i))
+      local v = encode_impl(check_integer(data[i], i))
       if not v then
         error("bad argument #" .. i .. " (value out of range)")
       else
@@ -58,7 +58,7 @@ local function codes(s)
   local c
   return function ()
     local j = i
-    i, c = decode(s, i)
+    i, c = decode_impl(s, i)
     if i then
       return j, c
     end
@@ -96,14 +96,14 @@ local function codepoint(s, i, j)
   end
 
   if i == j then
-    local a, b = decode(s, i)
+    local a, b = decode_impl(s, i)
     return b
   else
     local result = {}
     local k = 0
     while i <= j do
       k = k + 1
-      i, result[k] = decode(s, i)
+      i, result[k] = decode_impl(s, i)
     end
     return unpack(result)
   end

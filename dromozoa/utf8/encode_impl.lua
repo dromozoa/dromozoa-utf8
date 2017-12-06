@@ -16,7 +16,7 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 if _VERSION == "Lua 5.3" then
-  return require "dromozoa.utf8.encode53"
+  return require "dromozoa.utf8.encode_impl53"
 end
 
 local encode_table = require "dromozoa.utf8.encode_table"
