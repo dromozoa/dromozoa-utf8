@@ -65,7 +65,7 @@ local algorithms = {
 local benchmarks = {}
 for i = 1, #algorithms do
   local _, _, result = run(algorithms[i], data)
-  io.stderr:write(r, ",", result, "\n")
+  -- io.stderr:write(r, ",", result, "\n")
   assert(r == result)
   benchmarks[("%02d"):format(i)] = { run, algorithms[i], data }
 end
