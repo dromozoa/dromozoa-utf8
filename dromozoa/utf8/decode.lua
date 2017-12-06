@@ -28,8 +28,6 @@ local B = decode_table.B
 local TA = decode_table.TA
 local TB = decode_table.TB
 
-local data = {}
-
 return function (s, i, j)
   s = check_string(s, 1)
 
@@ -95,6 +93,7 @@ return function (s, i, j)
       error "invalid UTF-8 code"
     end
   else
+    local data = {}
     local k = 0
     while i <= j do
       k = k + 1
@@ -141,6 +140,6 @@ return function (s, i, j)
         error "invalid UTF-8 code"
       end
     end
-    return unpack(data, 1, k)
+    return unpack(data)
   end
 end
