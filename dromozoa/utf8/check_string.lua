@@ -1,4 +1,4 @@
--- Copyright (C) 2015,2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -15,17 +15,18 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local count = require "dromozoa.utf8.count"
-local decode = require "dromozoa.utf8.decode"
-local decode_each = require "dromozoa.utf8.decode_each"
-local encode = require "dromozoa.utf8.encode"
-local offset = require "dromozoa.utf8.offset"
+local error = error
+local tostring = tostring
+local type = type
 
-return {
-  char = encode;
-  charpattern = "[\000-\127\194-\244][\128-\191]*";
-  codes = decode_each;
-  codepoint = decode;
-  len = count;
-  offset = offset;
-}
+return function (v, i)
+  local t = type(v)
+  if t ~= "string" then
+    if t == "number" then
+      v = tostring(v)
+    else
+      error("bad argument #" .. i .. " (string expected, got " .. t .. ")")
+    end
+  end
+  return v
+end
