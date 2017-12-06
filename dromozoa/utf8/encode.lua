@@ -19,7 +19,7 @@ if _VERSION == "Lua 5.3" then
   return require "dromozoa.utf8.encode53"
 end
 
-local check_integer = require "dromozoa.utf8.check_integer"
+local encode_error = require "dromozoa.utf8.encode_error"
 local encode_table = require "dromozoa.utf8.encode_table"
 
 local error = error
@@ -30,11 +30,6 @@ local A = encode_table.A
 local B = encode_table.B
 local C = encode_table.C
 local T = encode_table.T
-
-local function raise_error(v, i)
-  check_integer(v, i)
-  error("bad argument #" .. i .. " (value out of range)")
-end
 
 return function (...)
   local n = select("#", ...)
@@ -62,7 +57,7 @@ return function (...)
         return v .. T[c] .. T[d]
       end
     end
-    raise_error(..., 1)
+    encode_error(..., 1)
   else
     local data = {...}
     for i = 1, n do
@@ -72,7 +67,7 @@ return function (...)
         if v then
           data[i] = v
         else
-          raise_error(data[i], i)
+          encode_error(data[i], i)
         end
       elseif a <= 0xFFFF then
         local c = a % 0x40
@@ -81,7 +76,7 @@ return function (...)
         if v then
           data[i] = v .. T[c]
         else
-          raise_error(data[i], i)
+          encode_error(data[i], i)
         end
       elseif a <= 0x10FFFF then
         local d = a % 0x40
@@ -92,10 +87,10 @@ return function (...)
         if v then
           data[i] = v .. T[c] .. T[d]
         else
-          raise_error(data[i], i)
+          encode_error(data[i], i)
         end
       else
-        raise_error(data[i], i)
+        encode_error(data[i], i)
       end
     end
     return concat(data)
