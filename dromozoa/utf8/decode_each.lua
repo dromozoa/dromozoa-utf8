@@ -16,17 +16,58 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local check_string = require "dromozoa.utf8.check_string"
-local decode_impl = require "dromozoa.utf8.decode_impl"
+local decode_table = require "dromozoa.utf8.decode_table"
+
+local error = error
+local byte = string.byte
+
+local A = decode_table.A
+local B = decode_table.B
+local TA = decode_table.TA
+local TB = decode_table.TB
 
 return function (s)
-  local s = check_string(s, 1)
+  s = check_string(s, 1)
+
   local i = 1
-  local c
   return function ()
-    local j = i
-    i, c = decode_impl(s, i)
-    if i then
-      return j, c
+    local j = i + 3
+    local p = i
+    local a, b, c, d = byte(s, i, j)
+    local x = A[a]
+    if x then
+      if a <= 0xDF then
+        if a <= 0x7F then
+          i = i + 1
+          return p, x
+        else
+          local b = TA[b]
+          if b then
+            i = i + 2
+            return p, x + b
+          end
+        end
+      else
+        if a <= 0xEF then
+          local b = B[a][b]
+          local c = TA[c]
+          if b and c then
+            i = j
+            return p, x + b + c
+          end
+        else
+          local b = B[a][b]
+          local c = TB[c]
+          local d = TA[d]
+          if b and c and d then
+            i = i + 4
+            return p, x + b + c + d
+          end
+        end
+      end
+      error "invalid UTF-8 code"
+    elseif a then
+      error "invalid UTF-8 code"
     end
   end
 end
