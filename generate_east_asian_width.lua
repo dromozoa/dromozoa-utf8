@@ -81,7 +81,7 @@ end
 
 local function make_tree(range)
   local m = #range - 1
-  local n = math.ceil(math.log(m) / math.log(2)) - 1
+  local n = math.ceil(math.log(#range) / math.log(2)) - 1
 
   local indice = {}
   for i = 1, m do
