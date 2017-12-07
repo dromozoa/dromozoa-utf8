@@ -2,6 +2,11 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v1.5
+
+* new function `dromozoa.ucd.east_asian_width`
+* new function `dromozoa.utf16.decode_surrogate_pair`
+
 ## v1.4
 
 ### Features
@@ -12,14 +17,14 @@ Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
 ### Performance Improvement
 
-| Function               | Improvement Ratio |
-|------------------------|------------------:|
-| utf8.char              |               9.9 |
-| utf8.codes             |               1.8 |
-| utf8.codepoint         |               1.8 |
-| utf8.len               |               1.5 |
-| utf8.offset (positive) |               3.3 |
-| utf8.offset (negative) |               2.3 |
+| Function                 | Improvement Ratio |
+|--------------------------|------------------:|
+| `utf8.char`              |               9.9 |
+| `utf8.codes`             |               1.8 |
+| `utf8.codepoint`         |               1.8 |
+| `utf8.len`               |               1.5 |
+| `utf8.offset` (positive) |               3.3 |
+| `utf8.offset` (negative) |               2.3 |
 
 ### Memory Usage
 

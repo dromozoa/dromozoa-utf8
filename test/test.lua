@@ -31,7 +31,7 @@ local reasons = {
 local count = 0
 local expect
 if _VERSION ~= "Lua 5.3" then
-  expect = assert(loadfile("test.exp"))()
+  expect = assert(loadfile("test/test.exp"))()
 end
 
 local function each(module, ...)
