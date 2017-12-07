@@ -1,2 +1,3 @@
 .*.swp
+/test/icu4j/target
 /ubench_result*
