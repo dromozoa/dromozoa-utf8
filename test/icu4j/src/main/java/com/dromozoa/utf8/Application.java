@@ -1,25 +1,40 @@
-// Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
-//
-// This file is part of dromozoa-utf8.
-//
-// dromozoa-utf8 is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// dromozoa-utf8 is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
-
 package com.dromozoa.utf8;
 
+import java.util.*;
 import com.ibm.icu.lang.*;
 
 public class Application {
+  private static class Range {
+    public int first;
+    public int last;
+    public int property;
+
+    public Range(int first, int last, int property) {
+      this.first = first;
+      this.last = last;
+      this.property = property;
+    }
+  }
+
+  private static String getPropertyString(int property) {
+    switch (property) {
+      case UCharacter.EastAsianWidth.AMBIGUOUS:
+        return "A";
+      case UCharacter.EastAsianWidth.FULLWIDTH:
+        return "F";
+      case UCharacter.EastAsianWidth.HALFWIDTH:
+        return "H";
+      case UCharacter.EastAsianWidth.NEUTRAL:
+        return "N";
+      case UCharacter.EastAsianWidth.NARROW:
+        return "Na";
+      case UCharacter.EastAsianWidth.WIDE:
+        return "W";
+      default:
+        throw new RuntimeException();
+    }
+  }
+
   public static void main(String[] args) {
     int codePointFirst = 0;
     int codePointLast = 0x10FFFF;
@@ -33,30 +48,25 @@ public class Application {
       }
     }
 
+    List<Range> ranges = new ArrayList<>();
     for (int codePoint = codePointFirst; codePoint <= codePointLast; ++codePoint) {
       int property = UCharacter.getIntPropertyValue(codePoint, UProperty.EAST_ASIAN_WIDTH);
-      switch (property) {
-        case UCharacter.EastAsianWidth.AMBIGUOUS:
-          System.out.println(codePoint + "\tA");
-          break;
-        case UCharacter.EastAsianWidth.FULLWIDTH:
-          System.out.println(codePoint + "\tF");
-          break;
-        case UCharacter.EastAsianWidth.HALFWIDTH:
-          System.out.println(codePoint + "\tH");
-          break;
-        case UCharacter.EastAsianWidth.NEUTRAL:
-          System.out.println(codePoint + "\tN");
-          break;
-        case UCharacter.EastAsianWidth.NARROW:
-          System.out.println(codePoint + "\tNa");
-          break;
-        case UCharacter.EastAsianWidth.WIDE:
-          System.out.println(codePoint + "\tW");
-          break;
-        default:
-          throw new RuntimeException();
+      Range range = null;
+      if (!ranges.isEmpty()) {
+        range = ranges.get(ranges.size() - 1);
+        if (range.property != property) {
+          range = null;
+        }
       }
+      if (range == null) {
+        ranges.add(new Range(codePoint, codePoint, property));
+      } else {
+        range.last = codePoint;
+      }
+    }
+
+    for (Range range : ranges) {
+      System.out.println(range.first + "\t" + range.last + "\t" + getPropertyString(range.property));
     }
   }
 }
