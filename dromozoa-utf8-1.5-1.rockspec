@@ -1,8 +1,8 @@
 package = "dromozoa-utf8"
-version = "1.4-1"
+version = "1.5-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.4.tar.gz";
-  file = "dromozoa-utf8-1.4.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.5.tar.gz";
+  file = "dromozoa-utf8-1.5.tar.gz";
 }
 description = {
   summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation";
@@ -13,6 +13,8 @@ description = {
 build = {
   type = "builtin";
   modules = {
+    ["dromozoa.ucd.east_asian_width"] = "dromozoa/ucd/east_asian_width.lua";
+    ["dromozoa.utf16.decode_surrogate_pair"] = "dromozoa/utf16/decode_surrogate_pair.lua";
     ["dromozoa.utf8"] = "dromozoa/utf8.lua";
     ["dromozoa.utf8.check_integer"] = "dromozoa/utf8/check_integer.lua";
     ["dromozoa.utf8.check_string"] = "dromozoa/utf8/check_string.lua";
