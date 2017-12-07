@@ -15,8 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local dumper = require "dromozoa.commons.dumper"
-
 -- https://www.unicode.org/reports/tr11/
 -- https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
 
@@ -151,14 +149,14 @@ local flat = make_flat(filename)
 local range = make_range(flat)
 local tree = make_tree(range)
 
-local code = {[[
+local code = { ([[
 -- generated from EastAsianWidth-10.0.0.txt
 return function (c)
-]]}
+  c = c + 0
+]]):format(filename:gsub("^.*/", "")) }
 make_code(tree, code, 1, 1)
-code[#code + 1] = [[
-end
-]]
+code[#code + 1] = "end\n"
 
-local code = table.concat(code)
-io.write(code)
+for i = 1, #code do
+  io.write(code[i])
+end
