@@ -1,4 +1,5 @@
 return function (c)
+  c = c + 0
   if c < 9793 then
     if c < 8570 then
       if c < 970 then

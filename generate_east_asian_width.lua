@@ -31,7 +31,7 @@ local properties = {
 
 local ucd = builder("N")
 
-for line in io.lines(filename) do
+for line in io.lines() do
   local first, last, property = line:match("^(%x+)%.%.(%x+);(%a+)")
   if not first then
     first, property = line:match("^(%x+);(%a+)")
