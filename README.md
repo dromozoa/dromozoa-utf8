@@ -2,6 +2,10 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v1.6
+
+* new utility `dromozoa-markdown-table`
+
 ## v1.5
 
 * new function `dromozoa.ucd.east_asian_width`
