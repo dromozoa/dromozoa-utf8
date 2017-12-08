@@ -50,30 +50,30 @@ local function println(buffer, ...)
   buffer[n + 1] = "\n"
 end
 
-local function compile(buffer, tree_operator, tree_operand, i, depth)
-  local u = tree_operand[i]
+local function compile(buffer, tree_class, tree_value, i, depth)
+  local u = tree_value[i]
   local j = i * 2
   local k = j + 1
 
   local indent = ("  "):rep(depth)
   local depth = depth + 1
 
-  if tree_operator[k] == "LT" then
+  if tree_class[k] == "node" then
     println(buffer, indent, "if c < ", quote(u), " then")
-    compile(buffer, tree_operator, tree_operand, j, depth)
+    compile(buffer, tree_class, tree_value, j, depth)
     println(buffer, indent, "else")
-    compile(buffer, tree_operator, tree_operand, k, depth)
+    compile(buffer, tree_class, tree_value, k, depth)
     println(buffer, indent, "end")
-  elseif tree_operator[j] == "LT" then
-    local w = tree_operand[k]
+  elseif tree_class[j] == "node" then
+    local w = tree_value[k]
     println(buffer, indent, "if c < ", quote(u), " then")
-    compile(buffer, tree_operator, tree_operand, j, depth)
+    compile(buffer, tree_class, tree_value, j, depth)
     println(buffer, indent, "else")
     println(buffer, indent, "  return " .. quote(w))
     println(buffer, indent, "end")
   else
-    local v = tree_operand[j]
-    local w = tree_operand[k]
+    local v = tree_value[j]
+    local w = tree_value[k]
     if type(v) == "boolean" and type(w) == "boolean" then
       if v then
         println(buffer, indent, "return c < ", quote(u))
@@ -117,8 +117,8 @@ function class:build()
     indice[i] = i
   end
 
-  local tree_operator = {}
-  local tree_operand = {}
+  local tree_class = {}
+  local tree_value = {}
 
   local height = math.ceil(math.log(n) / math.log(2))
   for i = height, 0, -1 do
@@ -126,8 +126,8 @@ function class:build()
     local k = 1
     local index = indice[k]
     while index and j <= m do
-      tree_operator[j] = "LT"
-      tree_operand[j] = range_first[index + 1]
+      tree_class[j] = "node"
+      tree_value[j] = range_first[index + 1]
       table.remove(indice, k)
       j = j + 1
       k = k + 1
@@ -139,15 +139,15 @@ function class:build()
     local first = range_first[i]
     local value = range_value[i]
     local j = 1
-    while tree_operator[j] == "LT" do
-      if first < tree_operand[j] then
+    while tree_class[j] == "node" do
+      if first < tree_value[j] then
         j = j * 2
       else
         j = j * 2 + 1
       end
     end
-    tree_operator[j] = "RETURN"
-    tree_operand[j] = value
+    tree_class[j] = "leaf"
+    tree_value[j] = value
   end
 
   return {
@@ -156,8 +156,8 @@ function class:build()
       value = range_value;
     };
     tree = {
-      operator = tree_operator;
-      operand = tree_operand;
+      class = tree_class;
+      value = tree_value;
     };
   }
 end
@@ -167,7 +167,7 @@ function class.compile(data)
   local buffer = {}
   println(buffer, "return function (c)")
   println(buffer, "  c = c + 0")
-  compile(tree.operator, tree.operand, 1, 1, buffer)
+  compile(tree.class, tree.value, 1, 1, buffer)
   println(buffer, "  end")
   return buffer
 end
