@@ -30,7 +30,7 @@ local function quote(v)
       return "false"
     end
   else
-    return v
+    error("nil, number, string or boolean expected, got " .. t)
   end
 end
 
@@ -38,6 +38,11 @@ local function write(buffer, ...)
   local n = select("#", ...)
   local data = {...}
   for i = 1, n do
+    local v = data[i]
+    local t = type(v)
+    if t ~= "string" then
+      error("string expected, got " .. t)
+    end
     buffer[#buffer + 1] = data[i]
   end
 end
