@@ -15,7 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
+local utf8 = require "dromozoa.utf8"
 local builder = require "dromozoa.ucd.builder"
+
+local loadstring = loadstring or load
 
 local alnum = builder(false)
 alnum:range(0x30, 0x39, true)
@@ -23,5 +26,10 @@ alnum:range(0x41, 0x5A, true)
 alnum:range(0x61, 0x7A, true)
 local data = alnum:build()
 local code = builder.compile(data)
-io.write(table.concat(code))
 
+local f = assert(loadstring(table.concat(code)))()
+assert(f(utf8.codepoint("0")))
+assert(f(utf8.codepoint("A")))
+assert(f(utf8.codepoint("a")))
+assert(not f(utf8.codepoint(" ")))
+assert(not f(utf8.codepoint("あ")))
