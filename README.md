@@ -5,6 +5,7 @@ Lua 5.3 compatible pure-Lua UTF-8 implementation.
 ## v1.6
 
 * new utility `dromozoa-markdown-table`
+* new module `dromozoa.ucd.builder`
 
 ## v1.5
 

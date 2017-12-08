@@ -17,6 +17,8 @@
 
 local builder = require "dromozoa.ucd.builder"
 
+local unpack = table.unpack or unpack
+
 -- https://www.unicode.org/reports/tr11/
 -- https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
 

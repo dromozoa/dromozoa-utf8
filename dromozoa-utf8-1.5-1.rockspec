@@ -13,6 +13,7 @@ description = {
 build = {
   type = "builtin";
   modules = {
+    ["dromozoa.ucd.builder"] = "dromozoa/ucd/builder.lua";
     ["dromozoa.ucd.east_asian_width"] = "dromozoa/ucd/east_asian_width.lua";
     ["dromozoa.utf16.decode_surrogate_pair"] = "dromozoa/utf16/decode_surrogate_pair.lua";
     ["dromozoa.utf8"] = "dromozoa/utf8.lua";
