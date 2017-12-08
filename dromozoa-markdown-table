@@ -133,15 +133,16 @@ for i = 1, #data do
         item = ""
       end
       local w = max_width - width(item) + 2
+      local w1
       if alignment == "normal" then
-        io.write(" ", item, (" "):rep(w - 1))
+        w1 = 1
       elseif alignment == "center" then
-        local w1 = (w - w % 2) / 2
-        local w2 = w - w1
-        io.write((" "):rep(w1), item, (" "):rep(w2))
+        w1 = (w - w % 2) / 2
       elseif alignment == "right" then
-        io.write((" "):rep(w - 1), item, " ")
+        w1 = w - 1
       end
+      local w2 = w - w1
+      io.write((" "):rep(w1), item, (" "):rep(w2))
     end
     io.write("|\n")
   end
