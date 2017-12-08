@@ -50,7 +50,7 @@ local n = 0
 for line in io.lines() do
   local items = {}
   local m = 0
-  for item in line:match("^%s*|?(.-)|?%s*$"):gmatch("[^|]*") do
+  for item in ("|" .. line:match("^%s*|?(.-)|?%s*$")):gmatch("|([^|]*)") do
     m = m + 1
     items[m] = item:match("^%s*(.-)%s*$")
   end
@@ -67,7 +67,7 @@ for i = 1, n do
     for j = 1, #items do
       local item = items[j]
       if item:find(":$") then
-        if item:find("^:") then
+        if item:find("^:.") then
           alignments[j] = "center"
         else
           alignments[j] = "right"
@@ -90,10 +90,15 @@ end
 
 local m = #alignments
 local n = #max_widths
-
-local size = #max_widths
-for i = #alignments + 1, size do
-  alignments[i] = "normal"
+if m < n then
+  for i = m + 1, n do
+    alignments[i] = "normal"
+  end
+else
+  for i = n + 1, m do
+    max_widths[i] = 0
+  end
+  n = m
 end
 
 for i = 1, #data do
@@ -101,45 +106,41 @@ for i = 1, #data do
   if #items == 0 then
     io.write("\n")
   elseif i == 2 then
-    for j = 1, size do
+    for j = 1, n do
       local alignment = alignments[j]
-      local n = max_widths[j]
-      if n > 0 then
-        io.write("|")
-        if alignment == "center" then
-          io.write(":")
-        else
-          io.write("-")
-        end
-        io.write(("-"):rep(n))
-        if alignment == "normal" then
-          io.write("-")
-        else
-          io.write(":")
-        end
+      local max_width = max_widths[j]
+      io.write("|")
+      if alignment == "center" then
+        io.write(":")
+      else
+        io.write("-")
+      end
+      io.write(("-"):rep(max_width))
+      if alignment == "normal" then
+        io.write("-")
+      else
+        io.write(":")
       end
     end
     io.write("|\n")
   else
-    for j = 1, size do
+    for j = 1, n do
       local alignment = alignments[j]
-      local n = max_widths[j]
-      if n > 0 then
-        io.write("|")
-        local item = items[j]
-        if item == nil then
-          item = ""
-        end
-        local n = n - width(item) + 1
-        if alignment == "normal" then
-          io.write(" ", item, (" "):rep(n))
-        elseif alignment == "center" then
-          local n1 = math.floor((n - 1) / 2) + 1
-          local n2 = n - n1 + 1
-          io.write((" "):rep(n1), item, (" "):rep(n2))
-        elseif alignment == "right" then
-          io.write((" "):rep(n), item, " ")
-        end
+      local max_width = max_widths[j]
+      io.write("|")
+      local item = items[j]
+      if not item then
+        item = ""
+      end
+      local w = max_width - width(item) + 2
+      if alignment == "normal" then
+        io.write(" ", item, (" "):rep(w - 1))
+      elseif alignment == "center" then
+        local w1 = (w - w % 2) / 2
+        local w2 = w - w1
+        io.write((" "):rep(w1), item, (" "):rep(w2))
+      elseif alignment == "right" then
+        io.write((" "):rep(w - 1), item, " ")
       end
     end
     io.write("|\n")
