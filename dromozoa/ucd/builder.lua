@@ -167,8 +167,8 @@ function class.compile(data)
   local buffer = {}
   println(buffer, "return function (c)")
   println(buffer, "  c = c + 0")
-  compile(tree.class, tree.value, 1, 1, buffer)
-  println(buffer, "  end")
+  compile(buffer, tree.class, tree.value, 1, 1)
+  println(buffer, "end")
   return buffer
 end
 

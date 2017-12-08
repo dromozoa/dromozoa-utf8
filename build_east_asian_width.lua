@@ -19,8 +19,8 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
--- https://www.unicode.org/reports/tr11/
--- https://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
+local filename = "doc/EastAsianWidth-10.0.0.txt"
+local code_filename = "dromozoa/ucd/east_asian_width.lua"
 
 local properties = {
   ["N"]  = true; -- neutral
@@ -31,9 +31,9 @@ local properties = {
   ["F"]  = true; -- fullwidth
 }
 
-local ucd = builder("N")
+local _ = builder("N")
 
-for line in io.lines() do
+for line in io.lines(filename) do
   local first, last, property = line:match("^(%x+)%.%.(%x+);(%a+)")
   if not first then
     first, property = line:match("^(%x+);(%a+)")
@@ -45,11 +45,13 @@ for line in io.lines() do
     assert(first <= last)
     assert(not prev or prev < first)
     assert(properties[property])
-    ucd:range(first, last, property)
+    _:range(first, last, property)
     prev = last
   end
 end
 
-local data = ucd:build()
-local code = builder.compile(data)
-io.write((table.unpack or unpack)(code))
+local code = _.compile(_:build())
+
+local out = assert(io.open(code_filename, "w"))
+out:write(unpack(code))
+out:close()
