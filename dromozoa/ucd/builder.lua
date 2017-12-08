@@ -47,7 +47,7 @@ local function write(buffer, ...)
   end
 end
 
-local function compile(tree_operator, tree_operand, i, depth, buffer)
+local function compile(buffer, tree_operator, tree_operand, i, depth)
   local u = tree_operand[i]
   local j = i * 2
   local k = j + 1
@@ -57,14 +57,14 @@ local function compile(tree_operator, tree_operand, i, depth, buffer)
 
   if tree_operator[k] == "LT" then
     write(buffer, indent, "if c < ", quote(u), " then\n")
-    compile(tree_operator, tree_operand, j, depth, buffer)
+    compile(buffer, tree_operator, tree_operand, j, depth)
     write(buffer, indent, "else\n")
-    compile(tree_operator, tree_operand, k, depth, buffer)
+    compile(buffer, tree_operator, tree_operand, k, depth)
     write(buffer, indent, "end\n")
   elseif tree_operator[j] == "LT" then
     local w = tree_operand[k]
     write(buffer, indent, "if c < ", quote(u), " then\n")
-    compile(tree_operator, tree_operand, j, depth, buffer)
+    compile(buffer, tree_operator, tree_operand, j, depth)
     write(buffer, indent, "else\n")
     write(buffer, indent, "  return " .. quote(w), "\n")
     write(buffer, indent, "end\n")
