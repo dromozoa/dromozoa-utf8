@@ -31,4 +31,9 @@ build = {
     ["dromozoa.utf8.offset_table"] = "dromozoa/utf8/offset_table.lua";
     ["dromozoa.utf8.pure"] = "dromozoa/utf8/pure.lua";
   };
+  install = {
+    bin = {
+      ["dromozoa-markdown-table"] = "dromozoa-markdown-table";
+    };
+  };
 }
