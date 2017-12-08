@@ -27,7 +27,7 @@ if not ambiguous_width then
   ambiguous_width = 2
 end
 
-local width_map = {
+local widths = {
   ["N"]  = 1; -- neutral
   ["Na"] = 1; -- narrow
   ["H"]  = 1; -- halfwidth
@@ -39,65 +39,71 @@ local width_map = {
 local function width(s)
   local width = 0
   for _, c in utf8.codes(s) do
-    width = width + width_map[east_asian_width(c)]
+    width = width + widths[east_asian_width(c)]
   end
   return width
 end
 
-local dataset = {}
-
-local lines = {}
+local data = {}
+local n = 0
 
 for line in io.lines() do
-  local data = {}
-  for item in line:gsub("^%s*|", ""):gsub("|%s*$", ""):gmatch("[^|]+") do
-    data[#data + 1] = item:gsub("^%s+", ""):gsub("%s+$", "")
+  local items = {}
+  local m = 0
+  for item in line:match("^%s*|?(.-)|?%s*$"):gmatch("[^|]*") do
+    m = m + 1
+    items[m] = item:match("^%s*(.-)%s*$")
   end
-  dataset[#dataset + 1] = data
+  n = n + 1
+  data[n] = items
 end
 
 local alignments = {}
-local max_sizes = {}
+local max_widths = {}
 
-for i = 1, #dataset do
-  local data = dataset[i]
+for i = 1, n do
+  local items = data[i]
   if i == 2 then
-    for j = 1, #data do
-      local item = data[j]
-      alignments[j] = "normal"
-      if item:match("%:$") then
-        if item:match("^%:") then
+    for j = 1, #items do
+      local item = items[j]
+      if item:find(":$") then
+        if item:find("^:") then
           alignments[j] = "center"
         else
           alignments[j] = "right"
         end
+      else
+        alignments[j] = "normal"
       end
     end
   else
-    for j = 1, #data do
-      local item = data[j]
-      local m = max_sizes[j]
+    for j = 1, #items do
+      local item = items[j]
+      local m = max_widths[j]
       local n = width(item)
       if m == nil or m < n then
-        max_sizes[j] = n
+        max_widths[j] = n
       end
     end
   end
 end
 
-local size = #max_sizes
+local m = #alignments
+local n = #max_widths
+
+local size = #max_widths
 for i = #alignments + 1, size do
   alignments[i] = "normal"
 end
 
-for i = 1, #dataset do
-  local data = dataset[i]
-  if #data == 0 then
+for i = 1, #data do
+  local items = data[i]
+  if #items == 0 then
     io.write("\n")
   elseif i == 2 then
     for j = 1, size do
       local alignment = alignments[j]
-      local n = max_sizes[j]
+      local n = max_widths[j]
       if n > 0 then
         io.write("|")
         if alignment == "center" then
@@ -117,10 +123,10 @@ for i = 1, #dataset do
   else
     for j = 1, size do
       local alignment = alignments[j]
-      local n = max_sizes[j]
+      local n = max_widths[j]
       if n > 0 then
         io.write("|")
-        local item = data[j]
+        local item = items[j]
         if item == nil then
           item = ""
         end
