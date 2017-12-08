@@ -1,0 +1,149 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-utf8.
+--
+-- dromozoa-utf8 is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-utf8 is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
+
+local utf8 = require "dromozoa.utf8"
+local east_asian_width = require "dromozoa.ucd.east_asian_width"
+
+local ambiguous_width = ...
+
+ambiguous_width = tonumber(ambiguous_width)
+if not ambiguous_width then
+  ambiguous_width = 2
+end
+
+local widths = {
+  ["N"]  = 1; -- neutral
+  ["Na"] = 1; -- narrow
+  ["H"]  = 1; -- halfwidth
+  ["A"]  = ambiguous_width; -- ambiguous
+  ["W"]  = 2; -- wide
+  ["F"]  = 2; -- fullwidth
+}
+
+local function width(s)
+  local width = 0
+  for _, c in utf8.codes(s) do
+    width = width + widths[east_asian_width(c)]
+  end
+  return width
+end
+
+local data = {}
+local n = 0
+
+for line in io.lines() do
+  local items = {}
+  local m = 0
+  for item in ("|" .. line:match("^%s*|?(.-)|?%s*$")):gmatch("|([^|]*)") do
+    m = m + 1
+    items[m] = item:match("^%s*(.-)%s*$")
+  end
+  n = n + 1
+  data[n] = items
+end
+
+local alignments = {}
+local max_widths = {}
+
+for i = 1, n do
+  local items = data[i]
+  if i == 2 then
+    for j = 1, #items do
+      local item = items[j]
+      if item:find(":$") then
+        if item:find("^:.") then
+          alignments[j] = "center"
+        else
+          alignments[j] = "right"
+        end
+      else
+        alignments[j] = "normal"
+      end
+    end
+  else
+    for j = 1, #items do
+      local item = items[j]
+      local m = max_widths[j]
+      local n = width(item)
+      if m == nil or m < n then
+        max_widths[j] = n
+      end
+    end
+  end
+end
+
+local m = #alignments
+local n = #max_widths
+if m < n then
+  for i = m + 1, n do
+    alignments[i] = "normal"
+  end
+else
+  for i = n + 1, m do
+    max_widths[i] = 0
+  end
+  n = m
+end
+
+for i = 1, #data do
+  local items = data[i]
+  if #items == 0 then
+    io.write("\n")
+  elseif i == 2 then
+    for j = 1, n do
+      local alignment = alignments[j]
+      local max_width = max_widths[j]
+      io.write("|")
+      if alignment == "center" then
+        io.write(":")
+      else
+        io.write("-")
+      end
+      io.write(("-"):rep(max_width))
+      if alignment == "normal" then
+        io.write("-")
+      else
+        io.write(":")
+      end
+    end
+    io.write("|\n")
+  else
+    for j = 1, n do
+      local alignment = alignments[j]
+      local max_width = max_widths[j]
+      io.write("|")
+      local item = items[j]
+      if not item then
+        item = ""
+      end
+      local w = max_width - width(item) + 2
+      local w1
+      if alignment == "normal" then
+        w1 = 1
+      elseif alignment == "center" then
+        w1 = (w - w % 2) / 2
+      elseif alignment == "right" then
+        w1 = w - 1
+      end
+      local w2 = w - w1
+      io.write((" "):rep(w1), item, (" "):rep(w2))
+    end
+    io.write("|\n")
+  end
+end

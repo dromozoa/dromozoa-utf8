@@ -1,4 +1,3 @@
--- generated from EastAsianWidth-10.0.0.txt
 return function (c)
   c = c + 0
   if c < 9793 then
@@ -219,7 +218,9 @@ return function (c)
                 else
                   if c < 768 then
                     if c < 736 then return "A" else return "N" end
-                  else return "A" end
+                  else
+                    return "A"
+                  end
                 end
               end
             else

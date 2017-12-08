@@ -26,3 +26,16 @@ for i in test/test*.lua
 do
   "$lua" "$i"
 done
+
+mkdir -p out
+
+for i in test/table*.md
+do
+  name=`expr "x$i" : 'xtest/\(.*\)\.md$'`
+  "$lua" dromozoa-markdown-table <"$i" >"out/$name-01.md"
+  "$lua" dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md"
+  diff -u "test/$name.exp" "out/$name-01.md"
+  diff -u "test/$name.exp" "out/$name-02.md"
+done
+
+rm -f -r out

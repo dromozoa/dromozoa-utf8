@@ -3,7 +3,7 @@
 
   <groupId>com.dromozoa.utf8</groupId>
   <artifactId>icu4j</artifactId>
-  <version>1.4</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <properties>
