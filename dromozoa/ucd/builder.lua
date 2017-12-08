@@ -30,7 +30,7 @@ local function quote(v)
       return "false"
     end
   else
-    error("nil, number, string or boolean expected, got " .. t)
+    error("nil/number/string/boolean expected, got " .. t)
   end
 end
 
