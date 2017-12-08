@@ -34,17 +34,20 @@ local function quote(v)
   end
 end
 
-local function write(buffer, ...)
-  local n = select("#", ...)
+local function println(buffer, ...)
+  local n = #buffer
+  local m = select("#", ...)
   local data = {...}
-  for i = 1, n do
+  for i = 1, m do
     local v = data[i]
     local t = type(v)
     if t ~= "string" then
       error("string expected, got " .. t)
     end
-    buffer[#buffer + 1] = data[i]
+    n = n + 1
+    buffer[n] = data[i]
   end
+  buffer[n + 1] = "\n"
 end
 
 local function compile(buffer, tree_operator, tree_operand, i, depth)
@@ -56,29 +59,29 @@ local function compile(buffer, tree_operator, tree_operand, i, depth)
   local depth = depth + 1
 
   if tree_operator[k] == "LT" then
-    write(buffer, indent, "if c < ", quote(u), " then\n")
+    println(buffer, indent, "if c < ", quote(u), " then")
     compile(buffer, tree_operator, tree_operand, j, depth)
-    write(buffer, indent, "else\n")
+    println(buffer, indent, "else")
     compile(buffer, tree_operator, tree_operand, k, depth)
-    write(buffer, indent, "end\n")
+    println(buffer, indent, "end")
   elseif tree_operator[j] == "LT" then
     local w = tree_operand[k]
-    write(buffer, indent, "if c < ", quote(u), " then\n")
+    println(buffer, indent, "if c < ", quote(u), " then")
     compile(buffer, tree_operator, tree_operand, j, depth)
-    write(buffer, indent, "else\n")
-    write(buffer, indent, "  return " .. quote(w), "\n")
-    write(buffer, indent, "end\n")
+    println(buffer, indent, "else")
+    println(buffer, indent, "  return " .. quote(w))
+    println(buffer, indent, "end")
   else
     local v = tree_operand[j]
     local w = tree_operand[k]
     if type(v) == "boolean" and type(w) == "boolean" then
       if v then
-        write(buffer, indent, "return c < ", quote(u), "\n")
+        println(buffer, indent, "return c < ", quote(u))
       else
-        write(buffer, indent, "return c >= ", quote(u), "\n")
+        println(buffer, indent, "return c >= ", quote(u))
       end
     else
-      write(buffer, indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end\n")
+      println(buffer, indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end")
     end
   end
 end
@@ -161,12 +164,11 @@ end
 
 function class.compile(data)
   local tree = data.tree
-  local buffer = {
-    "return function (c)\n";
-    "  c = c + 0\n";
-  }
+  local buffer = {}
+  println(buffer, "return function (c)")
+  println(buffer, "  c = c + 0")
   compile(tree.operator, tree.operand, 1, 1, buffer)
-  buffer[#buffer + 1] = "end\n"
+  println(buffer, "  end")
   return buffer
 end
 
