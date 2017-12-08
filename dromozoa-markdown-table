@@ -1,0 +1,141 @@
+#! /usr/bin/env lua
+
+-- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+--
+-- This file is part of dromozoa-utf8.
+--
+-- dromozoa-utf8 is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+--
+-- dromozoa-utf8 is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
+
+local utf8 = require "dromozoa.utf8"
+local east_asian_width = require "dromozoa.ucd.east_asian_width"
+
+local ambiguous_width = ...
+
+ambiguous_width = tonumber(ambiguous_width)
+if not ambiguous_width then
+  ambiguous_width = 2
+end
+
+local width_map = {
+  ["N"]  = 1; -- neutral
+  ["Na"] = 1; -- narrow
+  ["H"]  = 1; -- halfwidth
+  ["A"]  = ambiguous_width; -- ambiguous
+  ["W"]  = 2; -- wide
+  ["F"]  = 2; -- fullwidth
+}
+
+local function width(s)
+  local width = 0
+  for _, c in utf8.codes(s) do
+    width = width + width_map[east_asian_width(c)]
+  end
+  return width
+end
+
+local dataset = {}
+
+local lines = {}
+
+for line in io.lines() do
+  local data = {}
+  for item in line:gsub("^%s*|", ""):gsub("|%s*$", ""):gmatch("[^|]+") do
+    data[#data + 1] = item:gsub("^%s+", ""):gsub("%s+$", "")
+  end
+  dataset[#dataset + 1] = data
+end
+
+local alignments = {}
+local max_sizes = {}
+
+for i = 1, #dataset do
+  local data = dataset[i]
+  if i == 2 then
+    for j = 1, #data do
+      local item = data[j]
+      alignments[j] = "normal"
+      if item:match("%:$") then
+        if item:match("^%:") then
+          alignments[j] = "center"
+        else
+          alignments[j] = "right"
+        end
+      end
+    end
+  else
+    for j = 1, #data do
+      local item = data[j]
+      local m = max_sizes[j]
+      local n = width(item)
+      if m == nil or m < n then
+        max_sizes[j] = n
+      end
+    end
+  end
+end
+
+local size = #max_sizes
+for i = #alignments + 1, size do
+  alignments[i] = "normal"
+end
+
+for i = 1, #dataset do
+  local data = dataset[i]
+  if #data == 0 then
+    io.write("\n")
+  elseif i == 2 then
+    for j = 1, size do
+      local alignment = alignments[j]
+      local n = max_sizes[j]
+      if n > 0 then
+        io.write("|")
+        if alignment == "center" then
+          io.write(":")
+        else
+          io.write("-")
+        end
+        io.write(("-"):rep(n))
+        if alignment == "normal" then
+          io.write("-")
+        else
+          io.write(":")
+        end
+      end
+    end
+    io.write("|\n")
+  else
+    for j = 1, size do
+      local alignment = alignments[j]
+      local n = max_sizes[j]
+      if n > 0 then
+        io.write("|")
+        local item = data[j]
+        if item == nil then
+          item = ""
+        end
+        local n = n - width(item) + 1
+        if alignment == "normal" then
+          io.write(" ", item, (" "):rep(n))
+        elseif alignment == "center" then
+          local n1 = math.floor((n - 1) / 2) + 1
+          local n2 = n - n1 + 1
+          io.write((" "):rep(n1), item, (" "):rep(n2))
+        elseif alignment == "right" then
+          io.write((" "):rep(n), item, " ")
+        end
+      end
+    end
+    io.write("|\n")
+  end
+end

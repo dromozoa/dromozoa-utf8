@@ -26,3 +26,13 @@ for i in test/test*.lua
 do
   "$lua" "$i"
 done
+
+mkdir -p out
+
+case x$TMPDIR in
+  x) TMPDIR=/tmp;;
+esac
+"$lua" dromozoa-markdown-table <test/table.md >out/table.md
+diff -u test/table.exp out/table.md
+
+rm -f -r out
