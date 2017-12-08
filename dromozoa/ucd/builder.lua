@@ -91,8 +91,19 @@ function class:build()
   }
 end
 
-local function generate_code(tree_operator, tree_operands, i, depth, buffer, n)
-  local u = tree_operands[i]
+local function format(v)
+  local t = type(v)
+  if t == "number" then
+    return "%.17g"
+  elseif t == "string" then
+    return "\"%s\""
+  else
+    return "%s"
+  end
+end
+
+local function generate_code(tree_operator, tree_operand, i, depth, buffer, n)
+  local u = tree_operand[i]
   local j = i * 2
   local k = j + 1
 
@@ -101,31 +112,28 @@ local function generate_code(tree_operator, tree_operands, i, depth, buffer, n)
 
   if tree_operator[k] == "LT" then
     n = n + 1 buffer[n] = indent .. ("if c < %d then\n"):format(u)
-    n = generate_code(tree_operator, tree_operands, j, depth, buffer, n)
+    n = generate_code(tree_operator, tree_operand, j, depth, buffer, n)
     n = n + 1 buffer[n] = indent .. "else\n"
-    n = generate_code(tree_operator, tree_operands, k, depth, buffer, n)
+    n = generate_code(tree_operator, tree_operand, k, depth, buffer, n)
     n = n + 1 buffer[n] = indent .. "end\n"
   elseif tree_operator[j] == "LT" then
-    local w = tree_operands[k]
-    local wt = type(w)
-    local wf = wt == "number" and "%.17g" or wt == "string" and "%q" or "%s"
+    local w = tree_operand[k]
+    local wf = format(w)
     n = n + 1 buffer[n] = indent .. ("if c < %d then\n"):format(u)
-    n = generate_code(tree_operator, tree_operands, j, depth, buffer, n)
+    n = generate_code(tree_operator, tree_operand, j, depth, buffer, n)
     n = n + 1 buffer[n] = indent .. ("else return " .. wf .. " end\n"):format(w)
   else
-    local v = tree_operands[j]
-    local vt = type(v)
-    local vf = vt == "number" and "%.17g" or vt == "string" and "%q" or "%s"
-    local w = tree_operands[k]
-    local wt = type(w)
-    local wf = wt == "number" and "%.17g" or wt == "string" and "%q" or "%s"
-    n = n + 1 buffer[n] = indent .. ("if c < %d then return " .. wf .. " else return " .. wf .. " end\n"):format(u, v, w)
+    local v = tree_operand[j]
+    local vf = format(v)
+    local w = tree_operand[k]
+    local wf = format(w)
+    n = n + 1 buffer[n] = indent .. ("if c < %d then return " .. vf .. " else return " .. wf .. " end\n"):format(u, v, w)
   end
 
   return n
 end
 
-function class.generate_code(data)
+function class.compile(data)
   local tree = data.tree
   local buffer = { "return function (c)\n" }
   local n = generate_code(tree.operator, tree.operand, 1, 1, buffer, 1)

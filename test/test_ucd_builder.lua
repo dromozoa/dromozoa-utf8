@@ -22,6 +22,6 @@ alnum:range(0x30, 0x39, true)
 alnum:range(0x41, 0x5A, true)
 alnum:range(0x61, 0x7A, true)
 local data = alnum:build()
-local code = builder.generate_code(data)
+local code = builder.compile(data)
 io.write(table.concat(code))
 
