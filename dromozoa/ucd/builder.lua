@@ -15,18 +15,34 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local function format(v)
+local function quote(v)
   local t = type(v)
-  if t == "number" then
-    return "%.17g"
+  if t == "nil" then
+    return "nil"
+  elseif t == "number" then
+    return ("%.17g"):format(v)
   elseif t == "string" then
-    return "\"%s\""
+    return ("%q"):format(v)
+  elseif t == "boolean" then
+    if v then
+      return "true"
+    else
+      return "false"
+    end
   else
-    return "%s"
+    return v
   end
 end
 
-local function compile(tree_operator, tree_operand, i, depth, buffer, n)
+local function write(buffer, ...)
+  local n = select("#", ...)
+  local data = {...}
+  for i = 1, n do
+    buffer[#buffer + 1] = data[i]
+  end
+end
+
+local function compile(tree_operator, tree_operand, i, depth, buffer)
   local u = tree_operand[i]
   local j = i * 2
   local k = j + 1
@@ -35,26 +51,31 @@ local function compile(tree_operator, tree_operand, i, depth, buffer, n)
   local depth = depth + 1
 
   if tree_operator[k] == "LT" then
-    n = n + 1 buffer[n] = indent .. ("if c < %d then\n"):format(u)
-    n = compile(tree_operator, tree_operand, j, depth, buffer, n)
-    n = n + 1 buffer[n] = indent .. "else\n"
-    n = compile(tree_operator, tree_operand, k, depth, buffer, n)
-    n = n + 1 buffer[n] = indent .. "end\n"
+    write(buffer, indent, "if c < ", quote(u), " then\n")
+    compile(tree_operator, tree_operand, j, depth, buffer)
+    write(buffer, indent, "else\n")
+    compile(tree_operator, tree_operand, k, depth, buffer)
+    write(buffer, indent, "end\n")
   elseif tree_operator[j] == "LT" then
     local w = tree_operand[k]
-    local wf = format(w)
-    n = n + 1 buffer[n] = indent .. ("if c < %d then\n"):format(u)
-    n = compile(tree_operator, tree_operand, j, depth, buffer, n)
-    n = n + 1 buffer[n] = indent .. ("else return " .. wf .. " end\n"):format(w)
+    write(buffer, indent, "if c < ", quote(u), " then\n")
+    compile(tree_operator, tree_operand, j, depth, buffer)
+    write(buffer, indent, "else\n")
+    write(buffer, indent, "  return " .. quote(w), "\n")
+    write(buffer, indent, "end\n")
   else
     local v = tree_operand[j]
-    local vf = format(v)
     local w = tree_operand[k]
-    local wf = format(w)
-    n = n + 1 buffer[n] = indent .. ("if c < %d then return " .. vf .. " else return " .. wf .. " end\n"):format(u, v, w)
+    if type(v) == "boolean" and type(w) == "boolean" then
+      if v then
+        write(buffer, indent, "return c < ", quote(u), "\n")
+      else
+        write(buffer, indent, "return c >= ", quote(u), "\n")
+      end
+    else
+      write(buffer, indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end\n")
+    end
   end
-
-  return n
 end
 
 local class = {}
@@ -135,10 +156,12 @@ end
 
 function class.compile(data)
   local tree = data.tree
-  local buffer = { "return function (c)\n  c = c + 0\n" }
-  local n = compile(tree.operator, tree.operand, 1, 1, buffer, 1)
-  n = n + 1
-  buffer[n] = "end\n"
+  local buffer = {
+    "return function (c)\n";
+    "  c = c + 0\n";
+  }
+  compile(tree.operator, tree.operand, 1, 1, buffer)
+  buffer[#buffer + 1] = "end\n"
   return buffer
 end
 

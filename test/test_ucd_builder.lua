@@ -27,6 +27,8 @@ alnum:range(0x61, 0x7A, true)
 local data = alnum:build()
 local code = builder.compile(data)
 
+io.write(table.concat(code))
+
 local f = assert(loadstring(table.concat(code)))()
 assert(f(utf8.codepoint("0")))
 assert(f(utf8.codepoint("A")))
