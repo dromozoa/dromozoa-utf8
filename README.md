@@ -2,6 +2,10 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v1.7
+
+* maintenance release
+
 ## v1.6
 
 * new utility `dromozoa-markdown-table`
