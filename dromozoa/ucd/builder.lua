@@ -34,23 +34,7 @@ local function quote(v)
   end
 end
 
-local function println(buffer, ...)
-  local n = #buffer
-  local m = select("#", ...)
-  local data = {...}
-  for i = 1, m do
-    local v = data[i]
-    local t = type(v)
-    if t ~= "string" then
-      error("string expected, got " .. t)
-    end
-    n = n + 1
-    buffer[n] = data[i]
-  end
-  buffer[n + 1] = "\n"
-end
-
-local function compile(buffer, tree_class, tree_value, i, depth)
+local function compile(out, tree_class, tree_value, i, depth)
   local u = tree_value[i]
   local j = i * 2
   local k = j + 1
@@ -59,29 +43,29 @@ local function compile(buffer, tree_class, tree_value, i, depth)
   local depth = depth + 1
 
   if tree_class[k] == "node" then
-    println(buffer, indent, "if c < ", quote(u), " then")
-    compile(buffer, tree_class, tree_value, j, depth)
-    println(buffer, indent, "else")
-    compile(buffer, tree_class, tree_value, k, depth)
-    println(buffer, indent, "end")
+    out:write(indent, "if c < ", quote(u), " then\n")
+    compile(out, tree_class, tree_value, j, depth)
+    out:write(indent, "else\n")
+    compile(out, tree_class, tree_value, k, depth)
+    out:write(indent, "end\n")
   elseif tree_class[j] == "node" then
     local w = tree_value[k]
-    println(buffer, indent, "if c < ", quote(u), " then")
-    compile(buffer, tree_class, tree_value, j, depth)
-    println(buffer, indent, "else")
-    println(buffer, indent, "  return " .. quote(w))
-    println(buffer, indent, "end")
+    out:write(indent, "if c < ", quote(u), " then\n")
+    compile(out, tree_class, tree_value, j, depth)
+    out:write(indent, "else\n")
+    out:write(indent, "  return ", quote(w), "\n")
+    out:write(indent, "end\n")
   else
     local v = tree_value[j]
     local w = tree_value[k]
     if type(v) == "boolean" and type(w) == "boolean" then
       if v then
-        println(buffer, indent, "return c < ", quote(u))
+        out:write(indent, "return c < ", quote(u), "\n")
       else
-        println(buffer, indent, "return c >= ", quote(u))
+        out:write(indent, "return c >= ", quote(u), "\n")
       end
     else
-      println(buffer, indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end")
+      out:write(indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end\n")
     end
   end
 end
@@ -162,14 +146,14 @@ function class:build()
   }
 end
 
-function class.compile(data)
+function class.compile(out, data)
   local tree = data.tree
   local buffer = {}
-  println(buffer, "return function (c)")
-  println(buffer, "  c = c + 0")
-  compile(buffer, tree.class, tree.value, 1, 1)
-  println(buffer, "end")
-  return buffer
+  out:write("return function (c)\n")
+  out:write("  c = c + 0\n")
+  compile(out, tree.class, tree.value, 1, 1)
+  out:write("end\n")
+  return out
 end
 
 return setmetatable(class, {

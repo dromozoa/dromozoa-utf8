@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local filename = "doc/EastAsianWidth-10.0.0.txt"
+local source_filename = "doc/EastAsianWidth-10.0.0.txt"
 local code_filename = "dromozoa/ucd/east_asian_width.lua"
 
 local properties = {
@@ -33,7 +33,7 @@ local properties = {
 
 local _ = builder("N")
 
-for line in io.lines(filename) do
+for line in io.lines(source_filename) do
   local first, last, property = line:match("^(%x+)%.%.(%x+);(%a+)")
   if not first then
     first, property = line:match("^(%x+);(%a+)")
@@ -50,8 +50,7 @@ for line in io.lines(filename) do
   end
 end
 
-local code = _.compile(_:build())
+local data = _:build()
 
 local out = assert(io.open(code_filename, "w"))
-out:write(unpack(code))
-out:close()
+_.compile(out, data):close()
