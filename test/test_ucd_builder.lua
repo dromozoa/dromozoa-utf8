@@ -18,18 +18,20 @@
 local utf8 = require "dromozoa.utf8"
 local builder = require "dromozoa.ucd.builder"
 
-local loadstring = loadstring or load
+local _ = builder(false)
+_:range(0x30, 0x39, true)
+_:range(0x41, 0x5A, true)
+_:range(0x61, 0x7A, true)
+local data = _:build()
 
-local alnum = builder(false)
-alnum:range(0x30, 0x39, true)
-alnum:range(0x41, 0x5A, true)
-alnum:range(0x61, 0x7A, true)
-local data = alnum:build()
-local code = builder.compile(data)
+local tmpname = os.tmpname()
+_.compile(assert(io.open(tmpname, "w")), data):close()
 
 -- io.write(table.concat(code))
 
-local f = assert(loadstring(table.concat(code)))()
+local f = assert(loadfile(tmpname))()
+os.remove(tmpname)
+
 assert(f(utf8.codepoint("0")))
 assert(f(utf8.codepoint("A")))
 assert(f(utf8.codepoint("a")))
