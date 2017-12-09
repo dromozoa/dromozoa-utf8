@@ -30,55 +30,42 @@ local function quote(v)
       return "false"
     end
   else
-    error("nil, number, string or boolean expected, got " .. t)
+    error("nil/number/string/boolean expected, got " .. t)
   end
 end
 
-local function write(buffer, ...)
-  local n = select("#", ...)
-  local data = {...}
-  for i = 1, n do
-    local v = data[i]
-    local t = type(v)
-    if t ~= "string" then
-      error("string expected, got " .. t)
-    end
-    buffer[#buffer + 1] = data[i]
-  end
-end
-
-local function compile(tree_operator, tree_operand, i, depth, buffer)
-  local u = tree_operand[i]
+local function compile(out, tree_class, tree_value, i, depth)
+  local u = tree_value[i]
   local j = i * 2
   local k = j + 1
 
   local indent = ("  "):rep(depth)
   local depth = depth + 1
 
-  if tree_operator[k] == "LT" then
-    write(buffer, indent, "if c < ", quote(u), " then\n")
-    compile(tree_operator, tree_operand, j, depth, buffer)
-    write(buffer, indent, "else\n")
-    compile(tree_operator, tree_operand, k, depth, buffer)
-    write(buffer, indent, "end\n")
-  elseif tree_operator[j] == "LT" then
-    local w = tree_operand[k]
-    write(buffer, indent, "if c < ", quote(u), " then\n")
-    compile(tree_operator, tree_operand, j, depth, buffer)
-    write(buffer, indent, "else\n")
-    write(buffer, indent, "  return " .. quote(w), "\n")
-    write(buffer, indent, "end\n")
+  if tree_class[k] == "node" then
+    out:write(indent, "if c < ", quote(u), " then\n")
+    compile(out, tree_class, tree_value, j, depth)
+    out:write(indent, "else\n")
+    compile(out, tree_class, tree_value, k, depth)
+    out:write(indent, "end\n")
+  elseif tree_class[j] == "node" then
+    local w = tree_value[k]
+    out:write(indent, "if c < ", quote(u), " then\n")
+    compile(out, tree_class, tree_value, j, depth)
+    out:write(indent, "else\n")
+    out:write(indent, "  return ", quote(w), "\n")
+    out:write(indent, "end\n")
   else
-    local v = tree_operand[j]
-    local w = tree_operand[k]
+    local v = tree_value[j]
+    local w = tree_value[k]
     if type(v) == "boolean" and type(w) == "boolean" then
       if v then
-        write(buffer, indent, "return c < ", quote(u), "\n")
+        out:write(indent, "return c < ", quote(u), "\n")
       else
-        write(buffer, indent, "return c >= ", quote(u), "\n")
+        out:write(indent, "return c >= ", quote(u), "\n")
       end
     else
-      write(buffer, indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end\n")
+      out:write(indent, "if c < ", quote(u), " then return ", quote(v), " else return ", quote(w), " end\n")
     end
   end
 end
@@ -114,8 +101,8 @@ function class:build()
     indice[i] = i
   end
 
-  local tree_operator = {}
-  local tree_operand = {}
+  local tree_class = {}
+  local tree_value = {}
 
   local height = math.ceil(math.log(n) / math.log(2))
   for i = height, 0, -1 do
@@ -123,8 +110,8 @@ function class:build()
     local k = 1
     local index = indice[k]
     while index and j <= m do
-      tree_operator[j] = "LT"
-      tree_operand[j] = range_first[index + 1]
+      tree_class[j] = "node"
+      tree_value[j] = range_first[index + 1]
       table.remove(indice, k)
       j = j + 1
       k = k + 1
@@ -136,15 +123,15 @@ function class:build()
     local first = range_first[i]
     local value = range_value[i]
     local j = 1
-    while tree_operator[j] == "LT" do
-      if first < tree_operand[j] then
+    while tree_class[j] == "node" do
+      if first < tree_value[j] then
         j = j * 2
       else
         j = j * 2 + 1
       end
     end
-    tree_operator[j] = "RETURN"
-    tree_operand[j] = value
+    tree_class[j] = "leaf"
+    tree_value[j] = value
   end
 
   return {
@@ -153,21 +140,20 @@ function class:build()
       value = range_value;
     };
     tree = {
-      operator = tree_operator;
-      operand = tree_operand;
+      class = tree_class;
+      value = tree_value;
     };
   }
 end
 
-function class.compile(data)
+function class.compile(out, data)
   local tree = data.tree
-  local buffer = {
-    "return function (c)\n";
-    "  c = c + 0\n";
-  }
-  compile(tree.operator, tree.operand, 1, 1, buffer)
-  buffer[#buffer + 1] = "end\n"
-  return buffer
+  local buffer = {}
+  out:write("return function (c)\n")
+  out:write("  c = c + 0\n")
+  compile(out, tree.class, tree.value, 1, 1)
+  out:write("end\n")
+  return out
 end
 
 return setmetatable(class, {
