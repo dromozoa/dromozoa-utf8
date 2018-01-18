@@ -1,4 +1,4 @@
-// Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+// Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 //
 // This file is part of dromozoa-utf8.
 //
@@ -24,50 +24,61 @@ public class Application {
   private static class Range {
     public final int first;
     public int last;
-    public final int property;
+    public final String property;
 
-    public Range(int codePoint, int property) {
+    public Range(int codePoint, String property) {
       first = codePoint;
       last = codePoint;
       this.property = property;
     }
   }
 
-  private static String getPropertyString(int property) {
-    switch (property) {
-      case UCharacter.EastAsianWidth.AMBIGUOUS:
-        return "A";
-      case UCharacter.EastAsianWidth.FULLWIDTH:
-        return "F";
-      case UCharacter.EastAsianWidth.HALFWIDTH:
-        return "H";
-      case UCharacter.EastAsianWidth.NEUTRAL:
-        return "N";
-      case UCharacter.EastAsianWidth.NARROW:
-        return "Na";
-      case UCharacter.EastAsianWidth.WIDE:
-        return "W";
-      default:
-        throw new RuntimeException();
+  private static String getPropertyString(int codePoint, int name) {
+    if (name == UProperty.EAST_ASIAN_WIDTH) {
+      switch (UCharacter.getIntPropertyValue(codePoint, name)) {
+        case UCharacter.EastAsianWidth.AMBIGUOUS:
+          return "A";
+        case UCharacter.EastAsianWidth.FULLWIDTH:
+          return "F";
+        case UCharacter.EastAsianWidth.HALFWIDTH:
+          return "H";
+        case UCharacter.EastAsianWidth.NEUTRAL:
+          return "N";
+        case UCharacter.EastAsianWidth.NARROW:
+          return "Na";
+        case UCharacter.EastAsianWidth.WIDE:
+          return "W";
+      }
+    } else if (name == UProperty.WHITE_SPACE) {
+      return Boolean.toString(UCharacter.hasBinaryProperty(codePoint, name));
     }
+    throw new RuntimeException();
   }
 
   public static void main(String[] args) {
+    int name = UProperty.EAST_ASIAN_WIDTH;
     int codePointFirst = 0;
     int codePointLast = 0x10FFFF;
 
     if (args != null) {
       if (args.length > 0) {
-        codePointFirst = Integer.parseInt(args[0], 16);
+        if (args[0].equals("EAST_ASIAN_WIDTH")) {
+          name = UProperty.EAST_ASIAN_WIDTH;
+        } else if (args[0].equals("WHITE_SPACE")) {
+          name = UProperty.WHITE_SPACE;
+        }
       }
       if (args.length > 1) {
-        codePointLast = Integer.parseInt(args[1], 16);
+        codePointFirst = Integer.parseInt(args[1], 16);
+      }
+      if (args.length > 2) {
+        codePointLast = Integer.parseInt(args[2], 16);
       }
     }
 
     List<Range> ranges = new ArrayList<>();
     for (int codePoint = codePointFirst; codePoint <= codePointLast; ++codePoint) {
-      int property = UCharacter.getIntPropertyValue(codePoint, UProperty.EAST_ASIAN_WIDTH);
+      String property = getPropertyString(codePoint, name);
       if (!ranges.isEmpty()) {
         Range range = ranges.get(ranges.size() - 1);
         if (range.property == property) {
@@ -82,7 +93,7 @@ public class Application {
     }
 
     for (Range range : ranges) {
-      System.out.println(range.first + "\t" + range.last + "\t" + getPropertyString(range.property));
+      System.out.println(range.first + "\t" + range.last + "\t" + range.property);
     }
   }
 }
