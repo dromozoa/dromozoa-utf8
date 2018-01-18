@@ -1,4 +1,4 @@
-// Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+// Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 //
 // This file is part of dromozoa-utf8.
 //
@@ -20,8 +20,13 @@ package com.dromozoa.utf8;
 import junit.framework.TestCase;
 
 public class ApplicationTest extends TestCase {
-  public void testApplication() {
-    String[] args = { "3000", "30FF" };
+  public void testEastAsianWidth() {
+    String[] args = { "EAST_ASIAN_WIDTH", "3000", "30FF" };
+    Application.main(args);
+  }
+
+  public void testWhiteSpace() {
+    String[] args = { "WHITE_SPACE", "2000", "20FF" };
     Application.main(args);
   }
 }
