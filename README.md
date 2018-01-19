@@ -2,6 +2,10 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v1.8
+
+* new function `dromozoa.ucd.is_white_space`
+
 ## v1.7
 
 * maintenance release
