@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "doc/PropList-10.0.0.txt"
+local source_filename = "docs/PropList-10.0.0.txt"
 local code_filename = "dromozoa/ucd/is_white_space.lua"
 
 local _ = builder(false)

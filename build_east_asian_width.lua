@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "doc/EastAsianWidth-10.0.0.txt"
+local source_filename = "docs/EastAsianWidth-10.0.0.txt"
 local code_filename = "dromozoa/ucd/east_asian_width.lua"
 
 local properties = {
