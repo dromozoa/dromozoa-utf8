@@ -15,12 +15,6 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local ucd = require "dromozoa.ucd"
-
-for line in io.lines("test/test_is_white_space.txt") do
-  local first, last, property = line:match("^(%d+)\t(%d+)\t(%a+)$")
-  property = property == "true"
-  for i = first, last do
-    assert(ucd.is_white_space(i) == property)
-  end
-end
+return {
+  decode_surrogate_pair = require "dromozoa.utf16.decode_surrogate_pair";
+}

@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -15,11 +15,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-local east_asian_width = require "dromozoa.ucd.east_asian_width"
+local ucd = require "dromozoa.ucd"
 
 for line in io.lines("test/test_east_asian_width.txt") do
   local first, last, property = line:match("^(%d+)\t(%d+)\t(%a%a?)$")
   for i = first, last do
-    assert(east_asian_width(i) == property)
+    assert(ucd.east_asian_width(i) == property)
   end
 end
