@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>実装メモ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>dromozoa-utf8</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
 <style>
-table {
-  border-collapse: collapse;
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
 }
-th, td {
-  border: 1px solid;
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
 }
 </style>
 <body>
+<div class="markdown-body">
 
-<h1>実装メモ</h1>
+<h1>dromozoa-utf8</h1>
 
 <h2>リンク</h2>
 
@@ -36,10 +43,9 @@ th, td {
 
 <h2>UTF-8デコード</h2>
 
-<div>
-RFC 3629によって与えられているABNFを下記に示す。
-冗長なエンコードと代用符号位置のエンコードが除外されている。
-</div>
+<p>
+RFC 3629で与えられているABNFを下記に示す。冗長なエンコードと代用符号位置のエンコードが除外されている。
+</p>
 
 <pre>UTF8-octets = *( UTF8-char )
 UTF8-char   = UTF8-1 / UTF8-2 / UTF8-3 / UTF8-4
@@ -54,9 +60,9 @@ UTF8-4      = %xF0 %x90-BF 2( UTF8-tail )
             / %xF4 %x80-8F 2( UTF8-tail )
 UTF8-tail   = %x80-BF</pre>
 
-<div>
+<p>
 展開して正規表現で書きくだす。
-</div>
+</p>
 
 <pre>UTF8-1  = [\x00-\x7F]
 UTF8-2  = [\xC2-\xDF] [\x80-\xBF]
@@ -68,9 +74,9 @@ UTF8-4a = [\xF0-\xF0] [\x90-\xBF] [\x80-\xBF] [\x80-\xBF]
 UTF8-4b = [\xF1-\xF3] [\x80-\xBF] [\x80-\xBF] [\x80-\xBF]
 UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 
-<div>
+<p>
 第1バイトだけに着目し、妥当でない領域も考慮すると、
-</div>
+</p>
 
 <table>
   <tr><th>第1バイト</th><th>長さ</th></tr>
@@ -87,10 +93,9 @@ UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
   <tr><td>F5..FF</td><td></td></tr>
 </table>
 
-<div>
-第2バイト以降の範囲は6種類である。
-演算後の値をテーブルとして保持する場合、第2バイト以降の範囲は7種類に分けられる（次表A,B,B2,B3,C,C2,C3）。
-</div>
+<p>
+第2バイト以降の範囲は6種類である。演算後の値をテーブルとして保持する場合、第2バイト以降の範囲は7種類に分けられる（次表A,B,B2,B3,C,C2,C3）。
+</p>
 
 <table>
   <tr><th>第1バイト</th><th>第2バイト</th><th>第3バイト</th><th>第4バイト</th></tr>
@@ -107,23 +112,22 @@ UTF8-4c = [\xF4-\xF4] [\x80-\x8F] [\x80-\xBF] [\x80-\xBF]</pre>
 
 <h2>UTF-8エンコード</h2>
 
-<div>
+<p>
 1112064種類の整数を引数としてUTF-8バイト列を返すような関数であり、メモリ量を考えなければ単純な表で実装が可能である。
-</div>
+</p>
 
 <table>
-  <tr><th>開始符号位置</th><th>終了符号位置</th><th>長さ</th><th>数</th></tr>
-  <tr><td>0000</td><td>007F</td><td>1</td><td>128 (0x0080)</td></tr>
-  <tr><td>0080</td><td>07FF</td><td>2</td><td>1920 (0x0780)</td></tr>
-  <tr><td>0800</td><td>D7FF</td><td>3</td><td>53248 (0xD000)</td></tr>
-  <tr><td>E000</td><td>FFFF</td><td>3</td><td>8192 (0x2000)</td></tr>
-  <tr><td>010000</td><td>10FFFF</td><td>4</td><td>1048576 (0x010000)</td></tr>
+  <tr><th>開始符号位置</th><th>終了符号位置</th><th>長さ</th><th>個数</th><th>個数（16進数）</th></tr>
+  <tr><td>0000</td><td>007F</td><td>1</td><td>128</td><td>0x0080</td></tr>
+  <tr><td>0080</td><td>07FF</td><td>2</td><td>1920</td><td>0x0780</td></tr>
+  <tr><td>0800</td><td>D7FF</td><td>3</td><td>53248</td><td>0xD000</td></tr>
+  <tr><td>E000</td><td>FFFF</td><td>3</td><td>8192</td><td>0x2000</td></tr>
+  <tr><td>010000</td><td>10FFFF</td><td>4</td><td>1048576</td><td>0x010000</td></tr>
 </table>
 
-<div>
-実験によれば、U+0001..U+07FFまでの区間を表にすると、消費メモリ量と速度のバランスがよいようだった。
-U+0800以降については、上位12bitで表を作ることで消費メモリ量と速度のバランスをとる。
-</div>
+<p>
+実験によれば、U+0001..U+07FFまでの区間を表にすると、消費メモリ量と速度のバランスがよいようだった。U+0800以降については、上位12bitで表を作ることで消費メモリ量と速度のバランスをとる。
+</p>
 
 <table>
   <tr><th>長さ</th><th>符号位置</th><th>6bit分割</th><th>上位12bit</th></tr>
@@ -152,21 +156,17 @@ U+0800以降については、上位12bitで表を作ることで消費メモリ
 
 <h2>文字数のカウント</h2>
 
-<div>
-任意のバイトは、UTF-8の有効な第1〜4バイトであるか、不正なバイトである。
-状態\(s\)と4バイトを引数として、状態を返すような関数\(f(s,a,b,c,d)\)を考え、有限状態機械で表現する。
-有限状態機械は最小化しないほうが高速かもしれない。
-</div>
+<p>
+任意のバイトは、UTF-8の有効な第1〜4バイトであるか不正なバイトである。状態\(s\)と4バイトを引数として、状態を返すような関数\(f(s,a,b,c,d)\)を考え、有限状態機械で表現する。有限状態機械は最小化しないほうが高速かもしれない。
+</p>
 
 <h2>オフセット</h2>
 
-<div>
-Lua 5.3の<code>utf8.offset</code>は、\(n\)文字めの位置をバイト単位で返す関数である。
-実装は、全バイトにアクセスして末尾バイト（80..BFでないバイト）かどうかを判定している。
-仕様が妥当なUTF-8文字列であることを仮定するので、バイト列の先頭からオフセットを探索する場合、先頭バイトだけにアクセスする実装が可能である。
-バイト列の末尾からオフセットを探索する場合、先頭バイトだけに着目して実装することはできないので、文字数のカウントと同様のテクニックを用いて実装する。
-</div>
+<p>
+Lua 5.3の<code>utf8.offset</code>は、\(n\)文字めの位置をバイト単位で返す関数である。実装は、全バイトにアクセスして末尾バイト（80..BFでないバイト）かどうかを判定している。仕様が妥当なUTF-8文字列であることを仮定するので、バイト列の先頭からオフセットを探索する場合、先頭バイトだけにアクセスする実装が可能である。バイト列の末尾からオフセットを探索する場合、先頭バイトだけに着目して実装することはできないので、文字数のカウントと同様のテクニックを用いて実装する。
+</p>
 
+</div>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   CommonHTML: {
