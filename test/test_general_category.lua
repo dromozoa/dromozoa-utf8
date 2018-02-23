@@ -15,8 +15,11 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-return {
-  east_asian_width = require "dromozoa.ucd.east_asian_width";
-  general_category = require "dromozoa.ucd.general_category";
-  is_white_space = require "dromozoa.ucd.is_white_space";
-}
+local ucd = require "dromozoa.ucd"
+
+for line in io.lines("test/test_general_category.txt") do
+  local first, last, property = assert(line:match "^(%d+)\t(%d+)\t(%a%a?)$")
+  for i = first, last do
+    assert(ucd.general_category(i) == property)
+  end
+end

@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "docs/EastAsianWidth-10.0.0.txt"
+local source_filename = "docs/10.0.0/ucd/EastAsianWidth.txt"
 local code_filename = "dromozoa/ucd/east_asian_width.lua"
 
 local properties = {
@@ -51,6 +51,5 @@ for line in io.lines(source_filename) do
 end
 
 local data = _:build()
-
 local out = assert(io.open(code_filename, "w"))
 _.compile(out, data):close()

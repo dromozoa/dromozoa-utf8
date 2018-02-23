@@ -19,24 +19,32 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "docs/10.0.0/ucd/PropList.txt"
-local code_filename = "dromozoa/ucd/is_white_space.lua"
+local source_filename = "docs/10.0.0/ucd/UnicodeData.txt"
+local code_filename = "dromozoa/ucd/general_category.lua"
 
-local _ = builder(false)
+local _ = builder("Cn")
+
+local prev_code
+local prev_property
 
 for line in io.lines(source_filename) do
-  local first, last, property = line:match("^(%x+)%.%.(%x+)%s*;%s*([%w_]+)")
-  if not first then
-    first, property = line:match("^(%x+)%s*;%s*([%w_]+)")
-    last = first
-  end
-  if first and property == "White_Space" then
-    local first = tonumber(first, 16)
-    local last = tonumber(last, 16)
-    assert(first <= last)
-    assert(not prev or prev < first)
-    _:range(first, last, true)
-    prev = last
+  local code, name, property = assert(line:match "^(%x+);(.-);(.-);")
+  code = tonumber(code, 16)
+  if name:find ", First>$" then
+    prev_code = code
+    prev_property = property
+  else
+    if name:find ", Last>$" then
+      assert(prev_code < code)
+      assert(prev_property == property)
+      _:range(prev_code, code, property)
+      prev_code = nil
+      prev_property = nil
+    else
+      assert(not prev_code)
+      assert(not prev_property)
+      _:range(code, code, property)
+    end
   end
 end
 
