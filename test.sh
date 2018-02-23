@@ -22,6 +22,9 @@ case x$1 in
   *) lua=$1;;
 esac
 
+LUA_PATH="?.lua;;"
+export LUA_PATH
+
 for i in test/test*.lua
 do
   "$lua" "$i"
