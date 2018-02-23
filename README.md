@@ -2,6 +2,10 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v2.0
+
+* new function `dromozoa.ucd.general_category`
+
 ## v1.9
 
 * new module `dromozoa.ucd`
