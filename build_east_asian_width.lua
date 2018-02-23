@@ -51,6 +51,5 @@ for line in io.lines(source_filename) do
 end
 
 local data = _:build()
-
 local out = assert(io.open(code_filename, "w"))
 _.compile(out, data):close()

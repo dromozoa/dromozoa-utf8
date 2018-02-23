@@ -22,24 +22,32 @@ local unpack = table.unpack or unpack
 local source_filename = "docs/10.0.0/ucd/UnicodeData.txt"
 local code_filename = "dromozoa/ucd/general_category.lua"
 
-local properties = {
-  ["N"]  = true; -- neutral
-  ["Na"] = true; -- narrow
-  ["H"]  = true; -- halfwidth
-  ["A"]  = true; -- ambiguous
-  ["W"]  = true; -- wide
-  ["F"]  = true; -- fullwidth
-}
-
 local _ = builder("Cn")
 
+local prev_code
+local prev_property
+
 for line in io.lines(source_filename) do
-  local code, name, generic_category = assert(line:match "^(%x+);(.-);(.-);")
+  local code, name, property = assert(line:match "^(%x+);(.-);(.-);")
   code = tonumber(code, 16)
-  _:range(code, code, generic_category)
+  if name:find ", First>$" then
+    prev_code = code
+    prev_property = property
+  else
+    if name:find ", Last>$" then
+      assert(prev_code < code)
+      assert(prev_property == property)
+      _:range(prev_code, code, property)
+      prev_code = nil
+      prev_property = nil
+    else
+      assert(not prev_code)
+      assert(not prev_property)
+      _:range(code, code, property)
+    end
+  end
 end
 
 local data = _:build()
-
 local out = assert(io.open(code_filename, "w"))
 _.compile(out, data):close()

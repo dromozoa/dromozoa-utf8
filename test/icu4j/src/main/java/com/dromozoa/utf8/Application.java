@@ -33,9 +33,9 @@ public class Application {
     }
   }
 
-  private static String getPropertyString(int codePoint, int name) {
-    if (name == UProperty.EAST_ASIAN_WIDTH) {
-      switch (UCharacter.getIntPropertyValue(codePoint, name)) {
+  private static String getPropertyString(int codePoint, String name) {
+    if (name.equals("EAST_ASIAN_WIDTH")) {
+      switch (UCharacter.getIntPropertyValue(codePoint, UProperty.EAST_ASIAN_WIDTH)) {
         case UCharacter.EastAsianWidth.AMBIGUOUS:
           return "A";
         case UCharacter.EastAsianWidth.FULLWIDTH:
@@ -49,24 +49,84 @@ public class Application {
         case UCharacter.EastAsianWidth.WIDE:
           return "W";
       }
-    } else if (name == UProperty.WHITE_SPACE) {
-      return Boolean.toString(UCharacter.hasBinaryProperty(codePoint, name));
+    } else if (name.equals("WHITE_SPACE")) {
+      return Boolean.toString(UCharacter.hasBinaryProperty(codePoint, UProperty.WHITE_SPACE));
+    } else if (name.equals("GENERAL_CATEGORY")) {
+      switch (UCharacter.getType(codePoint)) {
+        case UCharacterCategory.UNASSIGNED:
+          return "Cn";
+        case UCharacterCategory.UPPERCASE_LETTER:
+          return "Lu";
+        case UCharacterCategory.LOWERCASE_LETTER:
+          return "Ll";
+        case UCharacterCategory.TITLECASE_LETTER:
+          return "Lt";
+        case UCharacterCategory.MODIFIER_LETTER:
+          return "Lm";
+        case UCharacterCategory.OTHER_LETTER:
+          return "Lo";
+        case UCharacterCategory.NON_SPACING_MARK:
+          return "Mn";
+        case UCharacterCategory.ENCLOSING_MARK:
+          return "Me";
+        case UCharacterCategory.COMBINING_SPACING_MARK:
+          return "Mc";
+        case UCharacterCategory.DECIMAL_DIGIT_NUMBER:
+          return "Nd";
+        case UCharacterCategory.LETTER_NUMBER:
+          return "Nl";
+        case UCharacterCategory.OTHER_NUMBER:
+          return "No";
+        case UCharacterCategory.SPACE_SEPARATOR:
+          return "Zs";
+        case UCharacterCategory.LINE_SEPARATOR:
+          return "Zl";
+        case UCharacterCategory.PARAGRAPH_SEPARATOR:
+          return "Zp";
+        case UCharacterCategory.CONTROL:
+          return "Cc";
+        case UCharacterCategory.FORMAT:
+          return "Cf";
+        case UCharacterCategory.PRIVATE_USE:
+          return "Co";
+        case UCharacterCategory.SURROGATE:
+          return "Cs";
+        case UCharacterCategory.DASH_PUNCTUATION:
+          return "Pd";
+        case UCharacterCategory.START_PUNCTUATION:
+          return "Ps";
+        case UCharacterCategory.END_PUNCTUATION:
+          return "Pe";
+        case UCharacterCategory.CONNECTOR_PUNCTUATION:
+          return "Pc";
+        case UCharacterCategory.OTHER_PUNCTUATION:
+          return "Po";
+        case UCharacterCategory.MATH_SYMBOL:
+          return "Sm";
+        case UCharacterCategory.CURRENCY_SYMBOL:
+          return "Sc";
+        case UCharacterCategory.MODIFIER_SYMBOL:
+          return "Sk";
+        case UCharacterCategory.OTHER_SYMBOL:
+          return "So";
+        case UCharacterCategory.INITIAL_PUNCTUATION:
+          return "Pi";
+        case UCharacterCategory.FINAL_PUNCTUATION:
+          return "Pf";
+      }
+      System.err.println("invalid code " + codePoint + " " + UCharacter.getType(codePoint));
     }
     throw new RuntimeException();
   }
 
   public static void main(String[] args) {
-    int name = UProperty.EAST_ASIAN_WIDTH;
+    String name = "EAST_ASIAN_WIDTH";
     int codePointFirst = 0;
     int codePointLast = 0x10FFFF;
 
     if (args != null) {
       if (args.length > 0) {
-        if (args[0].equals("EAST_ASIAN_WIDTH")) {
-          name = UProperty.EAST_ASIAN_WIDTH;
-        } else if (args[0].equals("WHITE_SPACE")) {
-          name = UProperty.WHITE_SPACE;
-        }
+        name = args[0];
       }
       if (args.length > 1) {
         codePointFirst = Integer.parseInt(args[1], 16);
