@@ -1,6 +1,6 @@
 #! /bin/sh -e
 
-# Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-utf8.
 #
@@ -17,28 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) lua=lua;;
-  *) lua=$1;;
-esac
+jar=target/icu4j-1.0-jar-with-dependencies.jar
 
-LUA_PATH="?.lua;;"
-export LUA_PATH
-
-for i in test/test*.lua
-do
-  "$lua" "$i"
-done
-
-mkdir -p out
-
-for i in test/table*.md
-do
-  name=`expr "x$i" : 'xtest/\(.*\)\.md$'`
-  "$lua" dromozoa-markdown-table <"$i" >"out/$name-01.md"
-  "$lua" dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md"
-  diff -u "test/$name.exp" "out/$name-01.md"
-  diff -u "test/$name.exp" "out/$name-02.md"
-done
-
-rm -f -r out
+java -jar "$jar" EAST_ASIAN_WIDTH >../test_east_asian_width.txt
+java -jar "$jar" WHITE_SPACE >../test_is_white_space.txt
+java -jar "$jar" GENERAL_CATEGORY >../test_general_category.txt

@@ -29,4 +29,9 @@ public class ApplicationTest extends TestCase {
     String[] args = { "WHITE_SPACE", "2000", "20FF" };
     Application.main(args);
   }
+
+  public void testGeneralCategory() {
+    String[] args = { "GENERAL_CATEGORY", "2000", "200F" };
+    Application.main(args);
+  }
 }
