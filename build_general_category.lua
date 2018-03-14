@@ -20,7 +20,7 @@ local builder = require "dromozoa.ucd.builder"
 local unpack = table.unpack or unpack
 
 local source_filename = "docs/10.0.0/ucd/UnicodeData.txt"
-local code_filename = "dromozoa/ucd/general_category.lua"
+local result_filename = "dromozoa/ucd/general_category.lua"
 
 local _ = builder("Cn")
 
@@ -49,5 +49,5 @@ for line in io.lines(source_filename) do
 end
 
 local data = _:build()
-local out = assert(io.open(code_filename, "w"))
+local out = assert(io.open(result_filename, "w"))
 _.compile(out, data):close()
