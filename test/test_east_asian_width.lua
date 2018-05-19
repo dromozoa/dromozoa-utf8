@@ -17,8 +17,8 @@
 
 local ucd = require "dromozoa.ucd"
 
-for line in io.lines("test/test_east_asian_width.txt") do
-  local first, last, property = line:match("^(%d+)\t(%d+)\t(%a%a?)$")
+for line in io.lines "test/test_east_asian_width.txt" do
+  local first, last, property = line:match "^(%d+)\t(%d+)\t(%a%a?)$"
   for i = first, last do
     assert(ucd.east_asian_width(i) == property)
   end
