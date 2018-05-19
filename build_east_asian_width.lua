@@ -31,12 +31,12 @@ local properties = {
   ["F"]  = true; -- fullwidth
 }
 
-local _ = builder("N")
+local _ = builder "N"
 
 for line in io.lines(source_filename) do
-  local first, last, property = line:match("^(%x+)%.%.(%x+);(%a+)")
+  local first, last, property = line:match "^(%x+)%.%.(%x+);(%a+)"
   if not first then
-    first, property = line:match("^(%x+);(%a+)")
+    first, property = line:match "^(%x+);(%a+)"
     last = first
   end
   if first then
