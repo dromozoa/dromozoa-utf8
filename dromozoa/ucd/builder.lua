@@ -149,10 +149,12 @@ end
 function class.compile(out, data)
   local tree = data.tree
   local buffer = {}
-  out:write("return function (c)\n")
-  out:write("  c = c + 0\n")
+  out:write [[
+return function (c)
+  c = c + 0
+]]
   compile(out, tree.class, tree.value, 1, 1)
-  out:write("end\n")
+  out:write "end\n"
   return out
 end
 
