@@ -1,6 +1,6 @@
 #! /usr/bin/env lua
 
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -50,9 +50,9 @@ local n = 0
 for line in io.lines() do
   local items = {}
   local m = 0
-  for item in ("|" .. line:match("^%s*|?(.-)|?%s*$")):gmatch("|([^|]*)") do
+  for item in ("|" .. line:match "^%s*|?(.-)|?%s*$"):gmatch "|([^|]*)" do
     m = m + 1
-    items[m] = item:match("^%s*(.-)%s*$")
+    items[m] = item:match "^%s*(.-)%s*$"
   end
   n = n + 1
   data[n] = items
@@ -66,8 +66,8 @@ for i = 1, n do
   if i == 2 then
     for j = 1, #items do
       local item = items[j]
-      if item:find(":$") then
-        if item:find("^:.") then
+      if item:find ":$" then
+        if item:find "^:." then
           alignments[j] = "center"
         else
           alignments[j] = "right"
@@ -104,30 +104,30 @@ end
 for i = 1, #data do
   local items = data[i]
   if #items == 0 then
-    io.write("\n")
+    io.write "\n"
   elseif i == 2 then
     for j = 1, n do
       local alignment = alignments[j]
       local max_width = max_widths[j]
-      io.write("|")
+      io.write "|"
       if alignment == "center" then
-        io.write(":")
+        io.write ":"
       else
-        io.write("-")
+        io.write "-"
       end
       io.write(("-"):rep(max_width))
       if alignment == "normal" then
-        io.write("-")
+        io.write "-"
       else
-        io.write(":")
+        io.write ":"
       end
     end
-    io.write("|\n")
+    io.write "|\n"
   else
     for j = 1, n do
       local alignment = alignments[j]
       local max_width = max_widths[j]
-      io.write("|")
+      io.write "|"
       local item = items[j]
       if not item then
         item = ""
@@ -144,6 +144,6 @@ for i = 1, #data do
       local w2 = w - w1
       io.write((" "):rep(w1), item, (" "):rep(w2))
     end
-    io.write("|\n")
+    io.write "|\n"
   end
 end

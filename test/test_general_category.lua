@@ -17,7 +17,7 @@
 
 local ucd = require "dromozoa.ucd"
 
-for line in io.lines("test/test_general_category.txt") do
+for line in io.lines "test/test_general_category.txt" do
   local first, last, property = assert(line:match "^(%d+)\t(%d+)\t(%a%a?)$")
   for i = first, last do
     assert(ucd.general_category(i) == property)

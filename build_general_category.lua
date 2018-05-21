@@ -22,7 +22,7 @@ local unpack = table.unpack or unpack
 local source_filename = "docs/10.0.0/ucd/UnicodeData.txt"
 local result_filename = "dromozoa/ucd/general_category.lua"
 
-local _ = builder("Cn")
+local _ = builder "Cn"
 
 local prev_code
 local prev_property

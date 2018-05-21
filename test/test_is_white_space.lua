@@ -17,8 +17,8 @@
 
 local ucd = require "dromozoa.ucd"
 
-for line in io.lines("test/test_is_white_space.txt") do
-  local first, last, property = line:match("^(%d+)\t(%d+)\t(%a+)$")
+for line in io.lines "test/test_is_white_space.txt" do
+  local first, last, property = line:match "^(%d+)\t(%d+)\t(%a+)$"
   property = property == "true"
   for i = first, last do
     assert(ucd.is_white_space(i) == property)

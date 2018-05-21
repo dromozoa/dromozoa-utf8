@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -33,7 +33,7 @@ local codepoint_source = {
   0xFEFF, 0x0233B4,
 }
 
-local n = 69
+local n = 5
 utf8_char = utf8_char:rep(n)
 
 local codepoint = {}
@@ -71,12 +71,12 @@ local function run_offset(x, f, ...)
 end
 
 local function setup(benchmarks, module, prefix)
-  benchmarks[prefix .. ".char"] = { run_char, 0, module.char, unpack(codepoint) }
-  benchmarks[prefix .. ".codes"] = { run_each, 0, module.codes, utf8_char }
-  benchmarks[prefix .. ".codepoint"] = { run_codepoint, 0, module.codepoint, utf8_char, 1, #utf8_char }
-  benchmarks[prefix .. ".len"] = { run_count, 0, module.len, utf8_char:rep(2) }
-  benchmarks[prefix .. ".offset.P"] = { run_offset, 0, module.offset, utf8_char, #codepoint }
-  benchmarks[prefix .. ".offset.M"] = { run_offset, 0, module.offset, utf8_char, -#codepoint }
+  benchmarks[#benchmarks + 1] = { prefix .. ".char", run_char, 0, module.char, unpack(codepoint) }
+  benchmarks[#benchmarks + 1] = { prefix .. ".codes", run_each, 0, module.codes, utf8_char }
+  benchmarks[#benchmarks + 1] = { prefix .. ".codepoint", run_codepoint, 0, module.codepoint, utf8_char, 1, #utf8_char }
+  benchmarks[#benchmarks + 1] = { prefix .. ".len", run_count, 0, module.len, utf8_char:rep(2) }
+  benchmarks[#benchmarks + 1] = { prefix .. ".offset.P", run_offset, 0, module.offset, utf8_char, #codepoint }
+  benchmarks[#benchmarks + 1] = { prefix .. ".offset.M", run_offset, 0, module.offset, utf8_char, -#codepoint }
 end
 
 local benchmarks = {}

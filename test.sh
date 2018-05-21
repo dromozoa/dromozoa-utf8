@@ -17,26 +17,30 @@
 # You should have received a copy of the GNU General Public License
 # along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
-case x$1 in
-  x) lua=lua;;
-  *) lua=$1;;
-esac
-
 LUA_PATH="?.lua;;"
 export LUA_PATH
 
 for i in test/test*.lua
 do
-  "$lua" "$i"
+  case X$# in
+    X0) lua "$i";;
+    *) "$@" "$i";;
+  esac
 done
 
 mkdir -p out
 
 for i in test/table*.md
 do
-  name=`expr "x$i" : 'xtest/\(.*\)\.md$'`
-  "$lua" dromozoa-markdown-table <"$i" >"out/$name-01.md"
-  "$lua" dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md"
+  name=`expr "X$i" : 'Xtest\(/.*\)\.md$' | sed -e 's/^.//'`
+  case X$# in
+    X0)
+      lua dromozoa-markdown-table <"$i" >"out/$name-01.md"
+      lua dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md";;
+    *)
+      "$@" dromozoa-markdown-table <"$i" >"out/$name-01.md"
+      "$@" dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md";;
+  esac
   diff -u "test/$name.exp" "out/$name-01.md"
   diff -u "test/$name.exp" "out/$name-02.md"
 done

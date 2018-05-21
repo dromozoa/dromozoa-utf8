@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -27,13 +27,11 @@ local data = _:build()
 local tmpname = os.tmpname()
 _.compile(assert(io.open(tmpname, "w")), data):close()
 
--- io.write(table.concat(code))
-
 local f = assert(loadfile(tmpname))()
 os.remove(tmpname)
 
-assert(f(utf8.codepoint("0")))
-assert(f(utf8.codepoint("A")))
-assert(f(utf8.codepoint("a")))
-assert(not f(utf8.codepoint(" ")))
-assert(not f(utf8.codepoint("あ")))
+assert(f(utf8.codepoint "0"))
+assert(f(utf8.codepoint "A"))
+assert(f(utf8.codepoint "a"))
+assert(not f(utf8.codepoint " "))
+assert(not f(utf8.codepoint "あ"))
