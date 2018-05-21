@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -33,7 +33,7 @@ local codepoint_source = {
   0xFEFF, 0x0233B4,
 }
 
-local n = 69
+local n = 5
 utf8_char = utf8_char:rep(n)
 
 local codepoint = {}
