@@ -1,4 +1,4 @@
--- Copyright (C) 2015,2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -31,7 +31,7 @@ local reasons = {
 local count = 0
 local expect
 if _VERSION ~= "Lua 5.3" then
-  expect = assert(loadfile("test/test.exp"))()
+  expect = assert(loadfile "test/test.exp")()
 end
 
 local function each(module, ...)
@@ -104,7 +104,7 @@ local function check(name, ...)
     assert(not result2[1])
     local message1 = result1[2]
     local message2 = result2[2]
-    local bad_argument, reason = message1:match("(bad argument #%d+) .-%((.*)%)$")
+    local bad_argument, reason = message1:match "(bad argument #%d+) .-%((.*)%)$"
     if bad_argument then
       reason = reason:gsub("expected, got no value$", "expected, got nil")
       if not message2:find(bad_argument, nil, true) or not message2:find(reason, nil, true) then
@@ -126,9 +126,9 @@ local function check(name, ...)
   io.write("  ", dump(result1), ";\n")
 end
 
-io.write("return {\n")
+io.write "return {\n"
 
-check("charpattern")
+check "charpattern"
 
 check("char", -1)
 check("char", 0, -1)
@@ -263,4 +263,4 @@ for i = 1, #data do
   end
 end
 
-io.write("}\n")
+io.write "}\n"

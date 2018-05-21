@@ -25,9 +25,9 @@ local result_filename = "dromozoa/ucd/is_white_space.lua"
 local _ = builder(false)
 
 for line in io.lines(source_filename) do
-  local first, last, property = line:match("^(%x+)%.%.(%x+)%s*;%s*([%w_]+)")
+  local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*([%w_]+)"
   if not first then
-    first, property = line:match("^(%x+)%s*;%s*([%w_]+)")
+    first, property = line:match "^(%x+)%s*;%s*([%w_]+)"
     last = first
   end
   if first and property == "White_Space" then
