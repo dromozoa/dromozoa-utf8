@@ -1,14 +1,19 @@
+rockspec_format = "3.0"
 package = "dromozoa-utf8"
-version = "1.11-1"
+version = "1.12-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.11.tar.gz";
-  file = "dromozoa-utf8-1.11.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.12.tar.gz";
+  file = "dromozoa-utf8-1.12.tar.gz";
 }
 description = {
   summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation";
   license = "GPL-3";
   homepage = "https://github.com/dromozoa/dromozoa-utf8/";
   maintainer = "Tomoyuki Fujimori <moyu@dromozoa.com>";
+}
+test = {
+  type = "command";
+  command = "./test.sh";
 }
 build = {
   type = "builtin";
