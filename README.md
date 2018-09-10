@@ -2,6 +2,10 @@
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
+## v1.12
+
+* Unicode 11.0
+
 ## v1.11
 
 * maintenance release
