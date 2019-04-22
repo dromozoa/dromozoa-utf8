@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "docs/11.0.0/ucd/UnicodeData.txt"
+local source_filename = "docs/12.0.0/ucd/UnicodeData.txt"
 local result_filename = "dromozoa/ucd/general_category.lua"
 
 local _ = builder "Cn"
