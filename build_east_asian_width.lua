@@ -1,4 +1,4 @@
--- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017-2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -19,7 +19,7 @@ local builder = require "dromozoa.ucd.builder"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "docs/11.0.0/ucd/EastAsianWidth.txt"
+local source_filename = "docs/12.0.0/ucd/EastAsianWidth.txt"
 local result_filename = "dromozoa/ucd/east_asian_width.lua"
 
 local properties = {

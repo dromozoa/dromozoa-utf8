@@ -1,5 +1,5 @@
 <!--
-  Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+  Copyright (C) 2017-2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 
   This file is part of dromozoa-utf8.
 
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
-      <version>62.1</version>
+      <version>64.1</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
