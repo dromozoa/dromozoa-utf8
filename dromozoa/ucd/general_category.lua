@@ -4095,9 +4095,9 @@ return function (c)
       end
     end
   else
-    if c < 69821 then
-      if c < 43020 then
-        if c < 40982 then
+    if c < 69826 then
+      if c < 43045 then
+        if c < 42128 then
           if c < 11782 then
             if c < 11476 then
               if c < 11444 then
@@ -4574,7 +4574,7 @@ return function (c)
                     end
                   end
                 else
-                  if c < 13056 then
+                  if c < 19894 then
                     if c < 12938 then
                       if c < 12896 then
                         if c < 12881 then return "So" else return "No" end
@@ -4585,21 +4585,21 @@ return function (c)
                       if c < 12992 then
                         if c < 12977 then return "So" else return "No" end
                       else
-                        if c < 13055 then return "So" else return "Cn" end
+                        if c < 13312 then return "So" else return "Lo" end
                       end
                     end
                   else
-                    if c < 19968 then
-                      if c < 19894 then
-                        if c < 13312 then return "So" else return "Lo" end
-                      else
+                    if c < 40960 then
+                      if c < 19968 then
                         if c < 19904 then return "Cn" else return "So" end
+                      else
+                        if c < 40944 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 40960 then
-                        if c < 40944 then return "Lo" else return "Cn" end
-                      else
+                      if c < 40982 then
                         if c < 40981 then return "Lo" else return "Lm" end
+                      else
+                        if c < 42125 then return "Lo" else return "Cn" end
                       end
                     end
                   end
@@ -4608,254 +4608,254 @@ return function (c)
             end
           end
         else
-          if c < 42811 then
-            if c < 42612 then
-              if c < 42578 then
-                if c < 42562 then
-                  if c < 42508 then
-                    if c < 42192 then
-                      if c < 42128 then
-                        if c < 42125 then return "Lo" else return "Cn" end
-                      else
+          if c < 42813 then
+            if c < 42623 then
+              if c < 42580 then
+                if c < 42564 then
+                  if c < 42512 then
+                    if c < 42238 then
+                      if c < 42192 then
                         if c < 42183 then return "So" else return "Cn" end
+                      else
+                        if c < 42232 then return "Lo" else return "Lm" end
                       end
                     else
-                      if c < 42238 then
-                        if c < 42232 then return "Lo" else return "Lm" end
-                      else
+                      if c < 42508 then
                         if c < 42240 then return "Po" else return "Lo" end
+                      else
+                        if c < 42509 then return "Lm" else return "Po" end
                       end
                     end
                   else
-                    if c < 42538 then
-                      if c < 42512 then
-                        if c < 42509 then return "Lm" else return "Po" end
-                      else
+                    if c < 42560 then
+                      if c < 42538 then
                         if c < 42528 then return "Lo" else return "Nd" end
+                      else
+                        if c < 42540 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 42560 then
-                        if c < 42540 then return "Lo" else return "Cn" end
-                      else
+                      if c < 42562 then
                         if c < 42561 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42563 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 else
-                  if c < 42570 then
-                    if c < 42566 then
-                      if c < 42564 then
-                        if c < 42563 then return "Lu" else return "Ll" end
-                      else
+                  if c < 42572 then
+                    if c < 42568 then
+                      if c < 42566 then
                         if c < 42565 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42567 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42568 then
-                        if c < 42567 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42570 then
                         if c < 42569 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42571 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 42574 then
-                      if c < 42572 then
-                        if c < 42571 then return "Lu" else return "Ll" end
-                      else
+                    if c < 42576 then
+                      if c < 42574 then
                         if c < 42573 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42575 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42576 then
-                        if c < 42575 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42578 then
                         if c < 42577 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42579 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 end
               else
-                if c < 42594 then
-                  if c < 42586 then
-                    if c < 42582 then
-                      if c < 42580 then
-                        if c < 42579 then return "Lu" else return "Ll" end
-                      else
+                if c < 42596 then
+                  if c < 42588 then
+                    if c < 42584 then
+                      if c < 42582 then
                         if c < 42581 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42583 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42584 then
-                        if c < 42583 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42586 then
                         if c < 42585 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42587 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 42590 then
-                      if c < 42588 then
-                        if c < 42587 then return "Lu" else return "Ll" end
-                      else
+                    if c < 42592 then
+                      if c < 42590 then
                         if c < 42589 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42591 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42592 then
-                        if c < 42591 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42594 then
                         if c < 42593 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42595 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 else
-                  if c < 42602 then
-                    if c < 42598 then
-                      if c < 42596 then
-                        if c < 42595 then return "Lu" else return "Ll" end
-                      else
+                  if c < 42604 then
+                    if c < 42600 then
+                      if c < 42598 then
                         if c < 42597 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42599 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42600 then
-                        if c < 42599 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42602 then
                         if c < 42601 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42603 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 42606 then
-                      if c < 42604 then
-                        if c < 42603 then return "Lu" else return "Ll" end
-                      else
+                    if c < 42608 then
+                      if c < 42606 then
                         if c < 42605 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42607 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 42608 then
-                        if c < 42607 then return "Lo" else return "Mn" end
-                      else
+                      if c < 42612 then
                         if c < 42611 then return "Me" else return "Po" end
+                      else
+                        if c < 42622 then return "Mn" else return "Po" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 42654 then
-                if c < 42637 then
-                  if c < 42629 then
-                    if c < 42625 then
-                      if c < 42623 then
-                        if c < 42622 then return "Mn" else return "Po" end
-                      else
+              if c < 42726 then
+                if c < 42639 then
+                  if c < 42631 then
+                    if c < 42627 then
+                      if c < 42625 then
                         if c < 42624 then return "Lm" else return "Lu" end
+                      else
+                        if c < 42626 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42627 then
-                        if c < 42626 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42629 then
                         if c < 42628 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42630 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42633 then
-                      if c < 42631 then
-                        if c < 42630 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42635 then
+                      if c < 42633 then
                         if c < 42632 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42634 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42635 then
-                        if c < 42634 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42637 then
                         if c < 42636 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42638 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 else
-                  if c < 42645 then
-                    if c < 42641 then
-                      if c < 42639 then
-                        if c < 42638 then return "Ll" else return "Lu" end
-                      else
+                  if c < 42647 then
+                    if c < 42643 then
+                      if c < 42641 then
                         if c < 42640 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42642 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42643 then
-                        if c < 42642 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42645 then
                         if c < 42644 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42646 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42649 then
-                      if c < 42647 then
-                        if c < 42646 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42651 then
+                      if c < 42649 then
                         if c < 42648 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42650 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42651 then
-                        if c < 42650 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42654 then
                         if c < 42652 then return "Ll" else return "Lm" end
+                      else
+                        if c < 42656 then return "Mn" else return "Lo" end
                       end
                     end
                   end
                 end
               else
-                if c < 42793 then
-                  if c < 42784 then
-                    if c < 42738 then
-                      if c < 42726 then
-                        if c < 42656 then return "Mn" else return "Lo" end
-                      else
+                if c < 42795 then
+                  if c < 42787 then
+                    if c < 42752 then
+                      if c < 42738 then
                         if c < 42736 then return "Nl" else return "Mn" end
+                      else
+                        if c < 42744 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 42752 then
-                        if c < 42744 then return "Po" else return "Cn" end
-                      else
+                      if c < 42784 then
                         if c < 42775 then return "Sk" else return "Lm" end
+                      else
+                        if c < 42786 then return "Sk" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42789 then
-                      if c < 42787 then
-                        if c < 42786 then return "Sk" else return "Lu" end
-                      else
+                    if c < 42791 then
+                      if c < 42789 then
                         if c < 42788 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42790 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42791 then
-                        if c < 42790 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42793 then
                         if c < 42792 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42794 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 else
-                  if c < 42803 then
-                    if c < 42797 then
-                      if c < 42795 then
-                        if c < 42794 then return "Ll" else return "Lu" end
-                      else
+                  if c < 42805 then
+                    if c < 42799 then
+                      if c < 42797 then
                         if c < 42796 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42798 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42799 then
-                        if c < 42798 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42803 then
                         if c < 42802 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42804 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42807 then
-                      if c < 42805 then
-                        if c < 42804 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42809 then
+                      if c < 42807 then
                         if c < 42806 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42808 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42809 then
-                        if c < 42808 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42811 then
                         if c < 42810 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42812 then return "Ll" else return "Lu" end
                       end
                     end
                   end
@@ -4863,253 +4863,253 @@ return function (c)
               end
             end
           else
-            if c < 42883 then
-              if c < 42843 then
-                if c < 42827 then
-                  if c < 42819 then
-                    if c < 42815 then
-                      if c < 42813 then
-                        if c < 42812 then return "Ll" else return "Lu" end
-                      else
+            if c < 42885 then
+              if c < 42845 then
+                if c < 42829 then
+                  if c < 42821 then
+                    if c < 42817 then
+                      if c < 42815 then
                         if c < 42814 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42816 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42817 then
-                        if c < 42816 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42819 then
                         if c < 42818 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42820 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42823 then
-                      if c < 42821 then
-                        if c < 42820 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42825 then
+                      if c < 42823 then
                         if c < 42822 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42824 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42825 then
-                        if c < 42824 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42827 then
                         if c < 42826 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42828 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 else
-                  if c < 42835 then
-                    if c < 42831 then
-                      if c < 42829 then
-                        if c < 42828 then return "Ll" else return "Lu" end
-                      else
+                  if c < 42837 then
+                    if c < 42833 then
+                      if c < 42831 then
                         if c < 42830 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42832 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42833 then
-                        if c < 42832 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42835 then
                         if c < 42834 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42836 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42839 then
-                      if c < 42837 then
-                        if c < 42836 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42841 then
+                      if c < 42839 then
                         if c < 42838 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42840 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42841 then
-                        if c < 42840 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42843 then
                         if c < 42842 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42844 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 end
               else
-                if c < 42859 then
-                  if c < 42851 then
-                    if c < 42847 then
-                      if c < 42845 then
-                        if c < 42844 then return "Ll" else return "Lu" end
-                      else
+                if c < 42861 then
+                  if c < 42853 then
+                    if c < 42849 then
+                      if c < 42847 then
                         if c < 42846 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42848 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42849 then
-                        if c < 42848 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42851 then
                         if c < 42850 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42852 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42855 then
-                      if c < 42853 then
-                        if c < 42852 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42857 then
+                      if c < 42855 then
                         if c < 42854 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42856 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42857 then
-                        if c < 42856 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42859 then
                         if c < 42858 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42860 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 else
-                  if c < 42874 then
-                    if c < 42863 then
-                      if c < 42861 then
-                        if c < 42860 then return "Ll" else return "Lu" end
-                      else
+                  if c < 42876 then
+                    if c < 42865 then
+                      if c < 42863 then
                         if c < 42862 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42864 then return "Ll" else return "Lm" end
                       end
                     else
-                      if c < 42865 then
-                        if c < 42864 then return "Ll" else return "Lm" end
-                      else
+                      if c < 42874 then
                         if c < 42873 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42875 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42879 then
-                      if c < 42876 then
-                        if c < 42875 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42881 then
+                      if c < 42879 then
                         if c < 42877 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42880 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42881 then
-                        if c < 42880 then return "Ll" else return "Lu" end
-                      else
+                      if c < 42883 then
                         if c < 42882 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42884 then return "Ll" else return "Lu" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 42918 then
-                if c < 42902 then
-                  if c < 42892 then
-                    if c < 42887 then
-                      if c < 42885 then
-                        if c < 42884 then return "Ll" else return "Lu" end
-                      else
+              if c < 42920 then
+                if c < 42904 then
+                  if c < 42894 then
+                    if c < 42889 then
+                      if c < 42887 then
                         if c < 42886 then return "Ll" else return "Lu" end
+                      else
+                        if c < 42888 then return "Ll" else return "Lm" end
                       end
                     else
-                      if c < 42889 then
-                        if c < 42888 then return "Ll" else return "Lm" end
-                      else
+                      if c < 42892 then
                         if c < 42891 then return "Sk" else return "Lu" end
+                      else
+                        if c < 42893 then return "Ll" else return "Lu" end
                       end
                     end
                   else
-                    if c < 42896 then
-                      if c < 42894 then
-                        if c < 42893 then return "Ll" else return "Lu" end
-                      else
+                    if c < 42898 then
+                      if c < 42896 then
                         if c < 42895 then return "Ll" else return "Lo" end
+                      else
+                        if c < 42897 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42898 then
-                        if c < 42897 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42902 then
                         if c < 42899 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42903 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 else
-                  if c < 42910 then
-                    if c < 42906 then
-                      if c < 42904 then
-                        if c < 42903 then return "Lu" else return "Ll" end
-                      else
+                  if c < 42912 then
+                    if c < 42908 then
+                      if c < 42906 then
                         if c < 42905 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42907 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42908 then
-                        if c < 42907 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42910 then
                         if c < 42909 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42911 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 42914 then
-                      if c < 42912 then
-                        if c < 42911 then return "Lu" else return "Ll" end
-                      else
+                    if c < 42916 then
+                      if c < 42914 then
                         if c < 42913 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42915 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42916 then
-                        if c < 42915 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42918 then
                         if c < 42917 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42919 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 end
               else
-                if c < 42942 then
-                  if c < 42934 then
-                    if c < 42922 then
-                      if c < 42920 then
-                        if c < 42919 then return "Lu" else return "Ll" end
-                      else
+                if c < 42944 then
+                  if c < 42936 then
+                    if c < 42928 then
+                      if c < 42922 then
                         if c < 42921 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42927 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42928 then
-                        if c < 42927 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42934 then
                         if c < 42933 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42935 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 42938 then
-                      if c < 42936 then
-                        if c < 42935 then return "Lu" else return "Ll" end
-                      else
+                    if c < 42940 then
+                      if c < 42938 then
                         if c < 42937 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42939 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 42940 then
-                        if c < 42939 then return "Lu" else return "Ll" end
-                      else
+                      if c < 42942 then
                         if c < 42941 then return "Lu" else return "Ll" end
+                      else
+                        if c < 42943 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 else
-                  if c < 43000 then
-                    if c < 42947 then
-                      if c < 42944 then
-                        if c < 42943 then return "Lu" else return "Ll" end
-                      else
+                  if c < 43003 then
+                    if c < 42951 then
+                      if c < 42947 then
                         if c < 42946 then return "Cn" else return "Lu" end
+                      else
+                        if c < 42948 then return "Ll" else return "Lu" end
                       end
                     else
-                      if c < 42951 then
-                        if c < 42948 then return "Ll" else return "Lu" end
-                      else
+                      if c < 43000 then
                         if c < 42999 then return "Cn" else return "Lo" end
+                      else
+                        if c < 43002 then return "Lm" else return "Ll" end
                       end
                     end
                   else
-                    if c < 43011 then
-                      if c < 43003 then
-                        if c < 43002 then return "Lm" else return "Ll" end
-                      else
+                    if c < 43015 then
+                      if c < 43011 then
                         if c < 43010 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43014 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 43015 then
-                        if c < 43014 then return "Lo" else return "Mn" end
-                      else
+                      if c < 43020 then
                         if c < 43019 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43043 then return "Lo" else return "Mc" end
                       end
                     end
                   end
@@ -5119,255 +5119,255 @@ return function (c)
           end
         end
       else
-        if c < 65340 then
-          if c < 44003 then
-            if c < 43567 then
-              if c < 43310 then
-                if c < 43188 then
-                  if c < 43064 then
-                    if c < 43048 then
-                      if c < 43045 then
-                        if c < 43043 then return "Lo" else return "Mc" end
-                      else
+        if c < 65342 then
+          if c < 44006 then
+            if c < 43571 then
+              if c < 43335 then
+                if c < 43206 then
+                  if c < 43066 then
+                    if c < 43056 then
+                      if c < 43048 then
                         if c < 43047 then return "Mn" else return "Mc" end
+                      else
+                        if c < 43052 then return "So" else return "Cn" end
                       end
                     else
-                      if c < 43056 then
-                        if c < 43052 then return "So" else return "Cn" end
-                      else
+                      if c < 43064 then
                         if c < 43062 then return "No" else return "So" end
+                      else
+                        if c < 43065 then return "Sc" else return "So" end
                       end
                     end
                   else
-                    if c < 43124 then
-                      if c < 43066 then
-                        if c < 43065 then return "Sc" else return "So" end
-                      else
+                    if c < 43136 then
+                      if c < 43124 then
                         if c < 43072 then return "Cn" else return "Lo" end
+                      else
+                        if c < 43128 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 43136 then
-                        if c < 43128 then return "Po" else return "Cn" end
-                      else
+                      if c < 43188 then
                         if c < 43138 then return "Mc" else return "Lo" end
+                      else
+                        if c < 43204 then return "Mc" else return "Mn" end
                       end
                     end
                   end
                 else
-                  if c < 43256 then
-                    if c < 43216 then
-                      if c < 43206 then
-                        if c < 43204 then return "Mc" else return "Mn" end
-                      else
+                  if c < 43260 then
+                    if c < 43232 then
+                      if c < 43216 then
                         if c < 43214 then return "Cn" else return "Po" end
+                      else
+                        if c < 43226 then return "Nd" else return "Cn" end
                       end
                     else
-                      if c < 43232 then
-                        if c < 43226 then return "Nd" else return "Cn" end
-                      else
+                      if c < 43256 then
                         if c < 43250 then return "Mn" else return "Lo" end
+                      else
+                        if c < 43259 then return "Po" else return "Lo" end
                       end
                     end
                   else
-                    if c < 43263 then
-                      if c < 43260 then
-                        if c < 43259 then return "Po" else return "Lo" end
-                      else
+                    if c < 43274 then
+                      if c < 43263 then
                         if c < 43261 then return "Po" else return "Lo" end
+                      else
+                        if c < 43264 then return "Mn" else return "Nd" end
                       end
                     else
-                      if c < 43274 then
-                        if c < 43264 then return "Mn" else return "Nd" end
-                      else
+                      if c < 43310 then
                         if c < 43302 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43312 then return "Po" else return "Lo" end
                       end
                     end
                   end
                 end
               else
-                if c < 43454 then
-                  if c < 43392 then
-                    if c < 43348 then
-                      if c < 43335 then
-                        if c < 43312 then return "Po" else return "Lo" end
-                      else
+                if c < 43470 then
+                  if c < 43396 then
+                    if c < 43360 then
+                      if c < 43348 then
                         if c < 43346 then return "Mn" else return "Mc" end
+                      else
+                        if c < 43359 then return "Cn" else return "Po" end
                       end
                     else
-                      if c < 43360 then
-                        if c < 43359 then return "Cn" else return "Po" end
-                      else
+                      if c < 43392 then
                         if c < 43389 then return "Lo" else return "Cn" end
+                      else
+                        if c < 43395 then return "Mn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 43444 then
-                      if c < 43396 then
-                        if c < 43395 then return "Mn" else return "Mc" end
-                      else
+                    if c < 43450 then
+                      if c < 43444 then
                         if c < 43443 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43446 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 43450 then
-                        if c < 43446 then return "Mc" else return "Mn" end
-                      else
+                      if c < 43454 then
                         if c < 43452 then return "Mc" else return "Mn" end
+                      else
+                        if c < 43457 then return "Mc" else return "Po" end
                       end
                     end
                   end
                 else
-                  if c < 43493 then
-                    if c < 43472 then
-                      if c < 43470 then
-                        if c < 43457 then return "Mc" else return "Po" end
-                      else
+                  if c < 43495 then
+                    if c < 43486 then
+                      if c < 43472 then
                         if c < 43471 then return "Cn" else return "Lm" end
+                      else
+                        if c < 43482 then return "Nd" else return "Cn" end
                       end
                     else
-                      if c < 43486 then
-                        if c < 43482 then return "Nd" else return "Cn" end
-                      else
+                      if c < 43493 then
                         if c < 43488 then return "Po" else return "Lo" end
+                      else
+                        if c < 43494 then return "Mn" else return "Lm" end
                       end
                     end
                   else
-                    if c < 43514 then
-                      if c < 43495 then
-                        if c < 43494 then return "Mn" else return "Lm" end
-                      else
+                    if c < 43520 then
+                      if c < 43514 then
                         if c < 43504 then return "Lo" else return "Nd" end
+                      else
+                        if c < 43519 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 43520 then
-                        if c < 43519 then return "Lo" else return "Cn" end
-                      else
+                      if c < 43567 then
                         if c < 43561 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43569 then return "Mc" else return "Mn" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 43714 then
-                if c < 43633 then
-                  if c < 43596 then
-                    if c < 43575 then
-                      if c < 43571 then
-                        if c < 43569 then return "Mc" else return "Mn" end
-                      else
+              if c < 43739 then
+                if c < 43642 then
+                  if c < 43598 then
+                    if c < 43587 then
+                      if c < 43575 then
                         if c < 43573 then return "Mc" else return "Mn" end
+                      else
+                        if c < 43584 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 43587 then
-                        if c < 43584 then return "Cn" else return "Lo" end
-                      else
+                      if c < 43596 then
                         if c < 43588 then return "Mn" else return "Lo" end
+                      else
+                        if c < 43597 then return "Mn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 43610 then
-                      if c < 43598 then
-                        if c < 43597 then return "Mn" else return "Mc" end
-                      else
+                    if c < 43616 then
+                      if c < 43610 then
                         if c < 43600 then return "Cn" else return "Nd" end
+                      else
+                        if c < 43612 then return "Cn" else return "Po" end
                       end
                     else
-                      if c < 43616 then
-                        if c < 43612 then return "Cn" else return "Po" end
-                      else
+                      if c < 43633 then
                         if c < 43632 then return "Lo" else return "Lm" end
+                      else
+                        if c < 43639 then return "Lo" else return "So" end
                       end
                     end
                   end
                 else
-                  if c < 43697 then
-                    if c < 43644 then
-                      if c < 43642 then
-                        if c < 43639 then return "Lo" else return "So" end
-                      else
+                  if c < 43701 then
+                    if c < 43646 then
+                      if c < 43644 then
                         if c < 43643 then return "Lo" else return "Mc" end
+                      else
+                        if c < 43645 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 43646 then
-                        if c < 43645 then return "Mn" else return "Mc" end
-                      else
+                      if c < 43697 then
                         if c < 43696 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43698 then return "Lo" else return "Mn" end
                       end
                     end
                   else
-                    if c < 43705 then
-                      if c < 43701 then
-                        if c < 43698 then return "Lo" else return "Mn" end
-                      else
+                    if c < 43712 then
+                      if c < 43705 then
                         if c < 43703 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43710 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 43712 then
-                        if c < 43710 then return "Lo" else return "Mn" end
-                      else
+                      if c < 43714 then
                         if c < 43713 then return "Lo" else return "Mn" end
+                      else
+                        if c < 43715 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 end
               else
-                if c < 43783 then
-                  if c < 43758 then
-                    if c < 43742 then
-                      if c < 43739 then
-                        if c < 43715 then return "Lo" else return "Cn" end
-                      else
+                if c < 43791 then
+                  if c < 43762 then
+                    if c < 43755 then
+                      if c < 43742 then
                         if c < 43741 then return "Lo" else return "Lm" end
+                      else
+                        if c < 43744 then return "Po" else return "Lo" end
                       end
                     else
-                      if c < 43755 then
-                        if c < 43744 then return "Po" else return "Lo" end
-                      else
+                      if c < 43758 then
                         if c < 43756 then return "Mc" else return "Mn" end
+                      else
+                        if c < 43760 then return "Mc" else return "Po" end
                       end
                     end
                   else
-                    if c < 43765 then
-                      if c < 43762 then
-                        if c < 43760 then return "Mc" else return "Po" end
-                      else
+                    if c < 43767 then
+                      if c < 43765 then
                         if c < 43763 then return "Lo" else return "Lm" end
+                      else
+                        if c < 43766 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 43767 then
-                        if c < 43766 then return "Mc" else return "Mn" end
-                      else
+                      if c < 43783 then
                         if c < 43777 then return "Cn" else return "Lo" end
+                      else
+                        if c < 43785 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 43823 then
-                    if c < 43799 then
-                      if c < 43791 then
-                        if c < 43785 then return "Cn" else return "Lo" end
-                      else
+                  if c < 43867 then
+                    if c < 43815 then
+                      if c < 43799 then
                         if c < 43793 then return "Cn" else return "Lo" end
+                      else
+                        if c < 43808 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 43815 then
-                        if c < 43808 then return "Cn" else return "Lo" end
-                      else
+                      if c < 43823 then
                         if c < 43816 then return "Cn" else return "Lo" end
+                      else
+                        if c < 43824 then return "Cn" else return "Ll" end
                       end
                     end
                   else
-                    if c < 43872 then
-                      if c < 43867 then
-                        if c < 43824 then return "Cn" else return "Ll" end
-                      else
+                    if c < 43888 then
+                      if c < 43872 then
                         if c < 43868 then return "Sk" else return "Lm" end
+                      else
+                        if c < 43880 then return "Ll" else return "Cn" end
                       end
                     else
-                      if c < 43888 then
-                        if c < 43880 then return "Ll" else return "Cn" end
-                      else
+                      if c < 44003 then
                         if c < 43968 then return "Ll" else return "Lo" end
+                      else
+                        if c < 44005 then return "Mc" else return "Mn" end
                       end
                     end
                   end
@@ -5375,253 +5375,253 @@ return function (c)
               end
             end
           else
-            if c < 65073 then
-              if c < 64311 then
-                if c < 55292 then
-                  if c < 44014 then
-                    if c < 44009 then
-                      if c < 44006 then
-                        if c < 44005 then return "Mc" else return "Mn" end
-                      else
+            if c < 65077 then
+              if c < 64317 then
+                if c < 57344 then
+                  if c < 44026 then
+                    if c < 44012 then
+                      if c < 44009 then
                         if c < 44008 then return "Mc" else return "Mn" end
+                      else
+                        if c < 44011 then return "Mc" else return "Po" end
                       end
                     else
-                      if c < 44012 then
-                        if c < 44011 then return "Mc" else return "Po" end
-                      else
+                      if c < 44014 then
                         if c < 44013 then return "Mc" else return "Mn" end
+                      else
+                        if c < 44016 then return "Cn" else return "Nd" end
                       end
                     end
                   else
-                    if c < 55204 then
-                      if c < 44026 then
-                        if c < 44016 then return "Cn" else return "Nd" end
-                      else
+                    if c < 55239 then
+                      if c < 55204 then
                         if c < 44032 then return "Cn" else return "Lo" end
+                      else
+                        if c < 55216 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 55239 then
-                        if c < 55216 then return "Cn" else return "Lo" end
-                      else
+                      if c < 55292 then
                         if c < 55243 then return "Cn" else return "Lo" end
+                      else
+                        if c < 55296 then return "Cn" else return "Cs" end
                       end
                     end
                   end
                 else
-                  if c < 64263 then
-                    if c < 64110 then
-                      if c < 57344 then
-                        if c < 55296 then return "Cn" else return "Cs" end
-                      else
+                  if c < 64280 then
+                    if c < 64218 then
+                      if c < 64110 then
                         if c < 63744 then return "Co" else return "Lo" end
+                      else
+                        if c < 64112 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 64218 then
-                        if c < 64112 then return "Cn" else return "Lo" end
-                      else
+                      if c < 64263 then
                         if c < 64256 then return "Cn" else return "Ll" end
+                      else
+                        if c < 64275 then return "Cn" else return "Ll" end
                       end
                     end
                   else
-                    if c < 64286 then
-                      if c < 64280 then
-                        if c < 64275 then return "Cn" else return "Ll" end
-                      else
+                    if c < 64297 then
+                      if c < 64286 then
                         if c < 64285 then return "Cn" else return "Lo" end
+                      else
+                        if c < 64287 then return "Mn" else return "Lo" end
                       end
                     else
-                      if c < 64297 then
-                        if c < 64287 then return "Mn" else return "Lo" end
-                      else
+                      if c < 64311 then
                         if c < 64298 then return "Sm" else return "Lo" end
+                      else
+                        if c < 64312 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 end
               else
-                if c < 64848 then
-                  if c < 64325 then
-                    if c < 64319 then
-                      if c < 64317 then
-                        if c < 64312 then return "Cn" else return "Lo" end
-                      else
+                if c < 64914 then
+                  if c < 64434 then
+                    if c < 64322 then
+                      if c < 64319 then
                         if c < 64318 then return "Cn" else return "Lo" end
+                      else
+                        if c < 64320 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 64322 then
-                        if c < 64320 then return "Cn" else return "Lo" end
-                      else
+                      if c < 64325 then
                         if c < 64323 then return "Cn" else return "Lo" end
+                      else
+                        if c < 64326 then return "Cn" else return "Lo" end
                       end
                     end
                   else
-                    if c < 64467 then
-                      if c < 64434 then
-                        if c < 64326 then return "Cn" else return "Lo" end
-                      else
+                    if c < 64831 then
+                      if c < 64467 then
                         if c < 64450 then return "Sk" else return "Cn" end
+                      else
+                        if c < 64830 then return "Lo" else return "Pe" end
                       end
                     else
-                      if c < 64831 then
-                        if c < 64830 then return "Lo" else return "Pe" end
-                      else
+                      if c < 64848 then
                         if c < 64832 then return "Ps" else return "Cn" end
+                      else
+                        if c < 64912 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 65024 then
-                    if c < 65008 then
-                      if c < 64914 then
-                        if c < 64912 then return "Lo" else return "Cn" end
-                      else
+                  if c < 65047 then
+                    if c < 65021 then
+                      if c < 65008 then
                         if c < 64968 then return "Lo" else return "Cn" end
+                      else
+                        if c < 65020 then return "Lo" else return "Sc" end
                       end
                     else
-                      if c < 65021 then
-                        if c < 65020 then return "Lo" else return "Sc" end
-                      else
+                      if c < 65024 then
                         if c < 65022 then return "So" else return "Cn" end
+                      else
+                        if c < 65040 then return "Mn" else return "Po" end
                       end
                     end
                   else
-                    if c < 65049 then
-                      if c < 65047 then
-                        if c < 65040 then return "Mn" else return "Po" end
-                      else
+                    if c < 65056 then
+                      if c < 65049 then
                         if c < 65048 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65050 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 65056 then
-                        if c < 65050 then return "Po" else return "Cn" end
-                      else
+                      if c < 65073 then
                         if c < 65072 then return "Mn" else return "Po" end
+                      else
+                        if c < 65075 then return "Pd" else return "Pc" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 65118 then
-                if c < 65091 then
-                  if c < 65083 then
-                    if c < 65079 then
-                      if c < 65077 then
-                        if c < 65075 then return "Pd" else return "Pc" end
-                      else
+              if c < 65122 then
+                if c < 65093 then
+                  if c < 65085 then
+                    if c < 65081 then
+                      if c < 65079 then
                         if c < 65078 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65080 then return "Ps" else return "Pe" end
                       end
                     else
-                      if c < 65081 then
-                        if c < 65080 then return "Ps" else return "Pe" end
-                      else
+                      if c < 65083 then
                         if c < 65082 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65084 then return "Ps" else return "Pe" end
                       end
                     end
                   else
-                    if c < 65087 then
-                      if c < 65085 then
-                        if c < 65084 then return "Ps" else return "Pe" end
-                      else
+                    if c < 65089 then
+                      if c < 65087 then
                         if c < 65086 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65088 then return "Ps" else return "Pe" end
                       end
                     else
-                      if c < 65089 then
-                        if c < 65088 then return "Ps" else return "Pe" end
-                      else
+                      if c < 65091 then
                         if c < 65090 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65092 then return "Ps" else return "Pe" end
                       end
                     end
                   end
                 else
-                  if c < 65107 then
-                    if c < 65096 then
-                      if c < 65093 then
-                        if c < 65092 then return "Ps" else return "Pe" end
-                      else
+                  if c < 65112 then
+                    if c < 65101 then
+                      if c < 65096 then
                         if c < 65095 then return "Po" else return "Ps" end
+                      else
+                        if c < 65097 then return "Pe" else return "Po" end
                       end
                     else
-                      if c < 65101 then
-                        if c < 65097 then return "Pe" else return "Po" end
-                      else
+                      if c < 65107 then
                         if c < 65104 then return "Pc" else return "Po" end
+                      else
+                        if c < 65108 then return "Cn" else return "Po" end
                       end
                     end
                   else
-                    if c < 65114 then
-                      if c < 65112 then
-                        if c < 65108 then return "Cn" else return "Po" end
-                      else
+                    if c < 65116 then
+                      if c < 65114 then
                         if c < 65113 then return "Pd" else return "Ps" end
+                      else
+                        if c < 65115 then return "Pe" else return "Ps" end
                       end
                     else
-                      if c < 65116 then
-                        if c < 65115 then return "Pe" else return "Ps" end
-                      else
+                      if c < 65118 then
                         if c < 65117 then return "Pe" else return "Ps" end
+                      else
+                        if c < 65119 then return "Pe" else return "Po" end
                       end
                     end
                   end
                 end
               else
-                if c < 65281 then
-                  if c < 65130 then
-                    if c < 65124 then
-                      if c < 65122 then
-                        if c < 65119 then return "Pe" else return "Po" end
-                      else
+                if c < 65285 then
+                  if c < 65136 then
+                    if c < 65128 then
+                      if c < 65124 then
                         if c < 65123 then return "Sm" else return "Pd" end
+                      else
+                        if c < 65127 then return "Sm" else return "Cn" end
                       end
                     else
-                      if c < 65128 then
-                        if c < 65127 then return "Sm" else return "Cn" end
-                      else
+                      if c < 65130 then
                         if c < 65129 then return "Po" else return "Sc" end
+                      else
+                        if c < 65132 then return "Po" else return "Cn" end
                       end
                     end
                   else
-                    if c < 65142 then
-                      if c < 65136 then
-                        if c < 65132 then return "Po" else return "Cn" end
-                      else
+                    if c < 65279 then
+                      if c < 65142 then
                         if c < 65141 then return "Lo" else return "Cn" end
+                      else
+                        if c < 65277 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 65279 then
-                        if c < 65277 then return "Lo" else return "Cn" end
-                      else
+                      if c < 65281 then
                         if c < 65280 then return "Cf" else return "Cn" end
+                      else
+                        if c < 65284 then return "Po" else return "Sc" end
                       end
                     end
                   end
                 else
-                  if c < 65293 then
-                    if c < 65289 then
-                      if c < 65285 then
-                        if c < 65284 then return "Po" else return "Sc" end
-                      else
+                  if c < 65296 then
+                    if c < 65291 then
+                      if c < 65289 then
                         if c < 65288 then return "Po" else return "Ps" end
+                      else
+                        if c < 65290 then return "Pe" else return "Po" end
                       end
                     else
-                      if c < 65291 then
-                        if c < 65290 then return "Pe" else return "Po" end
-                      else
+                      if c < 65293 then
                         if c < 65292 then return "Sm" else return "Po" end
+                      else
+                        if c < 65294 then return "Pd" else return "Po" end
                       end
                     end
                   else
-                    if c < 65308 then
-                      if c < 65296 then
-                        if c < 65294 then return "Pd" else return "Po" end
-                      else
+                    if c < 65313 then
+                      if c < 65308 then
                         if c < 65306 then return "Nd" else return "Po" end
+                      else
+                        if c < 65311 then return "Sm" else return "Po" end
                       end
                     else
-                      if c < 65313 then
-                        if c < 65311 then return "Sm" else return "Po" end
-                      else
+                      if c < 65340 then
                         if c < 65339 then return "Lu" else return "Ps" end
+                      else
+                        if c < 65341 then return "Po" else return "Pe" end
                       end
                     end
                   end
@@ -5630,254 +5630,254 @@ return function (c)
             end
           end
         else
-          if c < 67594 then
-            if c < 65913 then
-              if c < 65507 then
-                if c < 65382 then
-                  if c < 65373 then
-                    if c < 65344 then
-                      if c < 65342 then
-                        if c < 65341 then return "Po" else return "Pe" end
-                      else
+          if c < 67639 then
+            if c < 65932 then
+              if c < 65509 then
+                if c < 65393 then
+                  if c < 65375 then
+                    if c < 65371 then
+                      if c < 65344 then
                         if c < 65343 then return "Sk" else return "Pc" end
+                      else
+                        if c < 65345 then return "Sk" else return "Ll" end
                       end
                     else
-                      if c < 65371 then
-                        if c < 65345 then return "Sk" else return "Ll" end
-                      else
+                      if c < 65373 then
                         if c < 65372 then return "Ps" else return "Sm" end
+                      else
+                        if c < 65374 then return "Pe" else return "Sm" end
                       end
                     end
                   else
-                    if c < 65377 then
-                      if c < 65375 then
-                        if c < 65374 then return "Pe" else return "Sm" end
-                      else
+                    if c < 65379 then
+                      if c < 65377 then
                         if c < 65376 then return "Ps" else return "Pe" end
+                      else
+                        if c < 65378 then return "Po" else return "Ps" end
                       end
                     else
-                      if c < 65379 then
-                        if c < 65378 then return "Po" else return "Ps" end
-                      else
+                      if c < 65382 then
                         if c < 65380 then return "Pe" else return "Po" end
+                      else
+                        if c < 65392 then return "Lo" else return "Lm" end
                       end
                     end
                   end
                 else
-                  if c < 65482 then
-                    if c < 65440 then
-                      if c < 65393 then
-                        if c < 65392 then return "Lo" else return "Lm" end
-                      else
+                  if c < 65490 then
+                    if c < 65474 then
+                      if c < 65440 then
                         if c < 65438 then return "Lo" else return "Lm" end
+                      else
+                        if c < 65471 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 65474 then
-                        if c < 65471 then return "Lo" else return "Cn" end
-                      else
+                      if c < 65482 then
                         if c < 65480 then return "Lo" else return "Cn" end
+                      else
+                        if c < 65488 then return "Lo" else return "Cn" end
                       end
                     end
                   else
-                    if c < 65498 then
-                      if c < 65490 then
-                        if c < 65488 then return "Lo" else return "Cn" end
-                      else
+                    if c < 65504 then
+                      if c < 65498 then
                         if c < 65496 then return "Lo" else return "Cn" end
+                      else
+                        if c < 65501 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 65504 then
-                        if c < 65501 then return "Lo" else return "Cn" end
-                      else
+                      if c < 65507 then
                         if c < 65506 then return "Sc" else return "Sm" end
+                      else
+                        if c < 65508 then return "Sk" else return "So" end
                       end
                     end
                   end
                 end
               else
-                if c < 65595 then
-                  if c < 65529 then
-                    if c < 65512 then
-                      if c < 65509 then
-                        if c < 65508 then return "Sk" else return "So" end
-                      else
+                if c < 65598 then
+                  if c < 65534 then
+                    if c < 65517 then
+                      if c < 65512 then
                         if c < 65511 then return "Sc" else return "Cn" end
+                      else
+                        if c < 65513 then return "So" else return "Sm" end
                       end
                     else
-                      if c < 65517 then
-                        if c < 65513 then return "So" else return "Sm" end
-                      else
+                      if c < 65529 then
                         if c < 65519 then return "So" else return "Cn" end
+                      else
+                        if c < 65532 then return "Cf" else return "So" end
                       end
                     end
                   else
-                    if c < 65548 then
-                      if c < 65534 then
-                        if c < 65532 then return "Cf" else return "So" end
-                      else
+                    if c < 65575 then
+                      if c < 65548 then
                         if c < 65536 then return "Cn" else return "Lo" end
+                      else
+                        if c < 65549 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 65575 then
-                        if c < 65549 then return "Cn" else return "Lo" end
-                      else
+                      if c < 65595 then
                         if c < 65576 then return "Cn" else return "Lo" end
+                      else
+                        if c < 65596 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 65787 then
-                    if c < 65614 then
-                      if c < 65598 then
-                        if c < 65596 then return "Cn" else return "Lo" end
-                      else
+                  if c < 65795 then
+                    if c < 65630 then
+                      if c < 65614 then
                         if c < 65599 then return "Cn" else return "Lo" end
+                      else
+                        if c < 65616 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 65630 then
-                        if c < 65616 then return "Cn" else return "Lo" end
-                      else
+                      if c < 65787 then
                         if c < 65664 then return "Cn" else return "Lo" end
+                      else
+                        if c < 65792 then return "Cn" else return "Po" end
                       end
                     end
                   else
-                    if c < 65844 then
-                      if c < 65795 then
-                        if c < 65792 then return "Cn" else return "Po" end
-                      else
+                    if c < 65856 then
+                      if c < 65844 then
                         if c < 65799 then return "Cn" else return "No" end
+                      else
+                        if c < 65847 then return "Cn" else return "So" end
                       end
                     else
-                      if c < 65856 then
-                        if c < 65847 then return "Cn" else return "So" end
-                      else
+                      if c < 65913 then
                         if c < 65909 then return "Nl" else return "No" end
+                      else
+                        if c < 65930 then return "So" else return "No" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 66464 then
-                if c < 66273 then
-                  if c < 66000 then
-                    if c < 65936 then
-                      if c < 65932 then
-                        if c < 65930 then return "So" else return "No" end
-                      else
+              if c < 66504 then
+                if c < 66304 then
+                  if c < 66046 then
+                    if c < 65952 then
+                      if c < 65936 then
                         if c < 65935 then return "So" else return "Cn" end
+                      else
+                        if c < 65948 then return "So" else return "Cn" end
                       end
                     else
-                      if c < 65952 then
-                        if c < 65948 then return "So" else return "Cn" end
-                      else
+                      if c < 66000 then
                         if c < 65953 then return "So" else return "Cn" end
+                      else
+                        if c < 66045 then return "So" else return "Mn" end
                       end
                     end
                   else
-                    if c < 66205 then
-                      if c < 66046 then
-                        if c < 66045 then return "So" else return "Mn" end
-                      else
+                    if c < 66257 then
+                      if c < 66205 then
                         if c < 66176 then return "Cn" else return "Lo" end
+                      else
+                        if c < 66208 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 66257 then
-                        if c < 66208 then return "Cn" else return "Lo" end
-                      else
+                      if c < 66273 then
                         if c < 66272 then return "Cn" else return "Mn" end
+                      else
+                        if c < 66300 then return "No" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 66378 then
-                    if c < 66340 then
-                      if c < 66304 then
-                        if c < 66300 then return "No" else return "Cn" end
-                      else
+                  if c < 66384 then
+                    if c < 66369 then
+                      if c < 66340 then
                         if c < 66336 then return "Lo" else return "No" end
+                      else
+                        if c < 66349 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 66369 then
-                        if c < 66349 then return "Cn" else return "Lo" end
-                      else
+                      if c < 66378 then
                         if c < 66370 then return "Nl" else return "Lo" end
+                      else
+                        if c < 66379 then return "Nl" else return "Cn" end
                       end
                     end
                   else
-                    if c < 66427 then
-                      if c < 66384 then
-                        if c < 66379 then return "Nl" else return "Cn" end
-                      else
+                    if c < 66462 then
+                      if c < 66427 then
                         if c < 66422 then return "Lo" else return "Mn" end
+                      else
+                        if c < 66432 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 66462 then
-                        if c < 66432 then return "Cn" else return "Lo" end
-                      else
+                      if c < 66464 then
                         if c < 66463 then return "Cn" else return "Po" end
+                      else
+                        if c < 66500 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 end
               else
-                if c < 66816 then
-                  if c < 66640 then
-                    if c < 66513 then
-                      if c < 66504 then
-                        if c < 66500 then return "Lo" else return "Cn" end
-                      else
+                if c < 66864 then
+                  if c < 66720 then
+                    if c < 66560 then
+                      if c < 66513 then
                         if c < 66512 then return "Lo" else return "Po" end
+                      else
+                        if c < 66518 then return "Nl" else return "Cn" end
                       end
                     else
-                      if c < 66560 then
-                        if c < 66518 then return "Nl" else return "Cn" end
-                      else
+                      if c < 66640 then
                         if c < 66600 then return "Lu" else return "Ll" end
+                      else
+                        if c < 66718 then return "Lo" else return "Cn" end
                       end
                     end
                   else
-                    if c < 66736 then
-                      if c < 66720 then
-                        if c < 66718 then return "Lo" else return "Cn" end
-                      else
+                    if c < 66776 then
+                      if c < 66736 then
                         if c < 66730 then return "Nd" else return "Cn" end
+                      else
+                        if c < 66772 then return "Lu" else return "Cn" end
                       end
                     else
-                      if c < 66776 then
-                        if c < 66772 then return "Lu" else return "Cn" end
-                      else
+                      if c < 66816 then
                         if c < 66812 then return "Ll" else return "Cn" end
+                      else
+                        if c < 66856 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 67392 then
-                    if c < 66927 then
-                      if c < 66864 then
-                        if c < 66856 then return "Lo" else return "Cn" end
-                      else
+                  if c < 67424 then
+                    if c < 67072 then
+                      if c < 66927 then
                         if c < 66916 then return "Lo" else return "Cn" end
+                      else
+                        if c < 66928 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 67072 then
-                        if c < 66928 then return "Po" else return "Cn" end
-                      else
+                      if c < 67392 then
                         if c < 67383 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67414 then return "Lo" else return "Cn" end
                       end
                     end
                   else
-                    if c < 67584 then
-                      if c < 67424 then
-                        if c < 67414 then return "Lo" else return "Cn" end
-                      else
+                    if c < 67592 then
+                      if c < 67584 then
                         if c < 67432 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67590 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 67592 then
-                        if c < 67590 then return "Lo" else return "Cn" end
-                      else
+                      if c < 67594 then
                         if c < 67593 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67638 then return "Lo" else return "Cn" end
                       end
                     end
                   end
@@ -5885,253 +5885,253 @@ return function (c)
               end
             end
           else
-            if c < 68297 then
-              if c < 68028 then
-                if c < 67760 then
-                  if c < 67671 then
-                    if c < 67644 then
-                      if c < 67639 then
-                        if c < 67638 then return "Lo" else return "Cn" end
-                      else
+            if c < 68327 then
+              if c < 68032 then
+                if c < 67827 then
+                  if c < 67680 then
+                    if c < 67647 then
+                      if c < 67644 then
                         if c < 67641 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67645 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 67647 then
-                        if c < 67645 then return "Lo" else return "Cn" end
-                      else
+                      if c < 67671 then
                         if c < 67670 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67672 then return "Po" else return "No" end
                       end
                     end
                   else
-                    if c < 67705 then
-                      if c < 67680 then
-                        if c < 67672 then return "Po" else return "No" end
-                      else
+                    if c < 67743 then
+                      if c < 67705 then
                         if c < 67703 then return "Lo" else return "So" end
+                      else
+                        if c < 67712 then return "No" else return "Lo" end
                       end
                     else
-                      if c < 67743 then
-                        if c < 67712 then return "No" else return "Lo" end
-                      else
+                      if c < 67760 then
                         if c < 67751 then return "Cn" else return "No" end
+                      else
+                        if c < 67808 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 67868 then
-                    if c < 67830 then
-                      if c < 67827 then
-                        if c < 67808 then return "Cn" else return "Lo" end
-                      else
+                  if c < 67872 then
+                    if c < 67840 then
+                      if c < 67830 then
                         if c < 67828 then return "Cn" else return "Lo" end
+                      else
+                        if c < 67835 then return "Cn" else return "No" end
                       end
                     else
-                      if c < 67840 then
-                        if c < 67835 then return "Cn" else return "No" end
-                      else
+                      if c < 67868 then
                         if c < 67862 then return "Lo" else return "No" end
+                      else
+                        if c < 67871 then return "Cn" else return "Po" end
                       end
                     end
                   else
-                    if c < 67903 then
-                      if c < 67872 then
-                        if c < 67871 then return "Cn" else return "Po" end
-                      else
+                    if c < 67968 then
+                      if c < 67903 then
                         if c < 67898 then return "Lo" else return "Cn" end
+                      else
+                        if c < 67904 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 67968 then
-                        if c < 67904 then return "Po" else return "Cn" end
-                      else
+                      if c < 68028 then
                         if c < 68024 then return "Lo" else return "Cn" end
+                      else
+                        if c < 68030 then return "No" else return "Lo" end
                       end
                     end
                   end
                 end
               else
-                if c < 68150 then
-                  if c < 68101 then
-                    if c < 68050 then
-                      if c < 68032 then
-                        if c < 68030 then return "No" else return "Lo" end
-                      else
+                if c < 68155 then
+                  if c < 68108 then
+                    if c < 68097 then
+                      if c < 68050 then
                         if c < 68048 then return "No" else return "Cn" end
+                      else
+                        if c < 68096 then return "No" else return "Lo" end
                       end
                     else
-                      if c < 68097 then
-                        if c < 68096 then return "No" else return "Lo" end
-                      else
+                      if c < 68101 then
                         if c < 68100 then return "Mn" else return "Cn" end
+                      else
+                        if c < 68103 then return "Mn" else return "Cn" end
                       end
                     end
                   else
-                    if c < 68116 then
-                      if c < 68108 then
-                        if c < 68103 then return "Mn" else return "Cn" end
-                      else
+                    if c < 68120 then
+                      if c < 68116 then
                         if c < 68112 then return "Mn" else return "Lo" end
+                      else
+                        if c < 68117 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 68120 then
-                        if c < 68117 then return "Cn" else return "Lo" end
-                      else
+                      if c < 68150 then
                         if c < 68121 then return "Cn" else return "Lo" end
+                      else
+                        if c < 68152 then return "Cn" else return "Mn" end
                       end
                     end
                   end
                 else
-                  if c < 68192 then
-                    if c < 68160 then
-                      if c < 68155 then
-                        if c < 68152 then return "Cn" else return "Mn" end
-                      else
+                  if c < 68223 then
+                    if c < 68176 then
+                      if c < 68160 then
                         if c < 68159 then return "Cn" else return "Mn" end
+                      else
+                        if c < 68169 then return "No" else return "Cn" end
                       end
                     else
-                      if c < 68176 then
-                        if c < 68169 then return "No" else return "Cn" end
-                      else
+                      if c < 68192 then
                         if c < 68185 then return "Po" else return "Cn" end
+                      else
+                        if c < 68221 then return "Lo" else return "No" end
                       end
                     end
                   else
-                    if c < 68253 then
-                      if c < 68223 then
-                        if c < 68221 then return "Lo" else return "No" end
-                      else
+                    if c < 68288 then
+                      if c < 68253 then
                         if c < 68224 then return "Po" else return "Lo" end
+                      else
+                        if c < 68256 then return "No" else return "Cn" end
                       end
                     else
-                      if c < 68288 then
-                        if c < 68256 then return "No" else return "Cn" end
-                      else
+                      if c < 68297 then
                         if c < 68296 then return "Lo" else return "So" end
+                      else
+                        if c < 68325 then return "Lo" else return "Mn" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 68922 then
-                if c < 68498 then
-                  if c < 68409 then
-                    if c < 68336 then
-                      if c < 68327 then
-                        if c < 68325 then return "Lo" else return "Mn" end
-                      else
+              if c < 69247 then
+                if c < 68509 then
+                  if c < 68438 then
+                    if c < 68352 then
+                      if c < 68336 then
                         if c < 68331 then return "Cn" else return "No" end
+                      else
+                        if c < 68343 then return "Po" else return "Cn" end
                       end
                     else
-                      if c < 68352 then
-                        if c < 68343 then return "Po" else return "Cn" end
-                      else
+                      if c < 68409 then
                         if c < 68406 then return "Lo" else return "Cn" end
+                      else
+                        if c < 68416 then return "Po" else return "Lo" end
                       end
                     end
                   else
-                    if c < 68448 then
-                      if c < 68438 then
-                        if c < 68416 then return "Po" else return "Lo" end
-                      else
+                    if c < 68472 then
+                      if c < 68448 then
                         if c < 68440 then return "Cn" else return "No" end
+                      else
+                        if c < 68467 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 68472 then
-                        if c < 68467 then return "Lo" else return "Cn" end
-                      else
+                      if c < 68498 then
                         if c < 68480 then return "No" else return "Lo" end
+                      else
+                        if c < 68505 then return "Cn" else return "Po" end
                       end
                     end
                   end
                 else
-                  if c < 68787 then
-                    if c < 68528 then
-                      if c < 68509 then
-                        if c < 68505 then return "Cn" else return "Po" end
-                      else
+                  if c < 68851 then
+                    if c < 68681 then
+                      if c < 68528 then
                         if c < 68521 then return "Cn" else return "No" end
+                      else
+                        if c < 68608 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 68681 then
-                        if c < 68608 then return "Cn" else return "Lo" end
-                      else
+                      if c < 68787 then
                         if c < 68736 then return "Cn" else return "Lu" end
+                      else
+                        if c < 68800 then return "Cn" else return "Ll" end
                       end
                     end
                   else
-                    if c < 68864 then
-                      if c < 68851 then
-                        if c < 68800 then return "Cn" else return "Ll" end
-                      else
+                    if c < 68904 then
+                      if c < 68864 then
                         if c < 68858 then return "Cn" else return "No" end
+                      else
+                        if c < 68900 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 68904 then
-                        if c < 68900 then return "Lo" else return "Mn" end
-                      else
+                      if c < 68922 then
                         if c < 68912 then return "Cn" else return "Nd" end
+                      else
+                        if c < 69216 then return "Cn" else return "No" end
                       end
                     end
                   end
                 end
               else
-                if c < 69634 then
-                  if c < 69446 then
-                    if c < 69405 then
-                      if c < 69247 then
-                        if c < 69216 then return "Cn" else return "No" end
-                      else
+                if c < 69688 then
+                  if c < 69461 then
+                    if c < 69416 then
+                      if c < 69405 then
                         if c < 69376 then return "Cn" else return "Lo" end
+                      else
+                        if c < 69415 then return "No" else return "Lo" end
                       end
                     else
-                      if c < 69416 then
-                        if c < 69415 then return "No" else return "Lo" end
-                      else
+                      if c < 69446 then
                         if c < 69424 then return "Cn" else return "Lo" end
+                      else
+                        if c < 69457 then return "Mn" else return "No" end
                       end
                     end
                   else
-                    if c < 69600 then
-                      if c < 69461 then
-                        if c < 69457 then return "Mn" else return "No" end
-                      else
+                    if c < 69632 then
+                      if c < 69600 then
                         if c < 69466 then return "Po" else return "Cn" end
+                      else
+                        if c < 69623 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 69632 then
-                        if c < 69623 then return "Lo" else return "Cn" end
-                      else
+                      if c < 69634 then
                         if c < 69633 then return "Mc" else return "Mn" end
+                      else
+                        if c < 69635 then return "Mc" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 69759 then
-                    if c < 69710 then
-                      if c < 69688 then
-                        if c < 69635 then return "Mc" else return "Lo" end
-                      else
+                  if c < 69763 then
+                    if c < 69734 then
+                      if c < 69710 then
                         if c < 69703 then return "Mn" else return "Po" end
+                      else
+                        if c < 69714 then return "Cn" else return "No" end
                       end
                     else
-                      if c < 69734 then
-                        if c < 69714 then return "Cn" else return "No" end
-                      else
+                      if c < 69759 then
                         if c < 69744 then return "Nd" else return "Cn" end
+                      else
+                        if c < 69762 then return "Mn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 69811 then
-                      if c < 69763 then
-                        if c < 69762 then return "Mn" else return "Mc" end
-                      else
+                    if c < 69817 then
+                      if c < 69811 then
                         if c < 69808 then return "Lo" else return "Mc" end
+                      else
+                        if c < 69815 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 69817 then
-                        if c < 69815 then return "Mn" else return "Mc" end
-                      else
+                      if c < 69821 then
                         if c < 69819 then return "Mn" else return "Po" end
+                      else
+                        if c < 69822 then return "Cf" else return "Po" end
                       end
                     end
                   end
@@ -6143,255 +6143,255 @@ return function (c)
       end
     else
       if c < 120540 then
-        if c < 72774 then
-          if c < 70832 then
-            if c < 70303 then
-              if c < 70085 then
-                if c < 69952 then
-                  if c < 69882 then
-                    if c < 69838 then
-                      if c < 69826 then
-                        if c < 69822 then return "Cf" else return "Po" end
-                      else
+        if c < 72794 then
+          if c < 70841 then
+            if c < 70314 then
+              if c < 70093 then
+                if c < 69957 then
+                  if c < 69891 then
+                    if c < 69865 then
+                      if c < 69838 then
                         if c < 69837 then return "Cn" else return "Cf" end
+                      else
+                        if c < 69840 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 69865 then
-                        if c < 69840 then return "Cn" else return "Lo" end
-                      else
+                      if c < 69882 then
                         if c < 69872 then return "Cn" else return "Nd" end
+                      else
+                        if c < 69888 then return "Cn" else return "Mn" end
                       end
                     end
                   else
-                    if c < 69932 then
-                      if c < 69891 then
-                        if c < 69888 then return "Cn" else return "Mn" end
-                      else
+                    if c < 69941 then
+                      if c < 69932 then
                         if c < 69927 then return "Lo" else return "Mn" end
+                      else
+                        if c < 69933 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 69941 then
-                        if c < 69933 then return "Mc" else return "Mn" end
-                      else
+                      if c < 69952 then
                         if c < 69942 then return "Cn" else return "Nd" end
+                      else
+                        if c < 69956 then return "Po" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 70007 then
-                    if c < 69968 then
-                      if c < 69957 then
-                        if c < 69956 then return "Po" else return "Lo" end
-                      else
+                  if c < 70018 then
+                    if c < 70004 then
+                      if c < 69968 then
                         if c < 69959 then return "Mc" else return "Cn" end
+                      else
+                        if c < 70003 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 70004 then
-                        if c < 70003 then return "Lo" else return "Mn" end
-                      else
+                      if c < 70007 then
                         if c < 70006 then return "Po" else return "Lo" end
+                      else
+                        if c < 70016 then return "Cn" else return "Mn" end
                       end
                     end
                   else
-                    if c < 70067 then
-                      if c < 70018 then
-                        if c < 70016 then return "Cn" else return "Mn" end
-                      else
+                    if c < 70079 then
+                      if c < 70067 then
                         if c < 70019 then return "Mc" else return "Lo" end
+                      else
+                        if c < 70070 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 70079 then
-                        if c < 70070 then return "Mc" else return "Mn" end
-                      else
+                      if c < 70085 then
                         if c < 70081 then return "Mc" else return "Lo" end
+                      else
+                        if c < 70089 then return "Po" else return "Mn" end
                       end
                     end
                   end
                 end
               else
-                if c < 70191 then
-                  if c < 70109 then
-                    if c < 70096 then
-                      if c < 70093 then
-                        if c < 70089 then return "Po" else return "Mn" end
-                      else
+                if c < 70196 then
+                  if c < 70113 then
+                    if c < 70107 then
+                      if c < 70096 then
                         if c < 70094 then return "Po" else return "Cn" end
+                      else
+                        if c < 70106 then return "Nd" else return "Lo" end
                       end
                     else
-                      if c < 70107 then
-                        if c < 70106 then return "Nd" else return "Lo" end
-                      else
+                      if c < 70109 then
                         if c < 70108 then return "Po" else return "Lo" end
+                      else
+                        if c < 70112 then return "Po" else return "Cn" end
                       end
                     end
                   else
-                    if c < 70144 then
-                      if c < 70113 then
-                        if c < 70112 then return "Po" else return "Cn" end
-                      else
+                    if c < 70163 then
+                      if c < 70144 then
                         if c < 70133 then return "No" else return "Cn" end
+                      else
+                        if c < 70162 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 70163 then
-                        if c < 70162 then return "Lo" else return "Cn" end
-                      else
+                      if c < 70191 then
                         if c < 70188 then return "Lo" else return "Mc" end
+                      else
+                        if c < 70194 then return "Mn" else return "Mc" end
                       end
                     end
                   end
                 else
-                  if c < 70272 then
-                    if c < 70198 then
-                      if c < 70196 then
-                        if c < 70194 then return "Mn" else return "Mc" end
-                      else
+                  if c < 70280 then
+                    if c < 70206 then
+                      if c < 70198 then
                         if c < 70197 then return "Mn" else return "Mc" end
+                      else
+                        if c < 70200 then return "Mn" else return "Po" end
                       end
                     else
-                      if c < 70206 then
-                        if c < 70200 then return "Mn" else return "Po" end
-                      else
+                      if c < 70272 then
                         if c < 70207 then return "Mn" else return "Cn" end
+                      else
+                        if c < 70279 then return "Lo" else return "Cn" end
                       end
                     end
                   else
-                    if c < 70282 then
-                      if c < 70280 then
-                        if c < 70279 then return "Lo" else return "Cn" end
-                      else
+                    if c < 70287 then
+                      if c < 70282 then
                         if c < 70281 then return "Lo" else return "Cn" end
+                      else
+                        if c < 70286 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 70287 then
-                        if c < 70286 then return "Lo" else return "Cn" end
-                      else
+                      if c < 70303 then
                         if c < 70302 then return "Lo" else return "Cn" end
+                      else
+                        if c < 70313 then return "Lo" else return "Po" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 70473 then
-                if c < 70417 then
-                  if c < 70384 then
-                    if c < 70367 then
-                      if c < 70314 then
-                        if c < 70313 then return "Lo" else return "Po" end
-                      else
+              if c < 70478 then
+                if c < 70441 then
+                  if c < 70400 then
+                    if c < 70371 then
+                      if c < 70367 then
                         if c < 70320 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70368 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 70371 then
-                        if c < 70368 then return "Mn" else return "Mc" end
-                      else
+                      if c < 70384 then
                         if c < 70379 then return "Mn" else return "Cn" end
+                      else
+                        if c < 70394 then return "Nd" else return "Cn" end
                       end
                     end
                   else
-                    if c < 70404 then
-                      if c < 70400 then
-                        if c < 70394 then return "Nd" else return "Cn" end
-                      else
+                    if c < 70413 then
+                      if c < 70404 then
                         if c < 70402 then return "Mn" else return "Mc" end
+                      else
+                        if c < 70405 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 70413 then
-                        if c < 70405 then return "Cn" else return "Lo" end
-                      else
+                      if c < 70417 then
                         if c < 70415 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70419 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 70458 then
-                    if c < 70449 then
-                      if c < 70441 then
-                        if c < 70419 then return "Cn" else return "Lo" end
-                      else
+                  if c < 70461 then
+                    if c < 70452 then
+                      if c < 70449 then
                         if c < 70442 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70450 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 70452 then
-                        if c < 70450 then return "Cn" else return "Lo" end
-                      else
+                      if c < 70458 then
                         if c < 70453 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70459 then return "Cn" else return "Mn" end
                       end
                     end
                   else
-                    if c < 70464 then
-                      if c < 70461 then
-                        if c < 70459 then return "Cn" else return "Mn" end
-                      else
+                    if c < 70469 then
+                      if c < 70464 then
                         if c < 70462 then return "Lo" else return "Mc" end
+                      else
+                        if c < 70465 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 70469 then
-                        if c < 70465 then return "Mn" else return "Mc" end
-                      else
+                      if c < 70473 then
                         if c < 70471 then return "Cn" else return "Mc" end
+                      else
+                        if c < 70475 then return "Cn" else return "Mc" end
                       end
                     end
                   end
                 end
               else
-                if c < 70712 then
-                  if c < 70498 then
-                    if c < 70481 then
-                      if c < 70478 then
-                        if c < 70475 then return "Cn" else return "Mc" end
-                      else
+                if c < 70722 then
+                  if c < 70502 then
+                    if c < 70488 then
+                      if c < 70481 then
                         if c < 70480 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70487 then return "Cn" else return "Mc" end
                       end
                     else
-                      if c < 70488 then
-                        if c < 70487 then return "Cn" else return "Mc" end
-                      else
+                      if c < 70498 then
                         if c < 70493 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70500 then return "Mc" else return "Cn" end
                       end
                     end
                   else
-                    if c < 70512 then
-                      if c < 70502 then
-                        if c < 70500 then return "Mc" else return "Cn" end
-                      else
+                    if c < 70656 then
+                      if c < 70512 then
                         if c < 70509 then return "Mn" else return "Cn" end
+                      else
+                        if c < 70517 then return "Mn" else return "Cn" end
                       end
                     else
-                      if c < 70656 then
-                        if c < 70517 then return "Mn" else return "Cn" end
-                      else
+                      if c < 70712 then
                         if c < 70709 then return "Lo" else return "Mc" end
+                      else
+                        if c < 70720 then return "Mn" else return "Mc" end
                       end
                     end
                   end
                 else
-                  if c < 70746 then
-                    if c < 70726 then
-                      if c < 70722 then
-                        if c < 70720 then return "Mn" else return "Mc" end
-                      else
+                  if c < 70748 then
+                    if c < 70731 then
+                      if c < 70726 then
                         if c < 70725 then return "Mn" else return "Mc" end
+                      else
+                        if c < 70727 then return "Mn" else return "Lo" end
                       end
                     else
-                      if c < 70731 then
-                        if c < 70727 then return "Mn" else return "Lo" end
-                      else
+                      if c < 70746 then
                         if c < 70736 then return "Po" else return "Nd" end
+                      else
+                        if c < 70747 then return "Cn" else return "Po" end
                       end
                     end
                   else
-                    if c < 70750 then
-                      if c < 70748 then
-                        if c < 70747 then return "Cn" else return "Po" end
-                      else
+                    if c < 70752 then
+                      if c < 70750 then
                         if c < 70749 then return "Cn" else return "Po" end
+                      else
+                        if c < 70751 then return "Mn" else return "Lo" end
                       end
                     else
-                      if c < 70752 then
-                        if c < 70751 then return "Mn" else return "Lo" end
-                      else
+                      if c < 70832 then
                         if c < 70784 then return "Cn" else return "Lo" end
+                      else
+                        if c < 70835 then return "Mc" else return "Mn" end
                       end
                     end
                   end
@@ -6399,253 +6399,253 @@ return function (c)
               end
             end
           else
-            if c < 71488 then
-              if c < 71231 then
-                if c < 71090 then
-                  if c < 70852 then
-                    if c < 70843 then
-                      if c < 70841 then
-                        if c < 70835 then return "Mc" else return "Mn" end
-                      else
+            if c < 71724 then
+              if c < 71236 then
+                if c < 71096 then
+                  if c < 70855 then
+                    if c < 70849 then
+                      if c < 70843 then
                         if c < 70842 then return "Mc" else return "Mn" end
+                      else
+                        if c < 70847 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 70849 then
-                        if c < 70847 then return "Mc" else return "Mn" end
-                      else
+                      if c < 70852 then
                         if c < 70850 then return "Mc" else return "Mn" end
+                      else
+                        if c < 70854 then return "Lo" else return "Po" end
                       end
                     end
                   else
-                    if c < 70864 then
-                      if c < 70855 then
-                        if c < 70854 then return "Lo" else return "Po" end
-                      else
+                    if c < 71040 then
+                      if c < 70864 then
                         if c < 70856 then return "Lo" else return "Cn" end
+                      else
+                        if c < 70874 then return "Nd" else return "Cn" end
                       end
                     else
-                      if c < 71040 then
-                        if c < 70874 then return "Nd" else return "Cn" end
-                      else
+                      if c < 71090 then
                         if c < 71087 then return "Lo" else return "Mc" end
+                      else
+                        if c < 71094 then return "Mn" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 71132 then
-                    if c < 71102 then
-                      if c < 71096 then
-                        if c < 71094 then return "Mn" else return "Cn" end
-                      else
+                  if c < 71168 then
+                    if c < 71105 then
+                      if c < 71102 then
                         if c < 71100 then return "Mc" else return "Mn" end
+                      else
+                        if c < 71103 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 71105 then
-                        if c < 71103 then return "Mc" else return "Mn" end
-                      else
+                      if c < 71132 then
                         if c < 71128 then return "Po" else return "Lo" end
+                      else
+                        if c < 71134 then return "Mn" else return "Cn" end
                       end
                     end
                   else
-                    if c < 71219 then
-                      if c < 71168 then
-                        if c < 71134 then return "Mn" else return "Cn" end
-                      else
+                    if c < 71229 then
+                      if c < 71219 then
                         if c < 71216 then return "Lo" else return "Mc" end
+                      else
+                        if c < 71227 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 71229 then
-                        if c < 71227 then return "Mn" else return "Mc" end
-                      else
+                      if c < 71231 then
                         if c < 71230 then return "Mn" else return "Mc" end
+                      else
+                        if c < 71233 then return "Mn" else return "Po" end
                       end
                     end
                   end
                 end
               else
-                if c < 71352 then
-                  if c < 71296 then
-                    if c < 71248 then
-                      if c < 71236 then
-                        if c < 71233 then return "Mn" else return "Po" end
-                      else
+                if c < 71360 then
+                  if c < 71340 then
+                    if c < 71264 then
+                      if c < 71248 then
                         if c < 71237 then return "Lo" else return "Cn" end
+                      else
+                        if c < 71258 then return "Nd" else return "Cn" end
                       end
                     else
-                      if c < 71264 then
-                        if c < 71258 then return "Nd" else return "Cn" end
-                      else
+                      if c < 71296 then
                         if c < 71277 then return "Po" else return "Cn" end
+                      else
+                        if c < 71339 then return "Lo" else return "Mn" end
                       end
                     end
                   else
-                    if c < 71342 then
-                      if c < 71340 then
-                        if c < 71339 then return "Lo" else return "Mn" end
-                      else
+                    if c < 71350 then
+                      if c < 71342 then
                         if c < 71341 then return "Mc" else return "Mn" end
+                      else
+                        if c < 71344 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 71350 then
-                        if c < 71344 then return "Mc" else return "Mn" end
-                      else
+                      if c < 71352 then
                         if c < 71351 then return "Mc" else return "Mn" end
+                      else
+                        if c < 71353 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 71458 then
-                    if c < 71424 then
-                      if c < 71360 then
-                        if c < 71353 then return "Lo" else return "Cn" end
-                      else
+                  if c < 71463 then
+                    if c < 71453 then
+                      if c < 71424 then
                         if c < 71370 then return "Nd" else return "Cn" end
+                      else
+                        if c < 71451 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 71453 then
-                        if c < 71451 then return "Lo" else return "Cn" end
-                      else
+                      if c < 71458 then
                         if c < 71456 then return "Mn" else return "Mc" end
+                      else
+                        if c < 71462 then return "Mn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 71472 then
-                      if c < 71463 then
-                        if c < 71462 then return "Mn" else return "Mc" end
-                      else
+                    if c < 71484 then
+                      if c < 71472 then
                         if c < 71468 then return "Mn" else return "Cn" end
+                      else
+                        if c < 71482 then return "Nd" else return "No" end
                       end
                     else
-                      if c < 71484 then
-                        if c < 71482 then return "Nd" else return "No" end
-                      else
+                      if c < 71488 then
                         if c < 71487 then return "Po" else return "So" end
+                      else
+                        if c < 71680 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 72243 then
-                if c < 72104 then
-                  if c < 71840 then
-                    if c < 71736 then
-                      if c < 71724 then
-                        if c < 71680 then return "Cn" else return "Lo" end
-                      else
+              if c < 72250 then
+                if c < 72145 then
+                  if c < 71904 then
+                    if c < 71739 then
+                      if c < 71736 then
                         if c < 71727 then return "Mc" else return "Mn" end
+                      else
+                        if c < 71737 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 71739 then
-                        if c < 71737 then return "Mc" else return "Mn" end
-                      else
+                      if c < 71840 then
                         if c < 71740 then return "Po" else return "Cn" end
+                      else
+                        if c < 71872 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 71923 then
-                      if c < 71904 then
-                        if c < 71872 then return "Lu" else return "Ll" end
-                      else
+                    if c < 71936 then
+                      if c < 71923 then
                         if c < 71914 then return "Nd" else return "No" end
+                      else
+                        if c < 71935 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 71936 then
-                        if c < 71935 then return "Cn" else return "Lo" end
-                      else
+                      if c < 72104 then
                         if c < 72096 then return "Cn" else return "Lo" end
+                      else
+                        if c < 72106 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 else
-                  if c < 72161 then
-                    if c < 72152 then
-                      if c < 72145 then
-                        if c < 72106 then return "Cn" else return "Lo" end
-                      else
+                  if c < 72163 then
+                    if c < 72156 then
+                      if c < 72152 then
                         if c < 72148 then return "Mc" else return "Mn" end
+                      else
+                        if c < 72154 then return "Cn" else return "Mn" end
                       end
                     else
-                      if c < 72156 then
-                        if c < 72154 then return "Cn" else return "Mn" end
-                      else
+                      if c < 72161 then
                         if c < 72160 then return "Mc" else return "Mn" end
+                      else
+                        if c < 72162 then return "Lo" else return "Po" end
                       end
                     end
                   else
-                    if c < 72165 then
-                      if c < 72163 then
-                        if c < 72162 then return "Lo" else return "Po" end
-                      else
+                    if c < 72193 then
+                      if c < 72165 then
                         if c < 72164 then return "Lo" else return "Mc" end
+                      else
+                        if c < 72192 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 72193 then
-                        if c < 72192 then return "Cn" else return "Lo" end
-                      else
+                      if c < 72243 then
                         if c < 72203 then return "Mn" else return "Lo" end
+                      else
+                        if c < 72249 then return "Mn" else return "Mc" end
                       end
                     end
                   end
                 end
               else
-                if c < 72349 then
-                  if c < 72273 then
-                    if c < 72255 then
-                      if c < 72250 then
-                        if c < 72249 then return "Mn" else return "Mc" end
-                      else
+                if c < 72355 then
+                  if c < 72281 then
+                    if c < 72264 then
+                      if c < 72255 then
                         if c < 72251 then return "Lo" else return "Mn" end
+                      else
+                        if c < 72263 then return "Po" else return "Mn" end
                       end
                     else
-                      if c < 72264 then
-                        if c < 72263 then return "Po" else return "Mn" end
-                      else
+                      if c < 72273 then
                         if c < 72272 then return "Cn" else return "Lo" end
+                      else
+                        if c < 72279 then return "Mn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 72330 then
-                      if c < 72281 then
-                        if c < 72279 then return "Mn" else return "Mc" end
-                      else
+                    if c < 72344 then
+                      if c < 72330 then
                         if c < 72284 then return "Mn" else return "Lo" end
+                      else
+                        if c < 72343 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 72344 then
-                        if c < 72343 then return "Mn" else return "Mc" end
-                      else
+                      if c < 72349 then
                         if c < 72346 then return "Mn" else return "Po" end
+                      else
+                        if c < 72350 then return "Lo" else return "Po" end
                       end
                     end
                   end
                 else
-                  if c < 72751 then
-                    if c < 72441 then
-                      if c < 72355 then
-                        if c < 72350 then return "Lo" else return "Po" end
-                      else
+                  if c < 72759 then
+                    if c < 72713 then
+                      if c < 72441 then
                         if c < 72384 then return "Cn" else return "Lo" end
+                      else
+                        if c < 72704 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 72713 then
-                        if c < 72704 then return "Cn" else return "Lo" end
-                      else
+                      if c < 72751 then
                         if c < 72714 then return "Cn" else return "Lo" end
+                      else
+                        if c < 72752 then return "Mc" else return "Mn" end
                       end
                     end
                   else
-                    if c < 72766 then
-                      if c < 72759 then
-                        if c < 72752 then return "Mc" else return "Mn" end
-                      else
+                    if c < 72768 then
+                      if c < 72766 then
                         if c < 72760 then return "Cn" else return "Mn" end
+                      else
+                        if c < 72767 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 72768 then
-                        if c < 72767 then return "Mc" else return "Mn" end
-                      else
+                      if c < 72774 then
                         if c < 72769 then return "Lo" else return "Po" end
+                      else
+                        if c < 72784 then return "Cn" else return "Nd" end
                       end
                     end
                   end
@@ -6654,254 +6654,254 @@ return function (c)
             end
           end
         else
-          if c < 110928 then
-            if c < 74863 then
-              if c < 73050 then
-                if c < 72960 then
-                  if c < 72872 then
-                    if c < 72816 then
-                      if c < 72794 then
-                        if c < 72784 then return "Cn" else return "Nd" end
-                      else
+          if c < 110948 then
+            if c < 74869 then
+              if c < 73062 then
+                if c < 72968 then
+                  if c < 72874 then
+                    if c < 72848 then
+                      if c < 72816 then
                         if c < 72813 then return "No" else return "Cn" end
+                      else
+                        if c < 72818 then return "Po" else return "Lo" end
                       end
                     else
-                      if c < 72848 then
-                        if c < 72818 then return "Po" else return "Lo" end
-                      else
+                      if c < 72872 then
                         if c < 72850 then return "Cn" else return "Mn" end
+                      else
+                        if c < 72873 then return "Cn" else return "Mc" end
                       end
                     end
                   else
-                    if c < 72882 then
-                      if c < 72874 then
-                        if c < 72873 then return "Cn" else return "Mc" end
-                      else
+                    if c < 72885 then
+                      if c < 72882 then
                         if c < 72881 then return "Mn" else return "Mc" end
+                      else
+                        if c < 72884 then return "Mn" else return "Mc" end
                       end
                     else
-                      if c < 72885 then
-                        if c < 72884 then return "Mn" else return "Mc" end
-                      else
+                      if c < 72960 then
                         if c < 72887 then return "Mn" else return "Cn" end
+                      else
+                        if c < 72967 then return "Lo" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 73019 then
-                    if c < 72971 then
-                      if c < 72968 then
-                        if c < 72967 then return "Lo" else return "Cn" end
-                      else
+                  if c < 73022 then
+                    if c < 73015 then
+                      if c < 72971 then
                         if c < 72970 then return "Lo" else return "Cn" end
+                      else
+                        if c < 73009 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 73015 then
-                        if c < 73009 then return "Lo" else return "Mn" end
-                      else
+                      if c < 73019 then
                         if c < 73018 then return "Cn" else return "Mn" end
+                      else
+                        if c < 73020 then return "Cn" else return "Mn" end
                       end
                     end
                   else
-                    if c < 73030 then
-                      if c < 73022 then
-                        if c < 73020 then return "Cn" else return "Mn" end
-                      else
+                    if c < 73032 then
+                      if c < 73030 then
                         if c < 73023 then return "Cn" else return "Mn" end
+                      else
+                        if c < 73031 then return "Lo" else return "Mn" end
                       end
                     else
-                      if c < 73032 then
-                        if c < 73031 then return "Lo" else return "Mn" end
-                      else
+                      if c < 73050 then
                         if c < 73040 then return "Cn" else return "Nd" end
+                      else
+                        if c < 73056 then return "Cn" else return "Lo" end
                       end
                     end
                   end
                 end
               else
-                if c < 73120 then
-                  if c < 73104 then
-                    if c < 73065 then
-                      if c < 73062 then
-                        if c < 73056 then return "Cn" else return "Lo" end
-                      else
+                if c < 73440 then
+                  if c < 73107 then
+                    if c < 73098 then
+                      if c < 73065 then
                         if c < 73063 then return "Cn" else return "Lo" end
+                      else
+                        if c < 73066 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 73098 then
-                        if c < 73066 then return "Cn" else return "Lo" end
-                      else
+                      if c < 73104 then
                         if c < 73103 then return "Mc" else return "Cn" end
+                      else
+                        if c < 73106 then return "Mn" else return "Cn" end
                       end
                     end
                   else
-                    if c < 73110 then
-                      if c < 73107 then
-                        if c < 73106 then return "Mn" else return "Cn" end
-                      else
+                    if c < 73112 then
+                      if c < 73110 then
                         if c < 73109 then return "Mc" else return "Mn" end
+                      else
+                        if c < 73111 then return "Mc" else return "Mn" end
                       end
                     else
-                      if c < 73112 then
-                        if c < 73111 then return "Mc" else return "Mn" end
-                      else
+                      if c < 73120 then
                         if c < 73113 then return "Lo" else return "Cn" end
+                      else
+                        if c < 73130 then return "Nd" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 73685 then
-                    if c < 73461 then
-                      if c < 73440 then
-                        if c < 73130 then return "Nd" else return "Cn" end
-                      else
+                  if c < 73697 then
+                    if c < 73465 then
+                      if c < 73461 then
                         if c < 73459 then return "Lo" else return "Mn" end
+                      else
+                        if c < 73463 then return "Mc" else return "Po" end
                       end
                     else
-                      if c < 73465 then
-                        if c < 73463 then return "Mc" else return "Po" end
-                      else
+                      if c < 73685 then
                         if c < 73664 then return "Cn" else return "No" end
+                      else
+                        if c < 73693 then return "So" else return "Sc" end
                       end
                     end
                   else
-                    if c < 73727 then
-                      if c < 73697 then
-                        if c < 73693 then return "So" else return "Sc" end
-                      else
+                    if c < 74650 then
+                      if c < 73727 then
                         if c < 73714 then return "So" else return "Cn" end
+                      else
+                        if c < 73728 then return "Po" else return "Lo" end
                       end
                     else
-                      if c < 74650 then
-                        if c < 73728 then return "Po" else return "Lo" end
-                      else
+                      if c < 74863 then
                         if c < 74752 then return "Cn" else return "Nl" end
+                      else
+                        if c < 74864 then return "Cn" else return "Po" end
                       end
                     end
                   end
                 end
               end
             else
-              if c < 93008 then
-                if c < 92778 then
-                  if c < 78905 then
-                    if c < 75076 then
-                      if c < 74869 then
-                        if c < 74864 then return "Cn" else return "Po" end
-                      else
+              if c < 93019 then
+                if c < 92784 then
+                  if c < 83527 then
+                    if c < 78895 then
+                      if c < 75076 then
                         if c < 74880 then return "Cn" else return "Lo" end
+                      else
+                        if c < 77824 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 78895 then
-                        if c < 77824 then return "Cn" else return "Lo" end
-                      else
+                      if c < 78905 then
                         if c < 78896 then return "Cn" else return "Cf" end
+                      else
+                        if c < 82944 then return "Cn" else return "Lo" end
                       end
                     end
                   else
-                    if c < 92729 then
-                      if c < 83527 then
-                        if c < 82944 then return "Cn" else return "Lo" end
-                      else
+                    if c < 92767 then
+                      if c < 92729 then
                         if c < 92160 then return "Cn" else return "Lo" end
+                      else
+                        if c < 92736 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 92767 then
-                        if c < 92736 then return "Cn" else return "Lo" end
-                      else
+                      if c < 92778 then
                         if c < 92768 then return "Cn" else return "Nd" end
+                      else
+                        if c < 92782 then return "Cn" else return "Po" end
                       end
                     end
                   end
                 else
-                  if c < 92928 then
-                    if c < 92910 then
-                      if c < 92784 then
-                        if c < 92782 then return "Cn" else return "Po" end
-                      else
+                  if c < 92983 then
+                    if c < 92917 then
+                      if c < 92910 then
                         if c < 92880 then return "Cn" else return "Lo" end
+                      else
+                        if c < 92912 then return "Cn" else return "Mn" end
                       end
                     else
-                      if c < 92917 then
-                        if c < 92912 then return "Cn" else return "Mn" end
-                      else
+                      if c < 92928 then
                         if c < 92918 then return "Po" else return "Cn" end
+                      else
+                        if c < 92976 then return "Lo" else return "Mn" end
                       end
                     end
                   else
-                    if c < 92992 then
-                      if c < 92983 then
-                        if c < 92976 then return "Lo" else return "Mn" end
-                      else
+                    if c < 92997 then
+                      if c < 92992 then
                         if c < 92988 then return "Po" else return "So" end
+                      else
+                        if c < 92996 then return "Lm" else return "Po" end
                       end
                     else
-                      if c < 92997 then
-                        if c < 92996 then return "Lm" else return "Po" end
-                      else
+                      if c < 93008 then
                         if c < 92998 then return "So" else return "Cn" end
+                      else
+                        if c < 93018 then return "Nd" else return "Cn" end
                       end
                     end
                   end
                 end
               else
-                if c < 94032 then
-                  if c < 93760 then
-                    if c < 93027 then
-                      if c < 93019 then
-                        if c < 93018 then return "Nd" else return "Cn" end
-                      else
+                if c < 94088 then
+                  if c < 93824 then
+                    if c < 93053 then
+                      if c < 93027 then
                         if c < 93026 then return "No" else return "Cn" end
+                      else
+                        if c < 93048 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 93053 then
-                        if c < 93048 then return "Lo" else return "Cn" end
-                      else
+                      if c < 93760 then
                         if c < 93072 then return "Lo" else return "Cn" end
+                      else
+                        if c < 93792 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 93851 then
-                      if c < 93824 then
-                        if c < 93792 then return "Lu" else return "Ll" end
-                      else
+                    if c < 94027 then
+                      if c < 93851 then
                         if c < 93847 then return "No" else return "Po" end
+                      else
+                        if c < 93952 then return "Cn" else return "Lo" end
                       end
                     else
-                      if c < 94027 then
-                        if c < 93952 then return "Cn" else return "Lo" end
-                      else
+                      if c < 94032 then
                         if c < 94031 then return "Cn" else return "Mn" end
+                      else
+                        if c < 94033 then return "Lo" else return "Mc" end
                       end
                     end
                   end
                 else
-                  if c < 94179 then
-                    if c < 94099 then
-                      if c < 94088 then
-                        if c < 94033 then return "Lo" else return "Mc" end
-                      else
+                  if c < 94208 then
+                    if c < 94176 then
+                      if c < 94099 then
                         if c < 94095 then return "Cn" else return "Mn" end
+                      else
+                        if c < 94112 then return "Lm" else return "Cn" end
                       end
                     else
-                      if c < 94176 then
-                        if c < 94112 then return "Lm" else return "Cn" end
-                      else
+                      if c < 94179 then
                         if c < 94178 then return "Lm" else return "Po" end
+                      else
+                        if c < 94180 then return "Lm" else return "Cn" end
                       end
                     end
                   else
-                    if c < 100352 then
-                      if c < 94208 then
-                        if c < 94180 then return "Lm" else return "Cn" end
-                      else
+                    if c < 110592 then
+                      if c < 100352 then
                         if c < 100344 then return "Lo" else return "Cn" end
+                      else
+                        if c < 101107 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 110592 then
-                        if c < 101107 then return "Lo" else return "Cn" end
-                      else
+                      if c < 110928 then
                         if c < 110879 then return "Lo" else return "Cn" end
+                      else
+                        if c < 110931 then return "Lo" else return "Cn" end
                       end
                     end
                   end
@@ -6909,127 +6909,127 @@ return function (c)
               end
             end
           else
-            if c < 119982 then
-              if c < 119180 then
-                if c < 113823 then
-                  if c < 113776 then
-                    if c < 110960 then
-                      if c < 110948 then
-                        if c < 110931 then return "Lo" else return "Cn" end
-                      else
+            if c < 119994 then
+              if c < 119214 then
+                if c < 113828 then
+                  if c < 113792 then
+                    if c < 113664 then
+                      if c < 110960 then
                         if c < 110952 then return "Lo" else return "Cn" end
+                      else
+                        if c < 111356 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 113664 then
-                        if c < 111356 then return "Lo" else return "Cn" end
-                      else
+                      if c < 113776 then
                         if c < 113771 then return "Lo" else return "Cn" end
+                      else
+                        if c < 113789 then return "Lo" else return "Cn" end
                       end
                     end
                   else
-                    if c < 113808 then
-                      if c < 113792 then
-                        if c < 113789 then return "Lo" else return "Cn" end
-                      else
+                    if c < 113820 then
+                      if c < 113808 then
                         if c < 113801 then return "Lo" else return "Cn" end
+                      else
+                        if c < 113818 then return "Lo" else return "Cn" end
                       end
                     else
-                      if c < 113820 then
-                        if c < 113818 then return "Lo" else return "Cn" end
-                      else
+                      if c < 113823 then
                         if c < 113821 then return "So" else return "Mn" end
+                      else
+                        if c < 113824 then return "Po" else return "Cf" end
                       end
                     end
                   end
                 else
-                  if c < 119141 then
-                    if c < 119030 then
-                      if c < 113828 then
-                        if c < 113824 then return "Po" else return "Cf" end
-                      else
+                  if c < 119146 then
+                    if c < 119079 then
+                      if c < 119030 then
                         if c < 118784 then return "Cn" else return "So" end
+                      else
+                        if c < 119040 then return "Cn" else return "So" end
                       end
                     else
-                      if c < 119079 then
-                        if c < 119040 then return "Cn" else return "So" end
-                      else
+                      if c < 119141 then
                         if c < 119081 then return "Cn" else return "So" end
+                      else
+                        if c < 119143 then return "Mc" else return "Mn" end
                       end
                     end
                   else
-                    if c < 119155 then
-                      if c < 119146 then
-                        if c < 119143 then return "Mc" else return "Mn" end
-                      else
+                    if c < 119171 then
+                      if c < 119155 then
                         if c < 119149 then return "So" else return "Mc" end
+                      else
+                        if c < 119163 then return "Cf" else return "Mn" end
                       end
                     else
-                      if c < 119171 then
-                        if c < 119163 then return "Cf" else return "Mn" end
-                      else
+                      if c < 119180 then
                         if c < 119173 then return "So" else return "Mn" end
+                      else
+                        if c < 119210 then return "So" else return "Mn" end
                       end
                     end
                   end
                 end
               else
-                if c < 119860 then
-                  if c < 119520 then
-                    if c < 119296 then
-                      if c < 119214 then
-                        if c < 119210 then return "So" else return "Mn" end
-                      else
+                if c < 119893 then
+                  if c < 119552 then
+                    if c < 119365 then
+                      if c < 119296 then
                         if c < 119273 then return "So" else return "Cn" end
+                      else
+                        if c < 119362 then return "So" else return "Mn" end
                       end
                     else
-                      if c < 119365 then
-                        if c < 119362 then return "So" else return "Mn" end
-                      else
+                      if c < 119520 then
                         if c < 119366 then return "So" else return "Cn" end
+                      else
+                        if c < 119540 then return "No" else return "Cn" end
                       end
                     end
                   else
-                    if c < 119648 then
-                      if c < 119552 then
-                        if c < 119540 then return "No" else return "Cn" end
-                      else
+                    if c < 119808 then
+                      if c < 119648 then
                         if c < 119639 then return "So" else return "Cn" end
+                      else
+                        if c < 119673 then return "No" else return "Cn" end
                       end
                     else
-                      if c < 119808 then
-                        if c < 119673 then return "No" else return "Cn" end
-                      else
+                      if c < 119860 then
                         if c < 119834 then return "Lu" else return "Ll" end
+                      else
+                        if c < 119886 then return "Lu" else return "Ll" end
                       end
                     end
                   end
                 else
-                  if c < 119966 then
-                    if c < 119912 then
-                      if c < 119893 then
-                        if c < 119886 then return "Lu" else return "Ll" end
-                      else
+                  if c < 119970 then
+                    if c < 119964 then
+                      if c < 119912 then
                         if c < 119894 then return "Cn" else return "Ll" end
+                      else
+                        if c < 119938 then return "Lu" else return "Ll" end
                       end
                     else
-                      if c < 119964 then
-                        if c < 119938 then return "Lu" else return "Ll" end
-                      else
+                      if c < 119966 then
                         if c < 119965 then return "Lu" else return "Cn" end
+                      else
+                        if c < 119968 then return "Lu" else return "Cn" end
                       end
                     end
                   else
-                    if c < 119973 then
-                      if c < 119970 then
-                        if c < 119968 then return "Lu" else return "Cn" end
-                      else
+                    if c < 119977 then
+                      if c < 119973 then
                         if c < 119971 then return "Lu" else return "Cn" end
+                      else
+                        if c < 119975 then return "Lu" else return "Cn" end
                       end
                     else
-                      if c < 119977 then
-                        if c < 119975 then return "Lu" else return "Cn" end
-                      else
+                      if c < 119982 then
                         if c < 119981 then return "Lu" else return "Cn" end
+                      else
+                        if c < 119990 then return "Lu" else return "Ll" end
                       end
                     end
                   end
@@ -7037,64 +7037,60 @@ return function (c)
               end
             else
               if c < 120198 then
-                if c < 120086 then
-                  if c < 120016 then
-                    if c < 119996 then
-                      if c < 119994 then
-                        if c < 119990 then return "Lu" else return "Ll" end
-                      else
+                if c < 120094 then
+                  if c < 120068 then
+                    if c < 120004 then
+                      if c < 119996 then
                         if c < 119995 then return "Cn" else return "Ll" end
+                      else
+                        if c < 119997 then return "Cn" else return "Ll" end
                       end
                     else
-                      if c < 120004 then
-                        if c < 119997 then return "Cn" else return "Ll" end
-                      else
+                      if c < 120016 then
                         if c < 120005 then return "Cn" else return "Ll" end
+                      else
+                        if c < 120042 then return "Lu" else return "Ll" end
                       end
                     end
                   else
-                    if c < 120071 then
-                      if c < 120068 then
-                        if c < 120042 then return "Lu" else return "Ll" end
-                      else
+                    if c < 120077 then
+                      if c < 120071 then
                         if c < 120070 then return "Lu" else return "Cn" end
+                      else
+                        if c < 120075 then return "Lu" else return "Cn" end
                       end
                     else
-                      if c < 120077 then
-                        if c < 120075 then return "Lu" else return "Cn" end
-                      else
+                      if c < 120086 then
                         if c < 120085 then return "Lu" else return "Cn" end
+                      else
+                        if c < 120093 then return "Lu" else return "Cn" end
                       end
                     end
                   end
                 else
-                  if c < 120133 then
-                    if c < 120122 then
-                      if c < 120094 then
-                        if c < 120093 then return "Lu" else return "Cn" end
-                      else
+                  if c < 120135 then
+                    if c < 120127 then
+                      if c < 120122 then
                         if c < 120120 then return "Ll" else return "Lu" end
+                      else
+                        if c < 120123 then return "Cn" else return "Lu" end
                       end
                     else
-                      if c < 120127 then
-                        if c < 120123 then return "Cn" else return "Lu" end
-                      else
+                      if c < 120133 then
                         if c < 120128 then return "Cn" else return "Lu" end
+                      else
+                        if c < 120134 then return "Cn" else return "Lu" end
                       end
                     end
                   else
-                    if c < 120145 then
-                      if c < 120135 then
-                        if c < 120134 then return "Cn" else return "Lu" end
-                      else
+                    if c < 120146 then
+                      if c < 120145 then
                         if c < 120138 then return "Cn" else return "Lu" end
+                      else
+                        return "Cn"
                       end
                     else
-                      if c < 120172 then
-                        if c < 120146 then return "Cn" else return "Ll" end
-                      else
-                        return "Lu"
-                      end
+                      if c < 120172 then return "Ll" else return "Lu" end
                     end
                   end
                 end

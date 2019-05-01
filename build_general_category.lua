@@ -16,10 +16,11 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 local builder = require "dromozoa.ucd.builder"
+local build_config = require "build_config"
 
 local unpack = table.unpack or unpack
 
-local source_filename = "docs/12.0.0/ucd/UnicodeData.txt"
+local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/UnicodeData.txt"
 local result_filename = "dromozoa/ucd/general_category.lua"
 
 local _ = builder "Cn"
