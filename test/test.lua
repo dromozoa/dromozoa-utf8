@@ -35,7 +35,7 @@ local handle
 local expect
 
 if _VERSION == "Lua 5.3" then
-  handle = io.stdout
+  handle = assert(io.open("test.exp", "w"))
 else
   expect = assert(loadfile "test/test.exp")()
 end
@@ -281,3 +281,7 @@ for i = 1, #data do
 end
 
 write "}\n"
+
+if handle then
+  handle:close()
+end
