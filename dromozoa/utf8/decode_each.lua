@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -34,17 +34,17 @@ return function (s)
     local j = i + 3
     local p = i
     local a, b, c, d = byte(s, i, j)
-    local x = A[a]
-    if x then
+    local v = A[a]
+    if v then
       if a <= 0xDF then
         if a <= 0x7F then
           i = i + 1
-          return p, x
+          return p, v
         else
           local b = TA[b]
           if b then
             i = i + 2
-            return p, x + b
+            return p, v + b
           end
         end
       else
@@ -53,7 +53,7 @@ return function (s)
           local c = TA[c]
           if b and c then
             i = j
-            return p, x + b + c
+            return p, v + b + c
           end
         else
           local b = B[a][b]
@@ -61,7 +61,7 @@ return function (s)
           local d = TA[d]
           if b and c and d then
             i = i + 4
-            return p, x + b + c + d
+            return p, v + b + c + d
           end
         end
       end
