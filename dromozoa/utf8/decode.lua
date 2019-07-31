@@ -140,6 +140,6 @@ return function (s, i, j)
         error "invalid UTF-8 code"
       end
     end
-    return unpack(data)
+    return unpack(data, 1, k)
   end
 end
