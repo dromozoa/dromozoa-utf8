@@ -58,7 +58,7 @@ return function (s, i, j)
   if n < j then
     error "bad argument #3 (out of range)"
   end
-  if j <= 0 then
+  if j < i then
     return
   end
 
