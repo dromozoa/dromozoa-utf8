@@ -96,44 +96,47 @@ return function (s, i, j)
       error "invalid UTF-8 code"
     end
   else
-    local data = {}
+    local source = { byte(s, i, j + 3) }
+    j = j - i + 1
+    i = 1
+
+    local result = {}
     local k = 0
     while i <= j do
       k = k + 1
-      local j = i + 3
-      local a, b, c, d = byte(s, i, j)
+      local a = source[i]
       local v = A[a]
       if v then
         if a <= 0xDF then
           if a <= 0x7F then
             i = i + 1
-            data[k] = v
+            result[k] = v
           else
-            local b = TA[b]
+            local b = TA[source[i + 1]]
             if b then
               i = i + 2
-              data[k] = v + b
+              result[k] = v + b
             else
               error "invalid UTF-8 code"
             end
           end
         else
           if a <= 0xEF then
-            local b = B[a][b]
-            local c = TA[c]
+            local b = B[a][source[i + 1]]
+            local c = TA[source[i + 2]]
             if b and c then
-              i = j
-              data[k] = v + b + c
+              i = i + 3
+              result[k] = v + b + c
             else
               error "invalid UTF-8 code"
             end
           else
-            local b = B[a][b]
-            local c = TB[c]
-            local d = TA[d]
+            local b = B[a][source[i + 1]]
+            local c = TB[source[i + 2]]
+            local d = TA[source[i + 3]]
             if b and c and d then
               i = i + 4
-              data[k] = v + b + c + d
+              result[k] = v + b + c + d
             else
               error "invalid UTF-8 code"
             end
@@ -143,6 +146,6 @@ return function (s, i, j)
         error "invalid UTF-8 code"
       end
     end
-    return unpack(data, 1, k)
+    return unpack(result, 1, k)
   end
 end
