@@ -58,6 +58,9 @@ return function (s, i, j)
   if n < j then
     error "bad argument #3 (out of range)"
   end
+  if j <= 0 then
+    return
+  end
 
   if i == j then
     local a, b, c, d = byte(s, i, i + 3)
