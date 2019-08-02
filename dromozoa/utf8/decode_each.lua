@@ -32,7 +32,6 @@ return function (s)
   local i = 1
   local source = { byte(s, i, #s) }
   return function ()
-    local source = source
     local j = i
     local a = source[j]
     local v = A[a]
