@@ -1,9 +1,9 @@
 rockspec_format = "3.0"
 package = "dromozoa-utf8"
-version = "1.14-1"
+version = "1.15-1"
 source = {
-  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.14.tar.gz";
-  file = "dromozoa-utf8-1.14.tar.gz";
+  url = "https://github.com/dromozoa/dromozoa-utf8/archive/v1.15.tar.gz";
+  file = "dromozoa-utf8-1.15.tar.gz";
 }
 description = {
   summary = "Lua 5.3 compatible pure-Lua UTF-8 implementation";
