@@ -30,39 +30,35 @@ return function (s)
   s = check_string(s, 1)
 
   local i = 1
+  local n = #s
+  local source = { byte(s, i, n) }
   return function ()
-    local j = i + 3
-    local p = i
-    local a, b, c, d = byte(s, i, j)
+    local source = source
+    local j = i
+    local a = source[j]
     local v = A[a]
     if v then
       if a <= 0xDF then
         if a <= 0x7F then
-          i = i + 1
-          return p, v
+          i = j + 1
+          return j, v
         else
-          local b = TA[b]
-          if b then
-            i = i + 2
-            return p, v + b
-          end
+          local b = TA[source[j + 1]]
+          i = j + 2
+          return j, v + b
         end
       else
         if a <= 0xEF then
-          local b = B[a][b]
-          local c = TA[c]
-          if b and c then
-            i = j
-            return p, v + b + c
-          end
+          local b = B[a][source[j + 1]]
+          local c = TA[source[j + 2]]
+          i = j + 3
+          return j, v + b + c
         else
-          local b = B[a][b]
-          local c = TB[c]
-          local d = TA[d]
-          if b and c and d then
-            i = i + 4
-            return p, v + b + c + d
-          end
+          local b = B[a][source[j + 1]]
+          local c = TB[source[j + 2]]
+          local d = TA[source[j + 3]]
+          i = j + 4
+          return j, v + b + c + d
         end
       end
       error "invalid UTF-8 code"
