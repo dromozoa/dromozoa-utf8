@@ -1,4 +1,4 @@
--- Copyright (C) 2017,2018 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017-2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -19,18 +19,19 @@ local pure = require "dromozoa.utf8.pure"
 
 local unpack = table.unpack or unpack
 
+local verbose = os.getenv "VERBOSE" == "1"
+
 local pack = table.pack or function (...)
   return { n = select("#", ...), ... }
 end
 
-local reasons = {
-  "initial position is a continuation byte";
-  "invalid UTF-8 code";
-}
-
 local count = 0
+local handle
 local expect
-if _VERSION ~= "Lua 5.3" then
+
+if _VERSION == "Lua 5.3" then
+  handle = assert(io.open("test.exp", "w"))
+else
   expect = assert(loadfile "test/test.exp")()
 end
 
@@ -77,8 +78,17 @@ local function dump(v)
   end
 end
 
+local function write(...)
+  if handle then
+    handle:write(...)
+  end
+end
+
 local function check(name, ...)
-  io.stderr:write(name, " ", dump(pack(...)), "\n")
+  if verbose then
+    io.stderr:write(name, " ", dump(pack(...)), "\n")
+  end
+
   local result1
   if expect then
     count = count + 1
@@ -88,8 +98,10 @@ local function check(name, ...)
   end
   local result2 = run(pure, name, ...)
 
-  io.stderr:write("  utf8 ", dump(result1), "\n")
-  io.stderr:write("  pure ", dump(result2), "\n")
+  if verbose then
+    io.stderr:write("  utf8 ", dump(result1), "\n")
+    io.stderr:write("  pure ", dump(result2), "\n")
+  end
 
   if result1[1] then
     assert(result2[1])
@@ -111,22 +123,25 @@ local function check(name, ...)
         assert(message2:find("attempt to perform arithmetic on", nil, true))
       end
     else
-      local checked
-      for i = 1, #reasons do
-        local reason = reasons[i]
+      local reason = "initial position is a continuation byte"
+      if message1:find(reason, nil, true) then
+        assert(message2:find(reason, nil, true))
+      else
+        local reason = "invalid UTF-8 code";
         if message1:find(reason, nil, true) then
-          assert(message2:find(reason, nil, true))
-          checked = true
-          break
+          if not message2:find(reason, nil, true) then
+            assert(message2:find("attempt to perform arithmetic on", nil, true))
+          end
+        else
+          error "unchecked"
         end
       end
-      assert(checked)
     end
   end
-  io.write("  ", dump(result1), ";\n")
+  write("  ", dump(result1), ";\n")
 end
 
-io.write "return {\n"
+write "return {\n"
 
 check "charpattern"
 
@@ -263,4 +278,8 @@ for i = 1, #data do
   end
 end
 
-io.write "}\n"
+write "}\n"
+
+if handle then
+  handle:close()
+end
