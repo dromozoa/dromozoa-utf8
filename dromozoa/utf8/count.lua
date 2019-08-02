@@ -54,8 +54,7 @@ return function (s, i, j)
   if n < j then
     error "bad argument #3 (final position out of string)"
   end
-
-  if i > j then
+  if j < i then
     return 0
   end
 
