@@ -4,7 +4,7 @@ Lua 5.3 compatible pure-Lua UTF-8 implementation.
 
 ## v1.15
 
-* maintenance release
+* performance improvement
 
 ## v1.14
 
