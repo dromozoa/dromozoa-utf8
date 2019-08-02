@@ -71,27 +71,20 @@ return function (s, i, j)
           return v
         else
           local b = TA[b]
-          if b then
-            return v + b
-          end
+          return v + b
         end
       else
         if a <= 0xEF then
           local b = B[a][b]
           local c = TA[c]
-          if b and c then
-            return v + b + c
-          end
+          return v + b + c
         else
           local b = B[a][b]
           local c = TB[c]
           local d = TA[d]
-          if b and c and d then
-            return v + b + c + d
-          end
+          return v + b + c + d
         end
       end
-      error "invalid UTF-8 code"
     elseif a then
       error "invalid UTF-8 code"
     end
@@ -113,33 +106,21 @@ return function (s, i, j)
             result[k] = v
           else
             local b = TA[source[i + 1]]
-            if b then
-              i = i + 2
-              result[k] = v + b
-            else
-              error "invalid UTF-8 code"
-            end
+            i = i + 2
+            result[k] = v + b
           end
         else
           if a <= 0xEF then
             local b = B[a][source[i + 1]]
             local c = TA[source[i + 2]]
-            if b and c then
-              i = i + 3
-              result[k] = v + b + c
-            else
-              error "invalid UTF-8 code"
-            end
+            i = i + 3
+            result[k] = v + b + c
           else
             local b = B[a][source[i + 1]]
             local c = TB[source[i + 2]]
             local d = TA[source[i + 3]]
-            if b and c and d then
-              i = i + 4
-              result[k] = v + b + c + d
-            else
-              error "invalid UTF-8 code"
-            end
+            i = i + 4
+            result[k] = v + b + c + d
           end
         end
       elseif a then
