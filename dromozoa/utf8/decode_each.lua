@@ -42,22 +42,16 @@ return function (s)
           i = j + 1
           return j, v
         else
-          local b = TA[source[j + 1]]
           i = j + 2
-          return j, v + b
+          return j, v + TA[source[j + 1]]
         end
       else
         if a <= 0xEF then
-          local b = B[a][source[j + 1]]
-          local c = TA[source[j + 2]]
           i = j + 3
-          return j, v + b + c
+          return j, v + B[a][source[j + 1]] + TA[source[j + 2]]
         else
-          local b = B[a][source[j + 1]]
-          local c = TB[source[j + 2]]
-          local d = TA[source[j + 3]]
           i = j + 4
-          return j, v + b + c + d
+          return j, v + B[a][source[j + 1]] + TB[source[j + 2]] + TA[source[j + 3]]
         end
       end
       error "invalid UTF-8 code"
