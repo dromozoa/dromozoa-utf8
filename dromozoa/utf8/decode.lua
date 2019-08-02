@@ -92,7 +92,6 @@ return function (s, i, j)
     local source = { byte(s, i, j + 3) }
     j = j - i + 1
     i = 1
-
     local result = {}
     local k = 0
     while i <= j do
