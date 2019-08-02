@@ -101,25 +101,19 @@ return function (s, i, j)
       if v then
         if a <= 0xDF then
           if a <= 0x7F then
-            i = i + 1
             result[k] = v
+            i = i + 1
           else
-            local b = TA[source[i + 1]]
+            result[k] = v + TA[source[i + 1]]
             i = i + 2
-            result[k] = v + b
           end
         else
           if a <= 0xEF then
-            local b = B[a][source[i + 1]]
-            local c = TA[source[i + 2]]
+            result[k] = v + B[a][source[i + 1]] + TA[source[i + 2]]
             i = i + 3
-            result[k] = v + b + c
           else
-            local b = B[a][source[i + 1]]
-            local c = TB[source[i + 2]]
-            local d = TA[source[i + 3]]
+            result[k] = v + B[a][source[i + 1]] + TB[source[i + 2]] + TA[source[i + 3]]
             i = i + 4
-            result[k] = v + b + c + d
           end
         end
       elseif a then
