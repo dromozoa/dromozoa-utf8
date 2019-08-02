@@ -25,11 +25,6 @@ local pack = table.pack or function (...)
   return { n = select("#", ...), ... }
 end
 
-local reasons = {
-  "initial position is a continuation byte";
-  "invalid UTF-8 code";
-}
-
 local count = 0
 local handle
 local expect
@@ -128,16 +123,19 @@ local function check(name, ...)
         assert(message2:find("attempt to perform arithmetic on", nil, true))
       end
     else
-      local checked
-      for i = 1, #reasons do
-        local reason = reasons[i]
+      local reason = "initial position is a continuation byte"
+      if message1:find(reason, nil, true) then
+        assert(message2:find(reason, nil, true))
+      else
+        local reason = "invalid UTF-8 code";
         if message1:find(reason, nil, true) then
-          assert(message2:find(reason, nil, true))
-          checked = true
-          break
+          if not message2:find(reason, nil, true) then
+            assert(message2:find("attempt to perform arithmetic on", nil, true))
+          end
+        else
+          error "unchecked"
         end
       end
-      assert(checked)
     end
   end
   write("  ", dump(result1), ";\n")

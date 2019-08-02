@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -58,6 +58,9 @@ return function (s, i, j)
   if n < j then
     error "bad argument #3 (out of range)"
   end
+  if j < i then
+    return
+  end
 
   if i == j then
     local a, b, c, d = byte(s, i, i + 3)
@@ -68,78 +71,55 @@ return function (s, i, j)
           return v
         else
           local b = TA[b]
-          if b then
-            return v + b
-          end
+          return v + b
         end
       else
         if a <= 0xEF then
           local b = B[a][b]
           local c = TA[c]
-          if b and c then
-            return v + b + c
-          end
+          return v + b + c
         else
           local b = B[a][b]
           local c = TB[c]
           local d = TA[d]
-          if b and c and d then
-            return v + b + c + d
-          end
+          return v + b + c + d
         end
       end
-      error "invalid UTF-8 code"
     elseif a then
       error "invalid UTF-8 code"
     end
   else
-    local data = {}
+    local source = { byte(s, i, j + 3) }
+    j = j - i + 1
+    i = 1
+    local result = {}
     local k = 0
     while i <= j do
       k = k + 1
-      local j = i + 3
-      local a, b, c, d = byte(s, i, j)
+      local a = source[i]
       local v = A[a]
       if v then
         if a <= 0xDF then
           if a <= 0x7F then
+            result[k] = v
             i = i + 1
-            data[k] = v
           else
-            local b = TA[b]
-            if b then
-              i = i + 2
-              data[k] = v + b
-            else
-              error "invalid UTF-8 code"
-            end
+            result[k] = v + TA[source[i + 1]]
+            i = i + 2
           end
         else
           if a <= 0xEF then
-            local b = B[a][b]
-            local c = TA[c]
-            if b and c then
-              i = j
-              data[k] = v + b + c
-            else
-              error "invalid UTF-8 code"
-            end
+            result[k] = v + B[a][source[i + 1]] + TA[source[i + 2]]
+            i = i + 3
           else
-            local b = B[a][b]
-            local c = TB[c]
-            local d = TA[d]
-            if b and c and d then
-              i = i + 4
-              data[k] = v + b + c + d
-            else
-              error "invalid UTF-8 code"
-            end
+            result[k] = v + B[a][source[i + 1]] + TB[source[i + 2]] + TA[source[i + 3]]
+            i = i + 4
           end
         end
       elseif a then
         error "invalid UTF-8 code"
       end
     end
-    return unpack(data)
+    return unpack(result, 1, k)
   end
 end

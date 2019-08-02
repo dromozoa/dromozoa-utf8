@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -30,39 +30,27 @@ return function (s)
   s = check_string(s, 1)
 
   local i = 1
+  local source = { byte(s, i, #s) }
   return function ()
-    local j = i + 3
-    local p = i
-    local a, b, c, d = byte(s, i, j)
-    local x = A[a]
-    if x then
+    local j = i
+    local a = source[j]
+    local v = A[a]
+    if v then
       if a <= 0xDF then
         if a <= 0x7F then
-          i = i + 1
-          return p, x
+          i = j + 1
+          return j, v
         else
-          local b = TA[b]
-          if b then
-            i = i + 2
-            return p, x + b
-          end
+          i = j + 2
+          return j, v + TA[source[j + 1]]
         end
       else
         if a <= 0xEF then
-          local b = B[a][b]
-          local c = TA[c]
-          if b and c then
-            i = j
-            return p, x + b + c
-          end
+          i = j + 3
+          return j, v + B[a][source[j + 1]] + TA[source[j + 2]]
         else
-          local b = B[a][b]
-          local c = TB[c]
-          local d = TA[d]
-          if b and c and d then
-            i = i + 4
-            return p, x + b + c + d
-          end
+          i = j + 4
+          return j, v + B[a][source[j + 1]] + TB[source[j + 2]] + TA[source[j + 3]]
         end
       end
       error "invalid UTF-8 code"
