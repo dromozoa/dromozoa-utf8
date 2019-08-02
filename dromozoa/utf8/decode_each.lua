@@ -30,8 +30,7 @@ return function (s)
   s = check_string(s, 1)
 
   local i = 1
-  local n = #s
-  local source = { byte(s, i, n) }
+  local source = { byte(s, i, #s) }
   return function ()
     local source = source
     local j = i
