@@ -1,4 +1,4 @@
--- Copyright (C) 2017,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2019,2020 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -49,10 +49,10 @@ return function (s, i, j)
   end
 
   if i < 1 or m < i then
-    error "bad argument #2 (initial position out of string)"
+    error "bad argument #2 (initial position out of bounds)"
   end
   if n < j then
-    error "bad argument #3 (final position out of string)"
+    error "bad argument #3 (final position out of bounds)"
   end
   if j < i then
     return 0

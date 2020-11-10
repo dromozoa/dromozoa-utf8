@@ -1,4 +1,4 @@
--- Copyright (C) 2017-2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017-2020 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -29,7 +29,7 @@ local count = 0
 local handle
 local expect
 
-if _VERSION == "Lua 5.3" then
+if _VERSION == "Lua 5.4" then
   handle = assert(io.open("test.exp", "w"))
 else
   expect = assert(loadfile "test/test.exp")()
@@ -120,7 +120,7 @@ local function check(name, ...)
     if bad_argument then
       reason = reason:gsub("expected, got no value$", "expected, got nil")
       if not message2:find(bad_argument, nil, true) or not message2:find(reason, nil, true) then
-        assert(message2:find("attempt to perform arithmetic on", nil, true))
+        assert(message2:find("attempt to perform arithmetic on", nil, true) or message2:find("attempt to add", nil, true))
       end
     else
       local reason = "initial position is a continuation byte"
@@ -130,7 +130,7 @@ local function check(name, ...)
         local reason = "invalid UTF-8 code";
         if message1:find(reason, nil, true) then
           if not message2:find(reason, nil, true) then
-            assert(message2:find("attempt to perform arithmetic on", nil, true))
+            assert(message2:find("attempt to perform arithmetic on", nil, true) or message2:find("attempt to add", nil, true))
           end
         else
           error "unchecked"
@@ -148,9 +148,11 @@ check "charpattern"
 check("char", -1)
 check("char", 0, -1)
 check("char", 0x10FFFF)
-check("char", 0x110000)
+-- Lua 5.4 relaxed
+-- check("char", 0x110000)
 check("char", 0, 0x10FFFF)
-check("char", 0, 0x110000)
+-- Lua 5.4 relaxed
+-- check("char", 0, 0x110000)
 check("char", 0x41, 0x42, 0x43)
 check("char", "65", "0x42")
 check("char", 65.5)

@@ -1,4 +1,4 @@
--- Copyright (C) 2017 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2020 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -45,7 +45,7 @@ return function (s, n, i)
   end
 
   if i < 1 or m < i then
-    error "bad argument #3 (position out of range)"
+    error "bad argument #3 (position out of bounds)"
   end
 
   if n == 0 then
