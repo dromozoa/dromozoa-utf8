@@ -1,6 +1,12 @@
 # dromozoa-utf8
 
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
+Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
+
+## v1.16
+
+* Unicode 13.0
+* Lua 5.4 like error messages
 
 ## v1.15
 
