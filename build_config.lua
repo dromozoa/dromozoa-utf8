@@ -1,4 +1,4 @@
--- Copyright (C) 2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2019,2020 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -16,5 +16,5 @@
 -- along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
 
 return {
-  ucd_version = "12.1.0";
+  ucd_version = "13.0.0";
 }

@@ -1,4 +1,4 @@
--- Copyright (C) 2015,2017,2019 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2015,2017,2019,2020 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -17,7 +17,7 @@
 
 return {
   char = require "dromozoa.utf8.encode";
-  charpattern = "[\000-\127\194-\244][\128-\191]*";
+  charpattern = "[\000-\127\194-\253][\128-\191]*";
   codes = require "dromozoa.utf8.decode_each";
   codepoint = require "dromozoa.utf8.decode";
   len = require "dromozoa.utf8.count";
