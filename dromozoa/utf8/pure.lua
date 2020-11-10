@@ -17,7 +17,7 @@
 
 return {
   char = require "dromozoa.utf8.encode";
-  charpattern = "[\000-\127\194-\244][\128-\191]*";
+  charpattern = "[\000-\127\194-\253][\128-\191]*";
   codes = require "dromozoa.utf8.decode_each";
   codepoint = require "dromozoa.utf8.decode";
   len = require "dromozoa.utf8.count";

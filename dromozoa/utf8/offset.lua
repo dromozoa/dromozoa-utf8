@@ -45,7 +45,7 @@ return function (s, n, i)
   end
 
   if i < 1 or m < i then
-    error "bad argument #3 (position out of range)"
+    error "bad argument #3 (position out of bounds)"
   end
 
   if n == 0 then
