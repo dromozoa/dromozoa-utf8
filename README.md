@@ -6,6 +6,7 @@ Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 ## v1.18
 
 * Unicode 15.0
+* old luarocks support
 
 ## v1.17
 
