@@ -3,6 +3,10 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.18
+
+* Unicode 15.0
+
 ## v1.17
 
 * maintenance release
