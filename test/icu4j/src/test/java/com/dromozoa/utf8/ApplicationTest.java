@@ -17,19 +17,22 @@
 
 package com.dromozoa.utf8;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class ApplicationTest extends TestCase {
+public class ApplicationTest {
+  @Test
   public void testEastAsianWidth() {
     String[] args = { "EAST_ASIAN_WIDTH", "3000", "30FF" };
     Application.main(args);
   }
 
+  @Test
   public void testWhiteSpace() {
     String[] args = { "WHITE_SPACE", "2000", "20FF" };
     Application.main(args);
   }
 
+  @Test
   public void testGeneralCategory() {
     String[] args = { "GENERAL_CATEGORY", "2000", "200F" };
     Application.main(args);
