@@ -1,5 +1,5 @@
 <!--
-  Copyright (C) 2017-2020 Tomoyuki Fujimori <moyu@dromozoa.com>
+  Copyright (C) 2017-2020,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
 
   This file is part of dromozoa-utf8.
 
@@ -10,11 +10,11 @@
 
   dromozoa-utf8 is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with dromozoa-utf8.  If not, see <http://www.gnu.org/licenses/>.
+  along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -62,12 +62,12 @@
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
-      <version>68.1</version>
+      <version>73.1</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.9.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
