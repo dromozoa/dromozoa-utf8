@@ -35,9 +35,9 @@ local properties = {
 local _ = builder "N"
 
 for line in io.lines(source_filename) do
-  local first, last, property = line:match "^(%x+)%.%.(%x+);(%a+)"
+  local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*(%a+)"
   if not first then
-    first, property = line:match "^(%x+);(%a+)"
+    first, property = line:match "^(%x+)%s*;%s*(%a+)"
     last = first
   end
   if first then
