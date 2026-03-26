@@ -16,5 +16,5 @@
 -- along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
 
 return {
-  ucd_version = "16.0.0";
+  ucd_version = "17.0.0";
 }
