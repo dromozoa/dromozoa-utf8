@@ -62,7 +62,11 @@ local function parse(line)
       if j then
         break
       end
-      _, j, v = line:find("^([^\\`|]+)", i)
+      _, j, v = line:find("^(%$[^%$]*%$)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^([^\\`%$|]+)", i)
       if j then
         break
       end
@@ -99,16 +103,6 @@ local data = {}
 local n = 0
 
 for line in io.lines() do
-  -- local items = {}
-  -- local m = 0
-
-  -- for item in ("|" .. line:match "^%s*|?(.-)|?%s*$"):gmatch "|([^|]*)" do
-  --   m = m + 1
-  --   items[m] = item:match "^%s*(.-)%s*$"
-  -- end
-  -- n = n + 1
-  -- data[n] = items
-
   n = n + 1
   data[n] = parse(line)
 end
