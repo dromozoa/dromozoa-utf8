@@ -28,12 +28,12 @@ if not ambiguous_width then
 end
 
 local widths = {
-  ["N"]  = 1; -- neutral
-  ["Na"] = 1; -- narrow
-  ["H"]  = 1; -- halfwidth
-  ["A"]  = ambiguous_width; -- ambiguous
-  ["W"]  = 2; -- wide
-  ["F"]  = 2; -- fullwidth
+  ["N"]  = 1,               -- neutral
+  ["Na"] = 1,               -- narrow
+  ["H"]  = 1,               -- halfwidth
+  ["A"]  = ambiguous_width, -- ambiguous
+  ["W"]  = 2,               -- wide
+  ["F"]  = 2,               -- fullwidth
 }
 
 local function width(s)
@@ -44,18 +44,73 @@ local function width(s)
   return width
 end
 
+local function parse(line)
+  local line = line:gsub("^%s*|?", ""):gsub("%s*$", "")
+
+  local tokens = {}
+  local i = 1
+  repeat
+    local j
+    local v
+    repeat
+      local _
+      _, j, v = line:find("^(\\|)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^(`[^`]*`)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^([^\\`|]+)", i)
+      if j then
+        break
+      end
+      _, j, v = line:find("^(|)", i)
+      if j then
+        break
+      end
+    until false
+    table.insert(tokens, v)
+    i = j + 1
+  until i > #line
+
+  if tokens[#tokens] ~= "|" then
+    table.insert(tokens, "|")
+  end
+
+  local items = {}
+  local item = ""
+  for _, v in ipairs(tokens) do
+    if v == "|" then
+      item = item
+          :gsub("^%s*", "")
+          :gsub("%s*$", "")
+      table.insert(items, item)
+      item = ""
+    else
+      item = item .. v
+    end
+  end
+  return items
+end
+
 local data = {}
 local n = 0
 
 for line in io.lines() do
-  local items = {}
-  local m = 0
-  for item in ("|" .. line:match "^%s*|?(.-)|?%s*$"):gmatch "|([^|]*)" do
-    m = m + 1
-    items[m] = item:match "^%s*(.-)%s*$"
-  end
+  -- local items = {}
+  -- local m = 0
+
+  -- for item in ("|" .. line:match "^%s*|?(.-)|?%s*$"):gmatch "|([^|]*)" do
+  --   m = m + 1
+  --   items[m] = item:match "^%s*(.-)%s*$"
+  -- end
+  -- n = n + 1
+  -- data[n] = items
+
   n = n + 1
-  data[n] = items
+  data[n] = parse(line)
 end
 
 local alignments = {}
