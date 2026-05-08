@@ -3,6 +3,10 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.22
+
+* `dromozoa-markdown-table` no longer treats vertical bars in inline code or iinline equations, as well as vertical bars escaped with backslashes, as table borders
+
 ## v1.21
 
 * maintenance release
