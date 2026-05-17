@@ -115,11 +115,9 @@ end
 local alignments = {}
 local max_widths = {}
 
-for i = 1, n do
-  local items = data[i]
+for i, items in ipairs(data) do
   if i == 2 then
-    for j = 1, #items do
-      local item = items[j]
+    for j, item in ipairs(items) do
       if item:find ":$" then
         if item:find "^:." then
           alignments[j] = "center"
@@ -131,8 +129,7 @@ for i = 1, n do
       end
     end
   else
-    for j = 1, #items do
-      local item = items[j]
+    for j, item in ipairs(items) do
       local m = max_widths[j]
       local n = width(item)
       if m == nil or m < n then
@@ -155,8 +152,7 @@ else
   n = m
 end
 
-for i = 1, #data do
-  local items = data[i]
+for i, items in ipairs(data) do
   if #items == 0 then
     io.write "\n"
   elseif i == 2 then
@@ -182,10 +178,7 @@ for i = 1, #data do
       local alignment = alignments[j]
       local max_width = max_widths[j]
       io.write "|"
-      local item = items[j]
-      if not item then
-        item = ""
-      end
+      local item = items[j] or ""
       local w = max_width - width(item) + 2
       local w1
       if alignment == "normal" then
