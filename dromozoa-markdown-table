@@ -44,8 +44,17 @@ local function width(s)
   return width
 end
 
-local function parse(line)
+-- compact |------:| パイプの直後が非空白
+-- github  | ----: | パイプの直後が空白
+local header_mode = "compact"
+local header_padding = 0
+
+local function parse(line, n, is_header)
   local line = line:gsub("^%s*|?", ""):gsub("%s*$", "")
+
+  if #line == 0 then
+    return {}
+  end
 
   local tokens = {}
   local i = 1
@@ -74,6 +83,7 @@ local function parse(line)
       if j then
         break
       end
+      error("unexpected token at " .. n .. ":" .. i)
     until false
     table.insert(tokens, v)
     i = j + 1
@@ -87,6 +97,11 @@ local function parse(line)
   local item = ""
   for _, v in ipairs(tokens) do
     if v == "|" then
+      -- ヘッダの最初の要素が空白で始まるかどうかを調べる
+      if is_header and #items == 0 and item:find "^%s" then
+        header_mode = "github"
+        header_padding = 2
+      end
       item = item
           :gsub("^%s*", "")
           :gsub("%s*$", "")
@@ -99,22 +114,25 @@ local function parse(line)
   return items
 end
 
-local data = {}
 local n = 0
+local header
+local data = {}
 
 for line in io.lines() do
   n = n + 1
-  data[n] = parse(line)
+  local items = parse(line, n, n == header)
+  if not header and #items > 0 then
+    header = n + 1
+  end
+  data[n] = items
 end
 
 local alignments = {}
 local max_widths = {}
 
-for i = 1, n do
-  local items = data[i]
-  if i == 2 then
-    for j = 1, #items do
-      local item = items[j]
+for i, items in ipairs(data) do
+  if i == header then
+    for j, item in ipairs(items) do
       if item:find ":$" then
         if item:find "^:." then
           alignments[j] = "center"
@@ -126,8 +144,7 @@ for i = 1, n do
       end
     end
   else
-    for j = 1, #items do
-      local item = items[j]
+    for j, item in ipairs(items) do
       local m = max_widths[j]
       local n = width(item)
       if m == nil or m < n then
@@ -150,25 +167,30 @@ else
   n = m
 end
 
-for i = 1, #data do
-  local items = data[i]
+for i, items in ipairs(data) do
   if #items == 0 then
     io.write "\n"
-  elseif i == 2 then
+  elseif i == header then
     for j = 1, n do
       local alignment = alignments[j]
       local max_width = max_widths[j]
       io.write "|"
+      if header_mode == "github" then
+        io.write " "
+      end
       if alignment == "center" then
         io.write ":"
       else
         io.write "-"
       end
-      io.write(("-"):rep(max_width))
+      io.write(("-"):rep(math.max(max_width, header_padding) - header_padding))
       if alignment == "normal" then
         io.write "-"
       else
         io.write ":"
+      end
+      if header_mode == "github" then
+        io.write " "
       end
     end
     io.write "|\n"
@@ -177,11 +199,8 @@ for i = 1, #data do
       local alignment = alignments[j]
       local max_width = max_widths[j]
       io.write "|"
-      local item = items[j]
-      if not item then
-        item = ""
-      end
-      local w = max_width - width(item) + 2
+      local item = items[j] or ""
+      local w = math.max(max_width, header_padding) - width(item) + 2
       local w1
       if alignment == "normal" then
         w1 = 1
