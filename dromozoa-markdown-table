@@ -47,6 +47,7 @@ end
 -- compact |------:| パイプの直後が非空白
 -- github  | ----: | パイプの直後が空白
 local header_mode = "compact"
+local header_padding = 0
 
 local function parse(line, n, is_header)
   local line = line:gsub("^%s*|?", ""):gsub("%s*$", "")
@@ -99,6 +100,7 @@ local function parse(line, n, is_header)
       -- ヘッダの最初の要素が空白で始まるかどうかを調べる
       if is_header and #items == 0 and item:find "^%s" then
         header_mode = "github"
+        header_padding = 2
       end
       item = item
           :gsub("^%s*", "")
@@ -173,16 +175,22 @@ for i, items in ipairs(data) do
       local alignment = alignments[j]
       local max_width = max_widths[j]
       io.write "|"
+      if header_mode == "github" then
+        io.write " "
+      end
       if alignment == "center" then
         io.write ":"
       else
         io.write "-"
       end
-      io.write(("-"):rep(max_width))
+      io.write(("-"):rep(math.max(max_width, header_padding) - header_padding))
       if alignment == "normal" then
         io.write "-"
       else
         io.write ":"
+      end
+      if header_mode == "github" then
+        io.write " "
       end
     end
     io.write "|\n"
@@ -192,7 +200,7 @@ for i, items in ipairs(data) do
       local max_width = max_widths[j]
       io.write "|"
       local item = items[j] or ""
-      local w = max_width - width(item) + 2
+      local w = math.max(max_width, header_padding) - width(item) + 2
       local w1
       if alignment == "normal" then
         w1 = 1
