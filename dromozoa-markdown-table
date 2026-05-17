@@ -47,9 +47,13 @@ end
 local function parse(line, n)
   local line = line:gsub("^%s*|?", ""):gsub("%s*$", "")
 
+  if #line == 0 then
+    return {}
+  end
+
   local tokens = {}
   local i = 1
-  while i <= #line do
+  repeat
     local j
     local v
     repeat
@@ -78,7 +82,7 @@ local function parse(line, n)
     until false
     table.insert(tokens, v)
     i = j + 1
-  end
+  until i > #line
 
   if tokens[#tokens] ~= "|" then
     table.insert(tokens, "|")
