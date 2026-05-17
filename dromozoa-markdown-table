@@ -112,11 +112,17 @@ for line in io.lines() do
   data[n] = parse(line, n)
 end
 
+-- TODO 前のループと統合
+local first = 1
+while data[first] and #data[first] == 0 do
+  first = first + 1
+end
+
 local alignments = {}
 local max_widths = {}
 
 for i, items in ipairs(data) do
-  if i == 2 then
+  if i == first + 1 then
     for j, item in ipairs(items) do
       if item:find ":$" then
         if item:find "^:." then
@@ -155,7 +161,7 @@ end
 for i, items in ipairs(data) do
   if #items == 0 then
     io.write "\n"
-  elseif i == 2 then
+  elseif i == first + 1 then
     for j = 1, n do
       local alignment = alignments[j]
       local max_width = max_widths[j]
