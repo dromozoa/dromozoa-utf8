@@ -5,7 +5,7 @@ Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
 ## v1.23
 
-* `dromozoa-markdown-table` now supports GitHub Flavored Markdown like table.
+* `dromozoa-markdown-table` now supports GitHub Flavored Markdown table.
 
 ## v1.22
 
