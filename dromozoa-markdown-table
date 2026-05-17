@@ -104,19 +104,19 @@ local function parse(line, n)
   return items
 end
 
-local data = {}
 local n = 0
+local first
+local data = {}
 
 for line in io.lines() do
   n = n + 1
-  data[n] = parse(line, n)
+  local items = parse(line, n)
+  if not first and #items > 0 then
+    first = n
+  end
+  data[n] = items
 end
-
--- TODO 前のループと統合
-local first = 1
-while data[first] and #data[first] == 0 do
-  first = first + 1
-end
+first = first or 1
 
 local alignments = {}
 local max_widths = {}
