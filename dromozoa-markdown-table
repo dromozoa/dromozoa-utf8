@@ -20,11 +20,38 @@
 local utf8 = require "dromozoa.utf8"
 local east_asian_width = require "dromozoa.ucd.east_asian_width"
 
-local ambiguous_width = ...
+local help = ([[
+Usage: %s [options] [ambiguous_width]
+Avairable options are:
+  -c  --csv
+  -t  --tsv
+  -h  --help
+]]):format(arg[0])
 
-ambiguous_width = tonumber(ambiguous_width)
-if not ambiguous_width then
-  ambiguous_width = 2
+local ambiguous_width = 2
+local output_mode = "markdown"
+
+local i = 1
+while i <= #arg do
+  local opt = arg[i]
+  i = i + 1
+  if opt == "-c" or opt == "--csv" then
+    output_mode = "csv"
+  elseif opt == "-t" or opt == "--tsv" then
+    output_mode = "tsv"
+  elseif opt == "-h" or opt == "--help" then
+    io.stderr:write(help)
+    os.exit()
+  elseif opt == "--" then
+    break
+  else
+    i = i - 1
+    break
+  end
+end
+
+if arg[i] then
+  ambiguous_width = assert(tonumber(arg[i]))
 end
 
 local widths = {
@@ -165,6 +192,48 @@ else
     max_widths[i] = 0
   end
   n = m
+end
+
+if output_mode == "csv" then
+  local csv_endl = "\n"
+  local function quote_csv(item)
+    local item = item:gsub("\n\r", "\n"):gsub("\r\n?", csv_endl)
+    if item:find '[\r\n\",]' then
+      return '"' .. item:gsub('"', '""') .. '"'
+    else
+      return item
+    end
+  end
+  for i, items in ipairs(data) do
+    if #items == 0 then
+      io.write "\n"
+    elseif i ~= header then
+      for j = 1, n do
+        if j > 1 then
+          io.write ","
+        end
+        io.write(quote_csv( items[j] or ""))
+      end
+      io.write(csv_endl)
+    end
+  end
+  os.exit()
+elseif output_mode == "tsv" then
+  -- TODO \tを含むテストを書く
+  for i, items in ipairs(data) do
+    if #items == 0 then
+      io.write "\n"
+    elseif i ~= header then
+      for j = 1, n do
+        if j > 1 then
+          io.write "\t"
+        end
+        io.write(items[j] or "")
+      end
+      io.write "\n"
+    end
+  end
+  os.exit()
 end
 
 for i, items in ipairs(data) do
