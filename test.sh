@@ -55,7 +55,7 @@ do
     *)
       "$@" dromozoa-markdown-table "--mode" <"test/$name.md" >"out/$name.$mode";;
   esac
-  diff -u "test/$name.csv" "out/$name.$mode"
+  diff -u "test/$name.$mode" "out/$name.$mode"
 done
 
 rm -f -r out test.exp

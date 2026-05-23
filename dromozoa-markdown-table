@@ -219,7 +219,10 @@ if output_mode == "csv" then
   end
   os.exit()
 elseif output_mode == "tsv" then
-  -- TODO \tを含むテストを書く
+  local tsv_tab = string.char(0xE2, 0x87, 0xA5) -- U+21E5 RIGHTWARDS ARROW TO BAR
+  local function quote_tsv(item)
+    return (item:gsub("\t", tsv_tab))
+  end
   for i, items in ipairs(data) do
     if #items == 0 then
       io.write "\n"
@@ -228,7 +231,7 @@ elseif output_mode == "tsv" then
         if j > 1 then
           io.write "\t"
         end
-        io.write(items[j] or "")
+        io.write(quote_tsv(items[j] or ""))
       end
       io.write "\n"
     end
