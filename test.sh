@@ -53,7 +53,7 @@ do
     X0)
       lua dromozoa-markdown-table "--$mode" <"test/$name.md" >"out/$name.$mode";;
     *)
-      "$@" dromozoa-markdown-table "--mode" <"test/$name.md" >"out/$name.$mode";;
+      "$@" dromozoa-markdown-table "--$mode" <"test/$name.md" >"out/$name.$mode";;
   esac
   diff -u "test/$name.$mode" "out/$name.$mode"
 done
