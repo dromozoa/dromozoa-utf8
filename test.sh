@@ -1,6 +1,6 @@
 #! /bin/sh -e
 
-# Copyright (C) 2017-2019,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+# Copyright (C) 2017-2019,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 #
 # This file is part of dromozoa-utf8.
 #
@@ -30,19 +30,32 @@ done
 
 mkdir -p out
 
-for i in test/table*.md
+for i in test/table*.exp
 do
-  name=`expr "X$i" : 'Xtest\(/.*\)\.md$' | sed -e 's/^.//'`
+  name=`expr "X$i" : 'Xtest\(/.*\)\.exp$' | sed -e 's/^.//'`
   case X$# in
     X0)
-      lua dromozoa-markdown-table <"$i" >"out/$name-01.md"
+      lua dromozoa-markdown-table <"test/$name.md" >"out/$name-01.md"
       lua dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md";;
     *)
-      "$@" dromozoa-markdown-table <"$i" >"out/$name-01.md"
+      "$@" dromozoa-markdown-table <"test/$name.md" >"out/$name-01.md"
       "$@" dromozoa-markdown-table <"out/$name-01.md" >"out/$name-02.md";;
   esac
   diff -u "test/$name.exp" "out/$name-01.md"
   diff -u "test/$name.exp" "out/$name-02.md"
+done
+
+for i in test/table*.[ct]sv
+do
+  name=`expr "X$i" : 'Xtest\(/.*\)\.[ct]sv$' | sed -e 's/^.//'`
+  mode=`expr "X$i" : 'Xtest/.*.\([ct]sv\)$'`
+  case X$# in
+    X0)
+      lua dromozoa-markdown-table "--$mode" <"test/$name.md" >"out/$name.$mode";;
+    *)
+      "$@" dromozoa-markdown-table "--$mode" <"test/$name.md" >"out/$name.$mode";;
+  esac
+  diff -u "test/$name.$mode" "out/$name.$mode"
 done
 
 rm -f -r out test.exp
