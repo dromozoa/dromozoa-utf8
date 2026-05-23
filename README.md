@@ -3,9 +3,13 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.24
+
+* `dromozoa-markdown-table` can now output in CSV and TSV formats
+
 ## v1.23
 
-* `dromozoa-markdown-table` now supports GitHub Flavored Markdown table.
+* `dromozoa-markdown-table` now supports GitHub Flavored Markdown table
 
 ## v1.22
 
@@ -35,7 +39,7 @@ Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 ## v1.16
 
 * Unicode 13.0
-* Lua 5.4 like error messages
+* Lua 5.4 compatible error messages
 
 ## v1.15
 
@@ -89,7 +93,7 @@ Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 ### Features
 
 * table-based performance improvement
-* almost compatible argument check
+* almost Lua compatible argument check
 * strict UTF-8 encoding check (do not accept CESU-8)
 
 ### Performance Improvement
