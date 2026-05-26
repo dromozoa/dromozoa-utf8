@@ -3,6 +3,10 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.25
+
+* `dromozoa-markdown-table` now handles backslashes loosely
+
 ## v1.24
 
 * `dromozoa-markdown-table` can now output in CSV and TSV formats

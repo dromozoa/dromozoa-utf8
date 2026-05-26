@@ -90,7 +90,7 @@ local function parse(line, n, is_header)
     local v
     repeat
       local _
-      _, j, v = line:find("^(\\|)", i)
+      _, j, v = line:find("^(\\|?)", i)
       if j then
         break
       end
