@@ -1,4 +1,4 @@
--- Copyright (C) 2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -17,6 +17,8 @@
 
 return {
   east_asian_width = require "dromozoa.ucd.east_asian_width";
+  east_asian_width_ambiguous_full = require "dromozoa.ucd.east_asian_width_ambiguous_full";
+  east_asian_width_ambiguous_half = require "dromozoa.ucd.east_asian_width_ambiguous_half";
   general_category = require "dromozoa.ucd.general_category";
   is_white_space = require "dromozoa.ucd.is_white_space";
 }

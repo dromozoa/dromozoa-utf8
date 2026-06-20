@@ -1,4 +1,4 @@
--- Copyright (C) 2017,2018,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2017,2018,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -15,6 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
 
+---@alias dromozoa.ucd.builder.value boolean|string|integer
+
+---@param v any
+---@return string
 local function quote(v)
   local t = type(v)
   if t == "nil" then
@@ -34,6 +38,11 @@ local function quote(v)
   end
 end
 
+---@param out file*
+---@param tree_class ("node"|"leaf")[]
+---@param tree_value dromozoa.ucd.builder.value[]
+---@param i integer
+---@param depth integer
 local function compile(out, tree_class, tree_value, i, depth)
   local u = tree_value[i]
   local j = i * 2
@@ -70,9 +79,15 @@ local function compile(out, tree_class, tree_value, i, depth)
   end
 end
 
+---@class dromozoa.ucd.builder
+---@field map table<integer, dromozoa.ucd.builder.value>
+---@overload fun(value: dromozoa.ucd.builder.value): dromozoa.ucd.builder
 local class = {}
 local metatable = { __index = class }
 
+---@param first integer
+---@param last integer
+---@param value dromozoa.ucd.builder.value
 function class:range(first, last, value)
   local map = self.map
   for i = first, last do
@@ -106,7 +121,7 @@ function class:build()
 
   local height = math.ceil(math.log(n) / math.log(2))
   for i = height, 0, -1 do
-    local j = 2^i
+    local j = 2 ^ i
     local k = 1
     local index = indice[k]
     while index and j <= m do
@@ -134,36 +149,45 @@ function class:build()
     tree_value[j] = value
   end
 
+  ---@class dromozoa.ucd.builder.data
+  ---@field range { first: integer[], value: dromozoa.ucd.builder.value[] }
+  ---@field tree { class: ("node"|"leaf")[], value: dromozoa.ucd.builder.value[] }
   return {
     range = {
-      first = range_first;
-      value = range_value;
-    };
+      first = range_first,
+      value = range_value,
+    },
     tree = {
-      class = tree_class;
-      value = tree_value;
-    };
+      class = tree_class,
+      value = tree_value,
+    },
   }
 end
 
-function class.compile(out, data)
+---@param out file*
+---@param data dromozoa.ucd.builder.data
+---@param type string
+function class.compile(out, data, type)
   local tree = data.tree
-  local buffer = {}
-  out:write [[
+  out:write(([[
+---@param c integer
+---@return %s
 return function (c)
   c = c + 0
-]]
+]]):format(type))
   compile(out, tree.class, tree.value, 1, 1)
   out:write "end\n"
   return out
 end
 
-return setmetatable(class, {
-  __call = function (_, value)
+setmetatable(class --[[@as table]], {
+  __call = function(_, value)
     local map = {}
     for i = 0, 0x10FFFF do
       map[i] = value
     end
     return setmetatable({ map = map }, metatable)
-  end;
+  end,
 })
+
+return class

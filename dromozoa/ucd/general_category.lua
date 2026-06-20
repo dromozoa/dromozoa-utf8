@@ -1,3 +1,5 @@
+---@param c integer
+---@return "Lu"|"Ll"|"Lt"|"Lm"|"Lo"|"Mn"|"Mc"|"Me"|"Nd"|"Nl"|"No"|"Pc"|"Pd"|"Ps"|"Pe"|"Pi"|"Pf"|"Po"|"Sm"|"Sc"|"Sk"|"So"|"Zs"|"Zl"|"Zp"|"Cc"|"Cf"|"Cs"|"Co"|"Cn"
 return function (c)
   c = c + 0
   if c < 11453 then

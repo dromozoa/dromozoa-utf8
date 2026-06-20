@@ -3,6 +3,11 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.26
+
+* new function `dromozoa.ucd.east_asian_width_ambiguous_half`
+* new function `dromozoa.ucd.east_asian_width_ambiguous_full`
+
 ## v1.25
 
 * `dromozoa-markdown-table` now handles backslashes loosely
