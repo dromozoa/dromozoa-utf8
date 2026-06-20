@@ -18,8 +18,6 @@
 local builder = require "dromozoa.ucd.builder"
 local build_config = require "build_config"
 
-local unpack = table.unpack or unpack
-
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/UnicodeData.txt"
 local result_filename = "dromozoa/ucd/general_category.lua"
 
@@ -30,7 +28,7 @@ local prev_property
 
 for line in io.lines(source_filename) do
   local code, name, property = assert(line:match "^(%x+);(.-);(.-);")
-  code = tonumber(code, 16)
+  local code = tonumber(code, 16)
   if name:find ", First>$" then
     prev_code = code
     prev_property = property
@@ -51,4 +49,4 @@ end
 
 local data = _:build()
 local out = assert(io.open(result_filename, "w"))
-_.compile(out, data):close()
+_.compile(out, data, "string"):close()

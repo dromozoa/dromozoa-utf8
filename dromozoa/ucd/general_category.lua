@@ -1,3 +1,5 @@
+---@param c integer
+---@return string
 return function (c)
   c = c + 0
   if c < 11453 then

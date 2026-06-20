@@ -18,8 +18,6 @@
 local builder = require "dromozoa.ucd.builder"
 local build_config = require "build_config"
 
-local unpack = table.unpack or unpack
-
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/PropList.txt"
 local result_filename = "dromozoa/ucd/is_white_space.lua"
 
@@ -43,4 +41,4 @@ end
 
 local data = _:build()
 local out = assert(io.open(result_filename, "w"))
-_.compile(out, data):close()
+_.compile(out, data, "boolean"):close()

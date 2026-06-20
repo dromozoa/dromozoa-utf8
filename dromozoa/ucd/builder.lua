@@ -166,8 +166,13 @@ end
 
 ---@param out file*
 ---@param data dromozoa.ucd.builder.data
-function class.compile(out, data)
+---@param type string?
+function class.compile(out, data, type)
   local tree = data.tree
+  out:write "---@param c integer\n"
+  if type then
+    out:write("---@return ", type, "\n")
+  end
   out:write [[
 return function (c)
   c = c + 0

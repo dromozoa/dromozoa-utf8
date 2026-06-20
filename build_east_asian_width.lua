@@ -51,4 +51,4 @@ end
 
 local data = b:build()
 local out = assert(io.open(result_filename, "w"))
-b.compile(out, data):close()
+b.compile(out, data, "string"):close()
