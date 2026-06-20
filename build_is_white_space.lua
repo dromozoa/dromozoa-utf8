@@ -1,4 +1,4 @@
--- Copyright (C) 2018,2019,2023 Tomoyuki Fujimori <moyu@dromozoa.com>
+-- Copyright (C) 2018,2019,2023,2026 Tomoyuki Fujimori <moyu@dromozoa.com>
 --
 -- This file is part of dromozoa-utf8.
 --
@@ -18,12 +18,10 @@
 local builder = require "dromozoa.ucd.builder"
 local build_config = require "build_config"
 
-local unpack = table.unpack or unpack
-
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/PropList.txt"
 local result_filename = "dromozoa/ucd/is_white_space.lua"
 
-local _ = builder(false)
+local b = builder(false)
 
 for line in io.lines(source_filename) do
   local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*([%w_]+)"
@@ -36,11 +34,11 @@ for line in io.lines(source_filename) do
     local last = tonumber(last, 16)
     assert(first <= last)
     assert(not prev or prev < first)
-    _:range(first, last, true)
+    b:range(first, last, true)
     prev = last
   end
 end
 
-local data = _:build()
+local data = b:build()
 local out = assert(io.open(result_filename, "w"))
-_.compile(out, data):close()
+b.compile(out, data, "boolean"):close()

@@ -1,3 +1,5 @@
+---@param c integer
+---@return boolean
 return function (c)
   c = c + 0
   if c < 8232 then
