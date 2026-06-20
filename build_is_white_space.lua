@@ -21,7 +21,7 @@ local build_config = require "build_config"
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/PropList.txt"
 local result_filename = "dromozoa/ucd/is_white_space.lua"
 
-local _ = builder(false)
+local b = builder(false)
 
 for line in io.lines(source_filename) do
   local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*([%w_]+)"
@@ -34,11 +34,11 @@ for line in io.lines(source_filename) do
     local last = tonumber(last, 16)
     assert(first <= last)
     assert(not prev or prev < first)
-    _:range(first, last, true)
+    b:range(first, last, true)
     prev = last
   end
 end
 
-local data = _:build()
+local data = b:build()
 local out = assert(io.open(result_filename, "w"))
-_.compile(out, data, "boolean"):close()
+b.compile(out, data, "boolean"):close()
