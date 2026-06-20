@@ -19,9 +19,9 @@ local builder = require "dromozoa.ucd.builder"
 local build_config = require "build_config"
 
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/EastAsianWidth.txt"
-local result_filename = "dromozoa/ucd/east_asian_width.lua"
-local result_filename_half = "dromozoa/ucd/east_asian_width_ambiguous_half.lua"
-local result_filename_full = "dromozoa/ucd/east_asian_width_ambiguous_full.lua"
+local filename_prop = "dromozoa/ucd/east_asian_width.lua"
+local filename_half = "dromozoa/ucd/east_asian_width_ambiguous_half.lua"
+local filename_full = "dromozoa/ucd/east_asian_width_ambiguous_full.lua"
 
 local properties = {
   N  = true, -- neutral
@@ -32,7 +32,7 @@ local properties = {
   F  = true, -- fullwidth
 }
 
-local widths_ambiguous_half = {
+local widths_half = {
   N  = 1, -- neutral
   Na = 1, -- narrow
   H  = 1, -- halfwidth
@@ -41,7 +41,7 @@ local widths_ambiguous_half = {
   F  = 2, -- fullwidth
 }
 
-local widths_ambiguous_full = {
+local widths_full = {
   N  = 1, -- neutral
   Na = 1, -- narrow
   H  = 1, -- halfwidth
@@ -50,7 +50,16 @@ local widths_ambiguous_full = {
   F  = 2, -- fullwidth
 }
 
-local b = builder "N"
+---@param b dromozoa.ucd.builder
+---@param filename string
+---@param value_type string
+local function write(b, filename, value_type)
+  local data = b:build()
+  local out = assert(io.open(filename, "w"))
+  b.compile(out, data, value_type):close()
+end
+
+local b_prop = builder "N"
 local b_half = builder(1)
 local b_full = builder(1)
 
@@ -66,19 +75,13 @@ for line in io.lines(source_filename) do
     assert(first <= last)
     assert(not prev or prev < first)
     assert(properties[property])
-    b:range(first, last, property)
-    b_half:range(first, last, widths_ambiguous_half[property])
-    b_full:range(first, last, widths_ambiguous_full[property])
+    b_prop:range(first, last, property)
+    b_half:range(first, last, assert(widths_half[property]))
+    b_full:range(first, last, assert(widths_full[property]))
     prev = last
   end
 end
 
-local function write(b, result_filename, value_type)
-  local data = b:build()
-  local out = assert(io.open(result_filename, "w"))
-  b.compile(out, data, value_type):close()
-end
-
-write(b, result_filename, "string")
-write(b_half, result_filename_half, "integer")
-write(b_full, result_filename_full, "integer")
+write(b_prop, filename_prop, "string")
+write(b_half, filename_half, "integer")
+write(b_full, filename_full, "integer")
