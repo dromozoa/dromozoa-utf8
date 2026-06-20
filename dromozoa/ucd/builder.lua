@@ -15,8 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
 
----@alias dromozoa.ucd.builder.value boolean|string|number
+---@alias dromozoa.ucd.builder.value boolean|string|integer
 
+---@param v any
+---@return string
 local function quote(v)
   local t = type(v)
   if t == "nil" then
@@ -36,6 +38,11 @@ local function quote(v)
   end
 end
 
+---@param out file*
+---@param tree_class ("node"|"leaf")[]
+---@param tree_value dromozoa.ucd.builder.value[]
+---@param i integer
+---@param depth integer
 local function compile(out, tree_class, tree_value, i, depth)
   local u = tree_value[i]
   local j = i * 2
@@ -78,6 +85,9 @@ end
 local class = {}
 local metatable = { __index = class }
 
+---@param first integer
+---@param last integer
+---@param value dromozoa.ucd.builder.value
 function class:range(first, last, value)
   local map = self.map
   for i = first, last do
@@ -139,6 +149,9 @@ function class:build()
     tree_value[j] = value
   end
 
+  ---@class dromozoa.ucd.builder.data
+  ---@field range { first: integer[], value: dromozoa.ucd.builder.value[] }
+  ---@field tree { class: ("node"|"leaf")[], value: dromozoa.ucd.builder.value[] }
   return {
     range = {
       first = range_first,
@@ -151,6 +164,8 @@ function class:build()
   }
 end
 
+---@param out file*
+---@param data dromozoa.ucd.builder.data
 function class.compile(out, data)
   local tree = data.tree
   out:write [[
