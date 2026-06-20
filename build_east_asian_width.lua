@@ -18,8 +18,6 @@
 local builder = require "dromozoa.ucd.builder"
 local build_config = require "build_config"
 
-local unpack = table.unpack or unpack
-
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/EastAsianWidth.txt"
 local result_filename = "dromozoa/ucd/east_asian_width.lua"
 
