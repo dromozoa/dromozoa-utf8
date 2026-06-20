@@ -30,7 +30,7 @@ local properties = {
   ["F"]  = true; -- fullwidth
 }
 
-local _ = builder "N"
+local b = builder "N"
 
 for line in io.lines(source_filename) do
   local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*(%a+)"
@@ -44,11 +44,11 @@ for line in io.lines(source_filename) do
     assert(first <= last)
     assert(not prev or prev < first)
     assert(properties[property])
-    _:range(first, last, property)
+    b:range(first, last, property)
     prev = last
   end
 end
 
-local data = _:build()
+local data = b:build()
 local out = assert(io.open(result_filename, "w"))
-_.compile(out, data):close()
+b.compile(out, data):close()

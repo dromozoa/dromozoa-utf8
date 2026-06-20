@@ -15,6 +15,8 @@
 -- You should have received a copy of the GNU General Public License
 -- along with dromozoa-utf8. If not, see <https://www.gnu.org/licenses/>.
 
+---@alias dromozoa.ucd.builder.value boolean|string|number
+
 local function quote(v)
   local t = type(v)
   if t == "nil" then
@@ -70,6 +72,8 @@ local function compile(out, tree_class, tree_value, i, depth)
   end
 end
 
+---@class dromozoa.ucd.builder
+---@field map table<integer, string>
 local class = {}
 local metatable = { __index = class }
 
@@ -148,7 +152,6 @@ end
 
 function class.compile(out, data)
   local tree = data.tree
-  local buffer = {}
   out:write [[
 return function (c)
   c = c + 0
@@ -159,6 +162,8 @@ return function (c)
 end
 
 return setmetatable(class, {
+  ---@param value dromozoa.ucd.builder.value
+  ---@return dromozoa.ucd.builder
   __call = function (_, value)
     local map = {}
     for i = 0, 0x10FFFF do
