@@ -166,17 +166,15 @@ end
 
 ---@param out file*
 ---@param data dromozoa.ucd.builder.data
----@param type string?
+---@param type string
 function class.compile(out, data, type)
   local tree = data.tree
-  out:write "---@param c integer\n"
-  if type then
-    out:write("---@return ", type, "\n")
-  end
-  out:write [[
+  out:write(([[
+---@param c integer
+---@return %s
 return function (c)
   c = c + 0
-]]
+]]):format(type))
   compile(out, tree.class, tree.value, 1, 1)
   out:write "end\n"
   return out

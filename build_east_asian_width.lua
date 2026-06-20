@@ -82,6 +82,6 @@ for line in io.lines(source_filename) do
   end
 end
 
-write(b_prop, filename_prop, "string")
-write(b_half, filename_half, "integer")
-write(b_full, filename_full, "integer")
+write(b_prop, filename_prop, '"N"|"Na"|"H"|"A"|"W"|"F"')
+write(b_half, filename_half, "1|2")
+write(b_full, filename_full, "1|2")

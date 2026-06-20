@@ -1,5 +1,5 @@
 ---@param c integer
----@return string
+---@return "N"|"Na"|"H"|"A"|"W"|"F"
 return function (c)
   c = c + 0
   if c < 9935 then

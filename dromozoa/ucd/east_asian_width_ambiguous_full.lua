@@ -1,5 +1,5 @@
 ---@param c integer
----@return integer
+---@return 1|2
 return function (c)
   c = c + 0
   if c < 9748 then
