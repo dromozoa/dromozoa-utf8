@@ -73,7 +73,8 @@ local function compile(out, tree_class, tree_value, i, depth)
 end
 
 ---@class dromozoa.ucd.builder
----@field map table<integer, string>
+---@field map table<integer, dromozoa.ucd.builder.value>
+---@overload fun(value: dromozoa.ucd.builder.value): dromozoa.ucd.builder
 local class = {}
 local metatable = { __index = class }
 
@@ -110,7 +111,7 @@ function class:build()
 
   local height = math.ceil(math.log(n) / math.log(2))
   for i = height, 0, -1 do
-    local j = 2^i
+    local j = 2 ^ i
     local k = 1
     local index = indice[k]
     while index and j <= m do
@@ -140,13 +141,13 @@ function class:build()
 
   return {
     range = {
-      first = range_first;
-      value = range_value;
-    };
+      first = range_first,
+      value = range_value,
+    },
     tree = {
-      class = tree_class;
-      value = tree_value;
-    };
+      class = tree_class,
+      value = tree_value,
+    },
   }
 end
 
@@ -161,14 +162,14 @@ return function (c)
   return out
 end
 
-return setmetatable(class, {
-  ---@param value dromozoa.ucd.builder.value
-  ---@return dromozoa.ucd.builder
-  __call = function (_, value)
+setmetatable(class --[[@as table]], {
+  __call = function(_, value)
     local map = {}
     for i = 0, 0x10FFFF do
       map[i] = value
     end
     return setmetatable({ map = map }, metatable)
-  end;
+  end,
 })
+
+return class
