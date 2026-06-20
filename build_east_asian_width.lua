@@ -20,17 +20,39 @@ local build_config = require "build_config"
 
 local source_filename = "docs/" .. build_config.ucd_version .. "/ucd/EastAsianWidth.txt"
 local result_filename = "dromozoa/ucd/east_asian_width.lua"
+local result_filename_half = "dromozoa/ucd/east_asian_width_ambiguous_half.lua"
+local result_filename_full = "dromozoa/ucd/east_asian_width_ambiguous_full.lua"
 
 local properties = {
-  ["N"]  = true; -- neutral
-  ["Na"] = true; -- narrow
-  ["H"]  = true; -- halfwidth
-  ["A"]  = true; -- ambiguous
-  ["W"]  = true; -- wide
-  ["F"]  = true; -- fullwidth
+  N  = true, -- neutral
+  Na = true, -- narrow
+  H  = true, -- halfwidth
+  A  = true, -- ambiguous
+  W  = true, -- wide
+  F  = true, -- fullwidth
+}
+
+local widths_ambiguous_half = {
+  N  = 1, -- neutral
+  Na = 1, -- narrow
+  H  = 1, -- halfwidth
+  A  = 1, -- ambiguous
+  W  = 2, -- wide
+  F  = 2, -- fullwidth
+}
+
+local widths_ambiguous_full = {
+  N  = 1, -- neutral
+  Na = 1, -- narrow
+  H  = 1, -- halfwidth
+  A  = 2, -- ambiguous
+  W  = 2, -- wide
+  F  = 2, -- fullwidth
 }
 
 local b = builder "N"
+local b_half = builder(1)
+local b_full = builder(1)
 
 for line in io.lines(source_filename) do
   local first, last, property = line:match "^(%x+)%.%.(%x+)%s*;%s*(%a+)"
@@ -45,10 +67,18 @@ for line in io.lines(source_filename) do
     assert(not prev or prev < first)
     assert(properties[property])
     b:range(first, last, property)
+    b_half:range(first, last, widths_ambiguous_half[property])
+    b_full:range(first, last, widths_ambiguous_full[property])
     prev = last
   end
 end
 
-local data = b:build()
-local out = assert(io.open(result_filename, "w"))
-b.compile(out, data, "string"):close()
+local function write(b, result_filename, value_type)
+  local data = b:build()
+  local out = assert(io.open(result_filename, "w"))
+  b.compile(out, data, value_type):close()
+end
+
+write(b, result_filename, "string")
+write(b_half, result_filename_half, "integer")
+write(b_full, result_filename_full, "integer")
