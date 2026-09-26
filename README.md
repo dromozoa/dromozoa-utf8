@@ -3,6 +3,10 @@
 Lua 5.3 compatible pure-Lua UTF-8 implementation.
 Currently, `lax` optional argument introduced in Lua 5.4 is not supported.
 
+## v1.27
+
+* Unicode 18.0
+
 ## v1.26
 
 * new function `dromozoa.ucd.east_asian_width_ambiguous_half`
